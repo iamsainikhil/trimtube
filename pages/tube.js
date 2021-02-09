@@ -1,10 +1,10 @@
 import Layout from '../components/Layout'
-import Input from '../containers/Input'
+import Video from '../containers/Video'
 
 export default function Home() {
   return (
     <Layout>
-      <Input />
+      <Video />
     </Layout>
   )
 }
