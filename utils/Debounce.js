@@ -1,12 +1,12 @@
-const debounce = (fn, wait) => {
-  let timeout
-
-  return function () {
-    const later = () => fn.apply(this, arguments)
-
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
+const debounce = (fn, time = 250) => {
+  let interval
+  return (...args) => {
+    const later = () => {
+      interval = null
+      fn.apply(this, args)
+    }
+    clearTimeout(interval)
+    interval = setTimeout(later, time)
   }
 }
-
 export default debounce

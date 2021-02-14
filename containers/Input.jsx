@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Search from '../components/Search'
 import Results from '../components/Results'
@@ -8,8 +8,7 @@ const Input = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [data, setData] = useState(undefined)
   const [error, setError] = useState(undefined)
-  const [loading, setLoading] = useState(false);
-  console.log(data)
+  const [loading, setLoading] = useState(false)
 
   const fetchResults = () => {
     if (searchTerm.trim()) {
@@ -18,6 +17,7 @@ const Input = () => {
         .get('/api/search', {params: {searchTerm}})
         .then((res) => {
           setData(res.data)
+          console.log(data)
         })
         .catch((error) => setError(error))
         .finally(() => setLoading(false))
@@ -31,20 +31,15 @@ const Input = () => {
     setSearchTerm(event.target.value)
   }
 
+  useEffect(() => {
+    fetchResults()
+    return () => {}
+  }, [searchTerm])
+
   return (
     <div>
-      <Search
-        searchTerm={searchTerm}
-        updateSearch={handleSearch}
-        fetchResults={fetchResults}
-      />
-      {
-          loading ? (
-              <Loader />
-          ) : (
-            <Results data={data} error={error} />
-          )
-      }
+      <Search searchTerm={searchTerm} updateSearch={handleSearch} />
+      {loading ? <Loader /> : <Results data={data} error={error} />}
     </div>
   )
 }

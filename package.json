@@ -17,6 +17,7 @@
     "next-pwa": "^5.0.5",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
+    "react-debounce-input": "^3.2.3",
     "react-dom": "^17.0.1",
     "react-ga": "^3.3.0",
     "react-headroom": "^3.1.0",
