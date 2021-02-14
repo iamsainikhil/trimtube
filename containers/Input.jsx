@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import useFirstRender from '../hooks/firstRender'
 import axios from 'axios'
 import Search from '../components/Search'
 import Results from '../components/Results'
@@ -9,6 +10,7 @@ const Input = () => {
   const [data, setData] = useState(undefined)
   const [error, setError] = useState(undefined)
   const [loading, setLoading] = useState(false)
+  const isFirstRender = useFirstRender()
 
   const fetchResults = () => {
     if (searchTerm.trim()) {
@@ -16,15 +18,22 @@ const Input = () => {
       axios
         .get('/api/search', {params: {searchTerm}})
         .then((res) => {
-          setData(res.data)
+          updateDataError(res.data, undefined)
           console.log(data)
         })
-        .catch((error) => setError(error))
+        .catch((error) => {
+          updateDataError(undefined, error)
+        })
         .finally(() => setLoading(false))
     } else {
       setLoading(false)
-      setError('Empty search!')
+      updateDataError(undefined, 'No videos found!')
     }
+  }
+
+  const updateDataError = (data, error) => {
+    setData(data)
+    setError(error)
   }
 
   const handleSearch = (event) => {
@@ -32,7 +41,9 @@ const Input = () => {
   }
 
   useEffect(() => {
-    fetchResults()
+    if (!isFirstRender) {
+      fetchResults()
+    }
     return () => {}
   }, [searchTerm])
 
