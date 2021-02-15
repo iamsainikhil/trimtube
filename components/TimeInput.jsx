@@ -1,40 +1,42 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {DebounceInput} from 'react-debounce-input'
 
-const Search = ({searchTerm, updateSearch}) => {
+const TimeInput = ({name, type, time, valueChange}) => {
   return (
     <div
       sx={{
         display: 'flex',
-        flexFlow: 'row nowrap',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        mx: 2,
+        mt: 3,
       }}>
-      <DebounceInput
+      <input
         sx={{
+          maxWidth: '3rem',
           bg: 'search',
           color: 'text',
           borderWidth: '1px',
           borderStyle: 'solid',
           borderColor: 'search',
           borderRadius: '2.5rem',
-          height: '2rem',
-          width: '75%',
-          p: 4,
           fontFamily: 'light',
-          fontSize: [2, 3, 4],
+          fontSize: 2,
           outline: 'none',
+          textAlign: 'center',
         }}
-        minLength={1}
-        debounceTimeout={300}
-        placeholder='Search or paste a youtube video link'
-        value={searchTerm}
-        onChange={updateSearch}
+        type='tel'
+        name={`${name}${type}`}
+        value={isNaN(time) ? '' : time}
+        onChange={valueChange}
       />
+      <label htmlFor={`${name}${type}`} sx={{fontSize: 0}}>
+        {type}
+      </label>
     </div>
   )
 }
 
-export default Search
+export default TimeInput

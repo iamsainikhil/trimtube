@@ -1,9 +1,9 @@
-import {Fragment} from 'react'
 import YouTube from 'react-youtube'
 
-const Player = () => {
+const Player = ({videoId, start, end}) => {
+  console.log(start)
   const opts = {
-    height: '390',
+    height: '400',
     width: '640',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
@@ -11,15 +11,18 @@ const Player = () => {
       loop: 1,
       controls: 1,
       modestbranding: 1,
-      start: 5,
-      end: 110,
-      //   playlist: 'JOPFpsVwAS4',
+      rel: 0,
+      start: start || 0,
+      end: end || 0,
+      iv_load_policy: 3,
+      color: 'white',
     },
   }
 
   const _onReady = (event) => {
     // access to player in all event handlers via event.target
     console.log(event.target.h.outerHTML, opts.playerVars)
+    // event.target.pauseVideo()
   }
 
   const _onStateChange = (event) => {
@@ -34,15 +37,15 @@ const Player = () => {
   }
 
   return (
-    <Fragment>
+    <div>
       <YouTube
-        videoId='JOPFpsVwAS4'
+        videoId={videoId}
         opts={opts}
         onReady={_onReady}
         onStateChange={_onStateChange}
         onError={_onError}
       />
-    </Fragment>
+    </div>
   )
 }
 

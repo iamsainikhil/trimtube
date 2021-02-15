@@ -19,7 +19,6 @@ const Input = () => {
         .get('/api/search', {params: {searchTerm}})
         .then((res) => {
           updateDataError(res.data, undefined)
-          console.log(data)
         })
         .catch((error) => {
           updateDataError(undefined, error)

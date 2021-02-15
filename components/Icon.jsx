@@ -3,14 +3,28 @@
 import {jsx} from 'theme-ui'
 import {
   GrLinkedinOption,
+  GrFacebookOption,
   GrTwitter,
   GrGithub,
 } from 'react-icons/gr'
+import {IoIosGlobe, IoLogoWhatsapp} from 'react-icons/io'
 import PropTypes from 'prop-types'
+import {trackGAEvent} from '../utils/googleAnalytics'
 
 const Icon = ({name, url, style}) => {
   const renderIcon = () => {
     switch (name) {
+      case 'Facebook':
+        return (
+          <GrFacebookOption
+            sx={{
+              ...style,
+              '&:hover': {
+                color: '#3b5998',
+              },
+            }}
+          />
+        )
       case 'Twitter':
         return (
           <GrTwitter
@@ -40,6 +54,28 @@ const Icon = ({name, url, style}) => {
               ...style,
               '&:hover': {
                 color: '#333',
+              },
+            }}
+          />
+        )
+      case 'Portfolio':
+        return (
+          <IoIosGlobe
+            sx={{
+              ...style,
+              '&:hover': {
+                color: '#fc7740',
+              },
+            }}
+          />
+        )
+      case 'WhatsApp':
+        return (
+          <IoLogoWhatsapp
+            sx={{
+              ...style,
+              '&:hover': {
+                color: '#128c7e',
               },
             }}
           />

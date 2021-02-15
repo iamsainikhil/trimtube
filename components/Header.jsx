@@ -5,9 +5,11 @@ import {GoSearch} from 'react-icons/go'
 import {FiSun, FiMoon} from 'react-icons/fi'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import routeURL from './../utils/routeURL'
+import {useRouter} from 'next/router'
 
 const Header = () => {
   const {theme, colorMode, setColorMode} = useThemeUI()
+  const router = useRouter()
 
   return (
     <Headroom disableInlineStyles upTolerance={10} downTolerance={10}>
@@ -40,7 +42,9 @@ const Header = () => {
                     fontSize: '1.2rem',
                     verticalAlign: 'middle',
                     marginTop: '0.7rem',
+                    cursor: 'pointer',
                   }}
+                  onClick={() => router.push('/')}
                 />
               </p>
             ) : null}

@@ -4,7 +4,7 @@ import axios from 'axios'
 import SearchData from '../../constants/SearchData'
 
 const search = (req, res) => {
-  const {searchTerm} = req.query
+  // const {searchTerm} = req.query
   // axios
   //   .get(
   //     `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${searchTerm}&type=video&key=${process.env.YOUTUBE_API_V3}`

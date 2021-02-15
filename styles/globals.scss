@@ -18,6 +18,12 @@ html {
   overflow-y: scroll;
 }
 
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: 100%;
+  }
+}
+
 * {
   box-sizing: inherit;
 
@@ -83,154 +89,13 @@ a {
   }
 }
 
-.codespan,
-kbd,
-pre,
-samp {
-  font-family: 'Fira Code', monospace !important;
-  font-size: 1em;
-}
-
-pre {
-  padding: 1rem 1.45rem;
-  margin: 0 0 1rem 0;
-  line-height: 1.42;
-  border-radius: 3px;
-  overflow: auto;
-  word-wrap: normal;
-  font-size: 0.875rem;
-}
-
-blockquote {
-  padding: 0 0 0 1rem;
-  margin: 1rem 1.45rem 1.45rem 1.45rem;
-  border-left: 2px solid green;
-}
-
-// table {
-//   padding: 0;
-//   margin: 0 0 1.45rem 0;
-//   font-size: 1rem;
-//   line-height: 1.45rem;
-//   border-collapse: collapse;
-//   width: 100%;
-// }
-
-// form,
-// noscript,
-// iframe {
-//   padding: 0;
-//   margin: 0 0 1.45rem 0;
-// }
-
-// hr {
-//   padding: 0;
-//   margin: 0 0 calc(1.45rem - 1px) 0;
-//   background: hsla(0, 0%, 0%, 0.2);
-//   border: none;
-//   height: 1px;
-// }
-
-// code,
-// kbd,
-// samp {
-//   font-size: 0.85rem;
-//   line-height: 1.45rem;
-// }
-
-// thead {
-//   text-align: left;
-// }
-
-// td {
-//   text-align: left;
-//   border-bottom: 1px solid hsla(0, 0%, 0%, 0.12);
-//   font-feature-settings: "tnum";
-//   -moz-font-feature-settings: "tnum";
-//   -ms-font-feature-settings: "tnum";
-//   -webkit-font-feature-settings: "tnum";
-//   padding-left: 0.96667rem;
-//   padding-right: 0.96667rem;
-//   padding-top: 0.725rem;
-//   padding-bottom: calc(0.725rem - 1px);
-// }
-
-// th {
-//   text-align: left;
-//   border-bottom: 1px solid hsla(0, 0%, 0%, 0.12);
-//   font-feature-settings: "tnum";
-//   -moz-font-feature-settings: "tnum";
-//   -ms-font-feature-settings: "tnum";
-//   -webkit-font-feature-settings: "tnum";
-//   padding-left: 0.96667rem;
-//   padding-right: 0.96667rem;
-//   padding-top: 0.725rem;
-//   padding-bottom: calc(0.725rem - 1px);
-
-//   &:first-child {
-//     padding-left: 0;
-//   }
-// }
-
-// td:first-child {
-//   padding-left: 0;
-// }
-
-// th:last-child,
-// td:last-child {
-//   padding-right: 0;
-// }
-
-// tt,
-// code {
-//   background-color: hsla(0, 0%, 0%, 0.04);
-//   border-radius: 3px;
-//   font-family: "Fira Code", Consolas, Courier, monospace !important;
-//   padding: 0;
-//   padding-top: 0.2em;
-//   padding-bottom: 0.2em;
-// }
-
-// pre code {
-//   background: none;
-//   line-height: 1.42;
-// }
-
-// code {
-//   &:before,
-//   &:after {
-//     letter-spacing: -0.2em;
-//     content: " ";
-//   }
-// }
-
-// tt {
-//   &:before,
-//   &:after {
-//     letter-spacing: -0.2em;
-//     content: " ";
-//   }
-// }
-
-// pre {
-//   code {
-//     &:before,
-//     &:after {
-//       content: "";
-//     }
-//   }
-
-//   tt {
-//     &:before,
-//     &:after {
-//       content: "";
-//     }
-//   }
-// }
-
-@media only screen and (max-width: 480px) {
-  html {
-    font-size: 100%;
+iframe {
+  border-radius: 25px;
+  @media only screen and (max-width: 767px) {
+    min-width: 250px;
+    max-width: 100%;
+    min-height: 150px;
+    max-height: 100%;
   }
 }
 
@@ -247,8 +112,8 @@ blockquote {
   }
 
   .main {
-    @extend %container !optional;
-    margin: 1rem;
+    // @extend %container !optional;
+    margin: 1rem 0;
     padding: 1rem;
     flex: 1 0 auto;
   }
@@ -300,4 +165,11 @@ blockquote {
       height: 100%;
     }
   }
+}
+
+.video-thumbnail {
+  background: 'gray';
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  cursor: pointer;
 }
