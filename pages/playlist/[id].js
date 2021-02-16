@@ -16,6 +16,12 @@ export default function Playlist() {
   const [loading, setLoading] = useState(true)
   const [details, setDetails] = useState({})
 
+  const getImage = () => {
+    if (details && details.videos) {
+      return details.videos[0].snippet.thumbnails.standard.url
+    }
+  }
+
   const pluralizeText = (value, text) => {
     if (value === 1) return `${value} ${text}`
     return `${value} ${text}s`
@@ -40,11 +46,11 @@ export default function Playlist() {
   }, [id])
 
   return (
-    <Layout>
+    <Layout title={id} page='Playlist' image={getImage()}>
       {loading ? (
         <Loader />
       ) : (
-        <div>
+        <div sx={{bg: 'background'}}>
           {details ? (
             <div
               sx={{

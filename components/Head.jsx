@@ -4,18 +4,20 @@ import GoogleFonts from 'next-google-fonts'
 const Head = ({
   children,
   pathUrl,
+  title,
   page = 'Search',
   description,
   image,
 }) => {
   const twitterHandle = '@iamsainikhil12'
   const siteName = 'LoopTube'
-  const pageTitle = `${page} | ${siteName}`
+  const pageTitle = `${title ? `${title} | ` : ''}${page} | ${siteName}`
   const metaDescription =
-    description || 'LoopTube is a media player that allows user to trim and loop any portion of a YouTube video.'
+    description ||
+    'LoopTube is a media player that allows user to trim and loop any portion of a YouTube video.'
   return (
     <>
-      <GoogleFonts href='https://fonts.googleapis.com/css2?family=Damion&family=Fira+Code&family=Lato:ital,wght@0,400;0,700;1,300&display=swap' />
+      <GoogleFonts href='https://fonts.googleapis.com/css2?family=Damion' />
       <NextHead>
         <meta charSet='UTF-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
@@ -23,7 +25,7 @@ const Head = ({
         <meta name='description' content={metaDescription} />
         <meta
           name='keywords'
-          content='"YouTube","Media Player","YouTube Trim","YouTube Loop","YouTube Repeat","nextjs","react","google-fonts","scss"'
+          content='YouTube, Media Player, YouTube Trim, YouTube Loop, YouTube Repeat, Playlists, Videos, nextjs, react, google-fonts, scss'
         />
         <meta name='author' content='Sai Nikhil'></meta>
         {/* Twitter */}
