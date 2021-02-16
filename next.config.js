@@ -26,4 +26,6 @@ module.exports = withPWA({
     // a non-locale prefixed path e.g. `/hello`
     defaultLocale: 'en-US',
   },
+  // https://github.com/shadowwalker/next-pwa/issues/135
+  future: {webpack5: true},
 })
