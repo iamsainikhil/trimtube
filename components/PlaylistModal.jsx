@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx, useThemeUI} from 'theme-ui'
-import React, {useState} from 'react'
+import {Fragment, useState} from 'react'
 import dayjs from 'dayjs'
 import Modal from 'react-modal'
 import PlaylistCheckbox from './PlaylistCheckbox'
@@ -15,21 +15,29 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
   const [playlistName, setPlaylistName] = useState('')
 
   const createPlaylist = () => {
-    let playlists = {}
-    playlists[playlistName] = {
-      name: playlistName,
-      created: dayjs().toISOString(),
-    }
-    if (localStorage.getItem('playlists')) {
-      const localPlaylists = JSON.parse(localStorage.getItem('playlists'))
-
-      playlists = {
-        ...localPlaylists,
-        ...playlists,
+    if (playlistName.trim()) {
+      let playlists = {}
+      playlists[playlistName] = {
+        name: playlistName,
+        created: dayjs().toISOString(),
       }
+      if (localStorage.getItem('playlists')) {
+        const localPlaylists = JSON.parse(localStorage.getItem('playlists'))
+
+        if (localPlaylists[playlistName]) {
+          playlists = {
+            ...localPlaylists,
+          }
+        } else {
+          playlists = {
+            ...localPlaylists,
+            ...playlists,
+          }
+        }
+      }
+      localStorage.setItem('playlists', JSON.stringify(playlists))
+      setShowCreatePlaylist(false)
     }
-    localStorage.setItem('playlists', JSON.stringify(playlists))
-    setShowCreatePlaylist(false)
   }
 
   const afterOpenModal = () => {}
@@ -39,7 +47,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
       backgroundColor:
         colorMode === 'dark'
           ? 'rgba(0, 0, 0, 0.95)'
-          : 'rgba(247,248,249, 0.98)',
+          : 'rgba(247,248,249, 0.95)',
       zIndex: 10,
     },
     content: {
@@ -52,7 +60,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
       borderRadius: '25px',
       width: '50%',
       height: 'auto',
-      background: theme.background,
+      background: theme.colors.muted,
       boxSizing: 'border-box',
       padding: 0,
     },
@@ -70,7 +78,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
           mb: 0,
           mx: 3,
         }}>
-        Save to a playlist
+        Save to
       </p>
       <IoClose
         onClick={close}
@@ -129,12 +137,13 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
             sx={{
               display: 'flex',
               justifyContent: 'center',
+              my: 3,
             }}>
             <input
               type='text'
               placeholder='Playlist Name'
               sx={{
-                bg: 'search',
+                bg: 'highlight',
                 color: 'text',
                 borderWidth: '1px',
                 borderStyle: 'solid',
@@ -157,6 +166,28 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
               justifyContent: 'flex-end',
               m: 3,
             }}>
+            <button
+              sx={{
+                py: 2,
+                px: 4,
+                mx: 2,
+                bg: 'muted',
+                color: 'text',
+                fontFamily: 'light',
+                fontSize: [1, 2],
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                border: 'none',
+                borderRadius: '2rem',
+                cursor: 'pointer',
+                '&:hover': {
+                  bg: 'shade1',
+                  color: 'accent',
+                },
+              }}
+              onClick={() => setShowCreatePlaylist(false)}>
+              Cancel
+            </button>
             <button
               sx={{
                 py: 2,

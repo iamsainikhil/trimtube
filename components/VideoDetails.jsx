@@ -5,10 +5,13 @@ import {Fragment} from 'react'
 import Image from 'next/image'
 import he from 'he'
 import relativeTimeString from '../utils/relativeTimeString'
+import formatNumber from '../utils/formatNumber'
+import truncateText from '../utils/truncateText'
 
 const VideoDetails = ({data: {id, snippet, statistics}}) => {
   const title = he.decode(snippet.title)
   const publishedTime = relativeTimeString(snippet.publishedAt)
+
   return (
     <Fragment>
       <div style={{overflow: 'hidden'}}>
@@ -25,7 +28,7 @@ const VideoDetails = ({data: {id, snippet, statistics}}) => {
       <div
         sx={{
           px: 3,
-          py: 2,
+          py: 3,
 
           '@media (max-width: 30rem)': {
             px: 3,
@@ -61,7 +64,7 @@ const VideoDetails = ({data: {id, snippet, statistics}}) => {
               fontSize: [1],
               color: 'gray',
             }}>
-            {statistics.viewCount} views | {publishedTime}
+            {formatNumber(statistics.viewCount)} views | {publishedTime}
           </p>
         )}
         <p
@@ -70,8 +73,9 @@ const VideoDetails = ({data: {id, snippet, statistics}}) => {
             mb: 2,
             fontSize: [0],
             color: 'primary',
+            maxHeight: '2rem',
           }}>
-          {he.decode(snippet.description)}
+          {truncateText(he.decode(snippet.description), 75)}
         </p>
       </div>
     </Fragment>

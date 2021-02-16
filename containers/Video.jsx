@@ -9,6 +9,7 @@ import axios from 'axios'
 import Loader from './../components/Loader'
 import TrimControls from '../components/TrimControls'
 import videoData from '../constants/videoData'
+import Alert from '../components/Alert'
 
 const Video = () => {
   const router = useRouter()
@@ -70,25 +71,7 @@ const Video = () => {
         <Loader />
       ) : (
         <Fragment>
-          {error && (
-            <div
-              sx={{
-                width: '70%',
-                mx: 'auto',
-                mt: 3,
-                py: 2,
-                px: 3,
-                backgroundColor: 'danger',
-                color: 'secondary',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                borderLeftColor: 'dangerBorder',
-                fontSize: [2, 3],
-                fontFamily: 'light',
-              }}>
-              {error.message || error}
-            </div>
-          )}
+          {error && <Alert type='danger' message={error.message || error} />}
           {data && (
             <Fragment>
               <Info data={data} start={start} end={end} />

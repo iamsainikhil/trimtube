@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import {default as NextLink} from 'next/link'
 import VideoDetails from './VideoDetails'
 
-const Listing = ({data}) => {
+const VideoListing = ({videos, start, end}) => {
   const {theme} = useThemeUI()
 
   const GridLayout = styled.div`
@@ -33,17 +33,21 @@ const Listing = ({data}) => {
   `
   return (
     <GridLayout>
-      {data.items.map((item, index) => (
+      {videos.map((video, index) => (
         <NextLink
           href={{
             pathname: '/video',
-            query: {id: item.id.videoId},
+            query: {
+              id: video.id,
+              start: video.start,
+              end: video.end,
+            },
           }}
           passHref
           key={index}>
           <a>
             <VideoCard>
-              <VideoDetails data={item} />
+              <VideoDetails data={video} />
             </VideoCard>
           </a>
         </NextLink>
@@ -52,4 +56,4 @@ const Listing = ({data}) => {
   )
 }
 
-export default Listing
+export default VideoListing

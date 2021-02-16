@@ -1,6 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
+import Alert from './Alert'
 import Listing from './Listing'
 
 const Results = ({data, error}) => {
@@ -8,25 +9,7 @@ const Results = ({data, error}) => {
 
   return (
     <div>
-      {error && (
-        <div
-          sx={{
-            width: '70%', // almost same width as the input field in Search.jsx
-            mx: 'auto',
-            mt: 3,
-            py: 2,
-            px: 3,
-            backgroundColor: 'danger',
-            color: 'secondary',
-            borderLeftWidth: '4px',
-            borderLeftStyle: 'solid',
-            borderLeftColor: 'dangerBorder',
-            fontSize: [2, 3],
-            fontFamily: 'light',
-          }}>
-          {error.message || error}
-        </div>
-      )}
+      {error && <Alert type='danger' message={error.message || error} />}
       {data && (
         <div>
           {data.items && (
