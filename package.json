@@ -1,7 +1,7 @@
 {
   "name": "looptube",
   "version": "0.0.0",
-  "description": "LoopTube is a custom player that allows user to trim and loop any portion of a YouTube video.",
+  "description": "LoopTube is a media player that allows user to trim and loop any portion of a YouTube video.",
   "author": "Sai Nikhil <contact@iamsainikhil.com>",
   "scripts": {
     "dev": "next dev",
@@ -10,10 +10,24 @@
     "cm": "cz"
   },
   "dependencies": {
-    "next": "latest",
-    "next-pwa": "^3.1.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "axios": "^0.21.1",
+    "dayjs": "^1.10.4",
+    "he": "^1.2.0",
+    "next": "^10.0.6",
+    "next-google-fonts": "^1.2.1",
+    "next-pwa": "^5.0.5",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-debounce-input": "^3.2.3",
+    "react-dom": "^17.0.1",
+    "react-ga": "^3.3.0",
+    "react-headroom": "^3.1.0",
+    "react-icons": "^4.2.0",
+    "react-modal": "^3.12.1",
+    "react-youtube": "^7.13.1",
+    "sass": "^1.32.6",
+    "theme-ui": "^0.3.5",
+    "webpack": "^5.21.1"
   },
   "devDependencies": {
     "commitizen": "^4.2.3",
