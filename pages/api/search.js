@@ -3,7 +3,7 @@
 import axios from 'axios'
 import SearchData from '../../constants/SearchData'
 
-const search = (req, res) => {
+const search = async (req, res) => {
   const {searchTerm} = req.query
   try {
     const response = await axios.get(
