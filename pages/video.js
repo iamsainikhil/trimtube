@@ -9,6 +9,7 @@ import axios from 'axios'
 import TrimControls from '../components/TrimControls'
 import Alert from '../components/Alert'
 import Layout from '../components/Layout'
+import siteUrl from './../utils/siteUrl'
 
 export default function Video({data, error, title, image}) {
   const router = useRouter()
@@ -101,7 +102,7 @@ Video.getInitialProps = async function (context) {
   let error = undefined
   let title = null
   let image = null
-  const baseURL = context.req ? 'http://localhost:3000' : ''
+  const baseURL = context.req ? siteUrl() : ''
   try {
     data = (
       await axios.get('/api/video', {
