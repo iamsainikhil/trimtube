@@ -3,13 +3,14 @@ import Headroom from 'react-headroom'
 import {Styled, useThemeUI} from 'theme-ui'
 import {GoSearch} from 'react-icons/go'
 import {FiSun, FiMoon} from 'react-icons/fi'
+import {MdPlaylistPlay} from 'react-icons/md'
 import {trackGAEvent} from '../utils/googleAnalytics'
-import routeURL from './../utils/routeURL'
 import {useRouter} from 'next/router'
 
 const Header = () => {
   const {theme, colorMode, setColorMode} = useThemeUI()
   const router = useRouter()
+  const {asPath: routePath} = router
 
   return (
     <Headroom disableInlineStyles upTolerance={10} downTolerance={10}>
@@ -34,17 +35,31 @@ const Header = () => {
             </Styled.h1>
           </div>
           <div className='header-links'>
-            {routeURL() !== '/' ? (
+            {routePath !== '/' ? (
               <p>
                 <GoSearch
                   title='Search'
                   style={{
-                    fontSize: '1.2rem',
+                    fontSize: '1.1rem',
                     verticalAlign: 'middle',
-                    marginTop: '0.7rem',
+                    marginTop: '0.8rem',
                     cursor: 'pointer',
                   }}
                   onClick={() => router.push('/')}
+                />
+              </p>
+            ) : null}
+            {routePath !== '/playlists' ? (
+              <p>
+                <MdPlaylistPlay
+                  title='Playlists'
+                  style={{
+                    cursor: 'pointer',
+                    verticalAlign: 'middle',
+                    fontSize: '1.5rem',
+                    marginTop: '0.7rem',
+                  }}
+                  onClick={() => router.push('/playlists')}
                 />
               </p>
             ) : null}

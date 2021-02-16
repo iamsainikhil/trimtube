@@ -1,7 +1,6 @@
 import YouTube from 'react-youtube'
 
 const Player = ({videoId, start, end}) => {
-  console.log(start)
   const opts = {
     height: '400',
     width: '640',
@@ -21,7 +20,7 @@ const Player = ({videoId, start, end}) => {
 
   const _onReady = (event) => {
     // access to player in all event handlers via event.target
-    console.log(event.target.h.outerHTML, opts.playerVars)
+    // console.log(event.target.h.outerHTML, opts.playerVars)
     // event.target.pauseVideo()
   }
 
@@ -33,7 +32,7 @@ const Player = ({videoId, start, end}) => {
   }
 
   const _onError = (event) => {
-    console.log(event.data)
+    console.error(event.data)
   }
 
   return (
