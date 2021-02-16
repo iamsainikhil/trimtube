@@ -21,7 +21,7 @@ export default function Video() {
   const [error, setError] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const [showControls, setShowControls] = useState(false)
-  const videoId = query.id || 'cLWmZpaTodg'
+  const videoId = query.id
 
   const getTitle = () => {
     if (data && data.items) {
@@ -63,13 +63,10 @@ export default function Video() {
   const trimVideo = ({start, end}) => {
     setStart(start)
     setEnd(end)
-    router.push(
-      {
-        pathname: '/video',
-        query: {videoId, start, end},
-      },
-      {shallow}
-    )
+    router.push({
+      pathname: '/video',
+      query: {id: videoId, start, end},
+    })
   }
 
   useEffect(() => {

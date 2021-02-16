@@ -60,9 +60,9 @@ const Head = ({
           sizes='16x16'
           href='/favicon-16x16.png'
         />
-        <link rel='manifest' href='/manifest.webmanifest' />
-        <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#333333' />
-        <meta name='msapplication-TileColor' content='#00aba9' />
+        <link rel='manifest' href='/site.webmanifest' />
+        <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#5bbad5' />
+        <meta name='msapplication-TileColor' content='#333' />
         <meta name='theme-color' content='#333' />
         <title>{pageTitle}</title>
         {children}
