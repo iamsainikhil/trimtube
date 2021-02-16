@@ -8,13 +8,20 @@ import Alert from './../../components/Alert'
 import dayjs from 'dayjs'
 import VideoListing from '../../components/VideoListing'
 import {FiTrash} from 'react-icons/fi'
+import {BiShareAlt} from 'react-icons/bi'
 import Loader from './../../components/Loader'
+import Share from '../../components/Share'
+import axios from 'axios'
 
 export default function Playlist() {
   const router = useRouter()
   const {id} = router.query
   const [loading, setLoading] = useState(true)
   const [details, setDetails] = useState({})
+  const [showShareIcons, setShowShareIcons] = useState(false)
+  const toggleShareIcons = () => {
+    setShowShareIcons(!showShareIcons)
+  }
 
   const getImage = () => {
     if (details && details.videos && details.videos.length) {
@@ -34,8 +41,36 @@ export default function Playlist() {
     router.push('/playlists')
   }
 
+  const getShareURL = () => {
+    const videos = details.videos.map((v) => v.id)
+    const videoIds = videos.join('-')
+    console.log(`${router.asPath}-${videoIds}`)
+    return `${router.asPath}-${videoIds}`
+  }
+
   useEffect(() => {
-    if (localStorage.getItem('playlists')) {
+    if (id && id.includes('-')) {
+      const [name, ...videoIds] = id.split('-')
+      let videos = []
+      setLoading(true)
+      axios
+        .get('/api/video', {params: {videoId: videoIds.join(',')}})
+        .then((res) => {
+          videos = res.data.items
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+        .finally(() => {
+          setLoading(false)
+          const playlist = {
+            name,
+            created: dayjs().toISOString(),
+            videos,
+          }
+          setDetails(playlist)
+        })
+    } else if (localStorage.getItem('playlists')) {
       const playlists = JSON.parse(localStorage.getItem('playlists'))
       if (playlists[id]) {
         setDetails(playlists[id])
@@ -70,16 +105,38 @@ export default function Playlist() {
                       : '0 videos'}
                   </span>
                 </p>
-                <p sx={{mt: 0}}>
+                <p sx={{mt: 0, position: 'relative'}}>
+                  <BiShareAlt
+                    sx={{mx: 3, cursor: 'pointer'}}
+                    title='Share'
+                    aria-label='Share'
+                    onMouseEnter={toggleShareIcons}
+                    onClick={toggleShareIcons}
+                  />
                   <FiTrash
-                    sx={{cursor: 'pointer'}}
+                    sx={{mx: 3, cursor: 'pointer'}}
                     title='Delete playlist'
                     onClick={deletePlaylist}
                   />
                 </p>
+                {showShareIcons && (
+                  <div
+                    sx={{
+                      position: 'absolute',
+                      mt: '9rem',
+                      mr: '2rem',
+                    }}
+                    onMouseLeave={toggleShareIcons}>
+                    <Share
+                      videoURL={getShareURL()}
+                      videoName={id}
+                      hideShareText={true}
+                    />
+                  </div>
+                )}
               </div>
               {details.videos && (
-                <div sx={{my: 3}}>
+                <div sx={{mt: 4, mb: 3}}>
                   <VideoListing videos={details.videos} />
                 </div>
               )}
