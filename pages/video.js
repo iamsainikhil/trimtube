@@ -36,7 +36,7 @@ export default function Video({data, error, title, image}) {
     setStart(Number(query.start))
     setEnd(Number(query.end))
     return () => {}
-  }, [query])
+  }, [query.start, query.end])
 
   return (
     <Layout title={title} page='Video' image={image}>
@@ -50,47 +50,47 @@ export default function Video({data, error, title, image}) {
         }}>
         <Player videoId={videoId} start={start} end={end} />
         <Fragment>
-          {error && <Alert type='danger' message={error.message || error} />}
+          {error && (
+            <Alert
+              type='danger'
+              message={`Failed to fetch information of videoId ${videoId}`}
+            />
+          )}
           {data && (
             <Fragment>
               <Info data={data} start={start} end={end} />
-              <p style={{textAlign: 'center'}}>
-                <button
-                  onClick={toggleControls}
-                  sx={{
-                    margin: '1rem auto 0.5rem auto',
-                    py: 2,
-                    px: 4,
-                    color: 'text',
-                    backgroundColor: 'muted',
-                    fontFamily: 'light',
-                    fontSize: [1, 2],
-                    textTransform: 'uppercase',
-                    letterSpacing: '2px',
-                    border: 'none',
-                    borderRadius: '2rem',
-                    cursor: 'pointer',
-                    '&:hover': {
-                      color: 'accent',
-                      backgroundColor: 'shade1',
-                    },
-                    '&:focus': {
-                      outline: 'none',
-                    },
-                  }}>
-                  {showControls ? 'Hide' : 'Show'} Trim Controls
-                </button>
-              </p>
-              {showControls ? (
-                <TrimControls
-                  start={start}
-                  end={end}
-                  videoInfo={data}
-                  onTrim={trimVideo}
-                />
-              ) : null}
             </Fragment>
           )}
+          <p style={{textAlign: 'center'}}>
+            <button
+              onClick={toggleControls}
+              sx={{
+                margin: '1rem auto 0.5rem auto',
+                py: 2,
+                px: 4,
+                color: 'text',
+                backgroundColor: 'muted',
+                fontFamily: 'light',
+                fontSize: [1, 2],
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                border: 'none',
+                borderRadius: '2rem',
+                cursor: 'pointer',
+                '&:hover': {
+                  color: 'accent',
+                  backgroundColor: 'shade1',
+                },
+                '&:focus': {
+                  outline: 'none',
+                },
+              }}>
+              {showControls ? 'Hide' : 'Show'} Trim Controls
+            </button>
+          </p>
+          {showControls ? (
+            <TrimControls start={start} end={end} onTrim={trimVideo} />
+          ) : null}
         </Fragment>
       </div>
     </Layout>

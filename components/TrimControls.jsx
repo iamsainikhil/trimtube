@@ -2,13 +2,12 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
 import {useState} from 'react'
-// import getDuration from '../utils/videoDuration'
 import TimeInput from './TimeInput'
 import formatTime from '../utils/formatTime'
 import getTime from '../utils/getTime'
 import {BiCut} from 'react-icons/bi'
 
-const TrimControls = ({videoInfo, start, end, onTrim}) => {
+const TrimControls = ({start, end, onTrim}) => {
   const [startTrimMinutes, setStartTrimMinutes] = useState(
     formatTime(start, 'Minutes')
   )
@@ -32,14 +31,10 @@ const TrimControls = ({videoInfo, start, end, onTrim}) => {
   }
 
   const handleTrim = () => {
-    // const {minutes, seconds} = getDuration(videoInfo)
     const endTime = getTime(endTrimMinutes, endTrimSeconds)
-    // get video duration to just check the endTime with videoDuration
-    // const videoDuration = getTime(minutes, seconds)
     const trimValues = {
       start: getTime(startTrimMinutes, startTrimSeconds),
       end: endTime,
-      // end: endTime > videoDuration ? videoDuration : endTime,
     }
     onTrim(trimValues)
   }
