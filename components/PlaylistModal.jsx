@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx, useThemeUI} from 'theme-ui'
-import {Fragment, useState} from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import dayjs from 'dayjs'
 import Modal from 'react-modal'
 import PlaylistCheckbox from './PlaylistCheckbox'
@@ -11,6 +11,7 @@ import {BiLike, BiDislike, BiShareAlt, BiPlus} from 'react-icons/bi'
 const PlaylistModal = ({data, start, end, isOpen, close}) => {
   Modal.setAppElement('main')
   const {theme, colorMode} = useThemeUI()
+  const [playlists, setPlaylists] = useState(null)
   const [showCreatePlaylist, setShowCreatePlaylist] = useState(false)
   const [playlistName, setPlaylistName] = useState('')
 
@@ -65,6 +66,14 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
       padding: 0,
     },
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('playlists')) {
+      setPlaylists(Object.keys(JSON.parse(localStorage.getItem('playlists'))))
+    }
+    return () => {}
+  }, [])
+
   return (
     <Modal
       isOpen={isOpen}
@@ -103,27 +112,25 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
           height: '200px',
           overflowY: 'auto',
         }}>
-        {localStorage.getItem('playlists') ? (
+        {playlists ? (
           <div
             sx={{
               display: 'flex',
               flexDirection: 'column',
             }}>
-            {Object.keys(JSON.parse(localStorage.getItem('playlists'))).map(
-              (name, index) => {
-                return (
-                  <div sx={{my: 2}} key={index}>
-                    <PlaylistCheckbox
-                      data={data}
-                      start={start}
-                      end={end}
-                      index={index}
-                      name={name}
-                    />
-                  </div>
-                )
-              }
-            )}
+            {playlists.map((name, index) => {
+              return (
+                <div sx={{my: 2}} key={index}>
+                  <PlaylistCheckbox
+                    data={data}
+                    start={start}
+                    end={end}
+                    index={index}
+                    name={name}
+                  />
+                </div>
+              )
+            })}
           </div>
         ) : (
           <p>No playlist found.</p>
