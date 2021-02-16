@@ -14,7 +14,6 @@ import axios from 'axios'
 import siteUrl from './../utils/siteUrl'
 
 export default function Playlist({name, info, image, fetchData}) {
-  console.log(name, info, image, fetchData)
   const [loading, setLoading] = useState(true)
   const [details, setDetails] = useState(undefined)
   const [showShareIcons, setShowShareIcons] = useState(false)
@@ -48,6 +47,8 @@ export default function Playlist({name, info, image, fetchData}) {
         if (playlists[name]) {
           setDetails(playlists[name])
         }
+        setLoading(false)
+      } else {
         setLoading(false)
       }
     } else {
