@@ -22,7 +22,9 @@ const Share = ({videoURL, videoName, hideShareText = false}) => {
     },
     {
       name: 'Twitter',
-      url: `https://twitter.com/intent/tweet?text=${videoName}&url=${URL}`,
+      url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        videoName
+      )}&url=${URL}`,
     },
     {
       name: 'LinkedIn',
