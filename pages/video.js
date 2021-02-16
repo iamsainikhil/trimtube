@@ -20,6 +20,7 @@ export default function Video() {
   const [data, setData] = useState(undefined)
   const [error, setError] = useState(undefined)
   const [loading, setLoading] = useState(false)
+  const [showControls, setShowControls] = useState(false)
   const videoId = query.id || 'cLWmZpaTodg'
 
   const getTitle = () => {
@@ -53,6 +54,10 @@ export default function Video() {
   const updateDataError = (data, error) => {
     setData(data)
     setError(error)
+  }
+
+  const toggleControls = () => {
+    setShowControls(!showControls)
   }
 
   const trimVideo = ({start, end}) => {
@@ -90,12 +95,41 @@ export default function Video() {
             {data && (
               <Fragment>
                 <Info data={data} start={start} end={end} />
-                <TrimControls
-                  start={start}
-                  end={end}
-                  videoInfo={data}
-                  onTrim={trimVideo}
-                />
+                <p style={{textAlign: 'center'}}>
+                  <button
+                    onClick={toggleControls}
+                    sx={{
+                      margin: '1rem auto 0.5rem auto',
+                      py: 2,
+                      px: 4,
+                      color: 'text',
+                      backgroundColor: 'muted',
+                      fontFamily: 'light',
+                      fontSize: [1, 2],
+                      textTransform: 'uppercase',
+                      letterSpacing: '2px',
+                      border: 'none',
+                      borderRadius: '2rem',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        color: 'accent',
+                        backgroundColor: 'shade1',
+                      },
+                      '&:focus': {
+                        outline: 'none',
+                      },
+                    }}>
+                    {showControls ? 'Hide' : 'Show'} Trim Controls
+                  </button>
+                </p>
+                {showControls ? (
+                  <TrimControls
+                    start={start}
+                    end={end}
+                    videoInfo={data}
+                    onTrim={trimVideo}
+                  />
+                ) : null}
               </Fragment>
             )}
           </Fragment>
