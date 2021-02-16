@@ -41,7 +41,11 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
     }
   }
 
-  const afterOpenModal = () => {}
+  const afterOpenModal = () => {
+    if (localStorage.getItem('playlists')) {
+      setPlaylists(Object.keys(JSON.parse(localStorage.getItem('playlists'))))
+    }
+  }
 
   const customStyles = {
     overlay: {
@@ -59,7 +63,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       borderRadius: '25px',
-      width: '50%',
+      width: '75%',
       height: 'auto',
       background: theme.colors.muted,
       boxSizing: 'border-box',
@@ -191,6 +195,11 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
                   bg: 'shade1',
                   color: 'accent',
                 },
+                '@media (max-width: 40rem)': {
+                  px: 2,
+                  fontSize: 0,
+                  letterSpacing: '0.02',
+                },
               }}
               onClick={() => setShowCreatePlaylist(false)}>
               Cancel
@@ -202,7 +211,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
                 bg: 'shade2',
                 color: 'text',
                 fontFamily: 'light',
-                fontSize: [1, 2],
+                fontSize: 2,
                 textTransform: 'uppercase',
                 letterSpacing: '2px',
                 border: 'none',
@@ -211,6 +220,11 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
                 '&:hover': {
                   bg: 'shade1',
                   color: 'accent',
+                },
+                '@media (max-width: 40rem)': {
+                  px: 3,
+                  fontSize: 0,
+                  letterSpacing: '0.02',
                 },
               }}
               onClick={createPlaylist}>
@@ -233,7 +247,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
               bg: 'shade2',
               color: 'text',
               fontFamily: 'light',
-              fontSize: [1, 2],
+              fontSize: 2,
               textTransform: 'uppercase',
               letterSpacing: '2px',
               border: 'none',
@@ -242,6 +256,12 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
               '&:hover': {
                 bg: 'shade1',
                 color: 'accent',
+              },
+              '@media (max-width: 40rem)': {
+                width: '75%',
+                px: 2,
+                fontSize: 1,
+                letterSpacing: '0.02',
               },
             }}
             onClick={() => setShowCreatePlaylist(true)}>
