@@ -66,6 +66,10 @@
       margin: 0 1rem;
       padding: 0.25rem 0.15rem;
 
+      @media (max-width: 640px) {
+        margin: 0 0.5rem;
+      }
+
       .theme-icon {
         font-size: 1.25rem;
         margin-top: 0.4rem;
