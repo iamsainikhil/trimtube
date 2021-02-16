@@ -2,31 +2,24 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
 import {Fragment, useEffect, useState} from 'react'
-import {useRouter} from 'next/router'
-import Layout from '../../components/Layout'
-import Alert from './../../components/Alert'
+import Layout from '../components/Layout'
+import Alert from '../components/Alert'
 import dayjs from 'dayjs'
-import VideoListing from '../../components/VideoListing'
+import VideoListing from '../components/VideoListing'
 import {FiTrash} from 'react-icons/fi'
 import {BiShareAlt} from 'react-icons/bi'
-import Loader from './../../components/Loader'
-import Share from '../../components/Share'
+import Loader from '../components/Loader'
+import Share from '../components/Share'
 import axios from 'axios'
+import siteUrl from './../utils/siteUrl'
 
-export default function Playlist() {
-  const router = useRouter()
-  const {id} = router.query
+export default function Playlist({name, info, image, fetchData}) {
+  console.log(name, info, image, fetchData)
   const [loading, setLoading] = useState(true)
-  const [details, setDetails] = useState({})
+  const [details, setDetails] = useState(undefined)
   const [showShareIcons, setShowShareIcons] = useState(false)
   const toggleShareIcons = () => {
     setShowShareIcons(!showShareIcons)
-  }
-
-  const getImage = () => {
-    if (details && details.videos && details.videos.length) {
-      return details.videos[0].snippet.thumbnails.standard.url
-    }
   }
 
   const pluralizeText = (value, text) => {
@@ -36,7 +29,7 @@ export default function Playlist() {
 
   const deletePlaylist = () => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
-    delete playlists[id]
+    delete playlists[name]
     localStorage.setItem('playlists', JSON.stringify(playlists))
     router.push('/playlists')
   }
@@ -49,39 +42,23 @@ export default function Playlist() {
   }
 
   useEffect(() => {
-    if (id && id.includes('-')) {
-      const [name, ...videoIds] = id.split('-')
-      let videos = []
-      setLoading(true)
-      axios
-        .get('/api/video', {params: {videoId: videoIds.join(',')}})
-        .then((res) => {
-          videos = res.data.items
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-        .finally(() => {
-          setLoading(false)
-          const playlist = {
-            name,
-            created: dayjs().toISOString(),
-            videos,
-          }
-          setDetails(playlist)
-        })
-    } else if (localStorage.getItem('playlists')) {
-      const playlists = JSON.parse(localStorage.getItem('playlists'))
-      if (playlists[id]) {
-        setDetails(playlists[id])
+    if (fetchData) {
+      if (localStorage.getItem('playlists')) {
+        const playlists = JSON.parse(localStorage.getItem('playlists'))
+        if (playlists[name]) {
+          setDetails(playlists[name])
+        }
+        setLoading(false)
       }
+    } else {
+      setDetails(info)
       setLoading(false)
     }
     return () => {}
-  }, [id])
+  }, [name])
 
   return (
-    <Layout title={id} page='Playlist' image={getImage()}>
+    <Layout title={name} page='Playlist' image={image}>
       {loading ? (
         <Loader />
       ) : (
@@ -129,7 +106,7 @@ export default function Playlist() {
                     onMouseLeave={toggleShareIcons}>
                     <Share
                       videoURL={getShareURL()}
-                      videoName={id}
+                      videoName={name}
                       hideShareText={true}
                     />
                   </div>
@@ -144,11 +121,55 @@ export default function Playlist() {
           ) : (
             <Alert
               type='danger'
-              message={`No Playlist found with name "${id}"`}
+              message={`No Playlist found with name "${name}"`}
             />
           )}
         </div>
       )}
     </Layout>
   )
+}
+
+Playlist.getInitialProps = async function (context) {
+  const {id} = context.query
+  let image = null
+  let info = undefined
+  if (id && id.includes('-')) {
+    const [name, ...videoIds] = id.split('-')
+    let videos = []
+    try {
+      const baseURL = context.req ? siteUrl() : ''
+      videos = (
+        await axios.get('/api/video', {
+          params: {videoId: videoIds.join(',')},
+          baseURL,
+        })
+      ).data.items
+      info = {
+        name,
+        created: dayjs().toISOString(),
+        videos,
+      }
+      return {
+        name,
+        image: info.videos[0].snippet.thumbnails.standard.url,
+        info,
+        fetchData: false,
+      }
+    } catch (error) {
+      return {
+        name,
+        image,
+        info,
+        fetchData: true,
+      }
+    }
+  } else {
+    return {
+      name: id,
+      image,
+      info,
+      fetchData: true,
+    }
+  }
 }

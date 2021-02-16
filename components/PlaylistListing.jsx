@@ -31,7 +31,7 @@ const PlaylistListing = () => {
             return (
               <NextLink
                 href={{
-                  pathname: '/playlist/[id]',
+                  pathname: '/playlist',
                   query: {id: name},
                 }}
                 key={index}>
