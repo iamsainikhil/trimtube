@@ -15,9 +15,6 @@ const Listing = ({data}) => {
     grid-gap: 1.25rem;
     justify-content: center;
     margin: auto;
-    @media (max-width: ${theme.breakpoints[0]}) {
-      grid-template-columns: 1fr;
-    }
   `
 
   const VideoCard = styled.div`

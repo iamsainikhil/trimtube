@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import {default as NextLink} from 'next/link'
 import VideoDetails from './VideoDetails'
 
-const VideoListing = ({videos, start, end}) => {
+const VideoListing = ({videos}) => {
   const {theme} = useThemeUI()
 
   const GridLayout = styled.div`
@@ -15,9 +15,6 @@ const VideoListing = ({videos, start, end}) => {
     grid-gap: 1.25rem;
     justify-content: center;
     margin: auto;
-    @media (max-width: ${theme.breakpoints[0]}) {
-      grid-template-columns: 1fr;
-    }
   `
 
   const VideoCard = styled.div`

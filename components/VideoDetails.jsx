@@ -38,19 +38,17 @@ const VideoDetails = ({data: {id, snippet, statistics}}) => {
           sx={{
             m: 0,
             pt: 0,
-            minHeight: '5rem',
+            height: '2.5rem',
             fontSize: [2],
-            overflow: 'ellipsis',
             '@media (max-width: 30rem)': {
               pt: 0,
               height: 'auto',
             },
           }}>
-          {title}
+          {truncateText(title, 50)}
         </h3>
         <p
           sx={{
-            mt: 0,
             fontSize: [1],
             color: 'gray',
           }}>

@@ -63,6 +63,13 @@ export default function Video() {
   const trimVideo = ({start, end}) => {
     setStart(start)
     setEnd(end)
+    router.push(
+      {
+        pathname: '/video',
+        query: {videoId, start, end},
+      },
+      {shallow}
+    )
   }
 
   useEffect(() => {

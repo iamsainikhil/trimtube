@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {useEffect, useState} from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
 import Layout from '../../components/Layout'
 import Alert from './../../components/Alert'
@@ -17,7 +17,7 @@ export default function Playlist() {
   const [details, setDetails] = useState({})
 
   const getImage = () => {
-    if (details && details.videos) {
+    if (details && details.videos && details.videos.length) {
       return details.videos[0].snippet.thumbnails.standard.url
     }
   }
@@ -52,36 +52,38 @@ export default function Playlist() {
       ) : (
         <div sx={{bg: 'background'}}>
           {details ? (
-            <div
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <h3 sx={{mb: 0}}>{details.name}</h3>
-              <p>
-                <span>{dayjs(details.created).format('MMM D, YYYY')}</span>
-                <span style={{margin: 'auto 1rem'}}>|</span>
-                <span>
-                  {details.videos
-                    ? `${pluralizeText(details.videos.length, 'video')}`
-                    : '0 videos'}
-                </span>
-              </p>
-              <p sx={{mt: 0}}>
-                <FiTrash
-                  sx={{cursor: 'pointer'}}
-                  title='Delete playlist'
-                  onClick={deletePlaylist}
-                />
-              </p>
+            <Fragment>
+              <div
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <h3 sx={{mb: 0}}>{details.name}</h3>
+                <p>
+                  <span>{dayjs(details.created).format('MMM D, YYYY')}</span>
+                  <span style={{margin: 'auto 1rem'}}>|</span>
+                  <span>
+                    {details.videos
+                      ? `${pluralizeText(details.videos.length, 'video')}`
+                      : '0 videos'}
+                  </span>
+                </p>
+                <p sx={{mt: 0}}>
+                  <FiTrash
+                    sx={{cursor: 'pointer'}}
+                    title='Delete playlist'
+                    onClick={deletePlaylist}
+                  />
+                </p>
+              </div>
               {details.videos && (
                 <div sx={{my: 3}}>
                   <VideoListing videos={details.videos} />
                 </div>
               )}
-            </div>
+            </Fragment>
           ) : (
             <Alert
               type='danger'
