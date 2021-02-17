@@ -10,6 +10,7 @@ import TrimControls from '../components/TrimControls'
 import Alert from '../components/Alert'
 import Layout from '../components/Layout'
 import siteUrl from './../utils/siteUrl'
+import Button from './../components/Button'
 
 export default function Video({data, error, title, image}) {
   const router = useRouter()
@@ -62,31 +63,12 @@ export default function Video({data, error, title, image}) {
             </Fragment>
           )}
           <p style={{textAlign: 'center'}}>
-            <button
-              onClick={toggleControls}
-              sx={{
-                margin: '1rem auto 0.5rem auto',
-                py: 2,
-                px: 4,
-                color: 'text',
-                backgroundColor: 'muted',
-                fontFamily: 'light',
-                fontSize: [1, 2],
-                textTransform: 'uppercase',
-                letterSpacing: '2px',
-                border: 'none',
-                borderRadius: '2rem',
-                cursor: 'pointer',
-                '&:hover': {
-                  color: 'accent',
-                  backgroundColor: 'shade1',
-                },
-                '&:focus': {
-                  outline: 'none',
-                },
-              }}>
+            <Button
+              primary={{bg: 'muted', color: 'text'}}
+              hover={{bg: 'shade1', color: 'accent'}}
+              action={toggleControls}>
               {showControls ? 'Hide' : 'Show'} Trim Controls
-            </button>
+            </Button>
           </p>
           {showControls ? (
             <TrimControls start={start} end={end} onTrim={trimVideo} />

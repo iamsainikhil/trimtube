@@ -7,6 +7,7 @@ import Modal from 'react-modal'
 import PlaylistCheckbox from './PlaylistCheckbox'
 import {IoClose} from 'react-icons/io5'
 import {BiLike, BiDislike, BiShareAlt, BiPlus} from 'react-icons/bi'
+import Button from './Button'
 
 const PlaylistModal = ({data, start, end, isOpen, close}) => {
   Modal.setAppElement('main')
@@ -67,7 +68,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
       borderRadius: '25px',
       width: '75%',
       height: 'auto',
-      background: theme.colors.muted,
+      background: theme.colors.background,
       boxSizing: 'border-box',
       padding: 0,
     },
@@ -175,62 +176,21 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
               justifyContent: 'flex-end',
               m: 3,
             }}>
-            <button
-              sx={{
-                py: 2,
-                px: 4,
-                mx: 2,
-                bg: 'muted',
-                color: 'text',
-                fontFamily: 'light',
-                fontSize: [1, 2],
-                textTransform: 'uppercase',
-                letterSpacing: '2px',
-                border: 'none',
-                borderRadius: '2rem',
-                cursor: 'pointer',
-                '&:hover': {
-                  bg: 'shade1',
-                  color: 'accent',
-                },
-                '@media (max-width: 40rem)': {
-                  px: 2,
-                  fontSize: 0,
-                  letterSpacing: '0.02',
-                },
-              }}
-              onClick={() => {
+            <Button
+              primary={{bg: 'background', color: 'text'}}
+              hover={{bg: 'muted', color: 'accent'}}
+              text='Cancel'
+              action={() => {
                 setPlaylistName('')
                 setShowCreatePlaylist(false)
-              }}>
-              Cancel
-            </button>
-            <button
-              sx={{
-                py: 2,
-                px: 4,
-                bg: 'shade2',
-                color: 'text',
-                fontFamily: 'light',
-                fontSize: 2,
-                textTransform: 'uppercase',
-                letterSpacing: '2px',
-                border: 'none',
-                borderRadius: '2rem',
-                cursor: 'pointer',
-                '&:hover': {
-                  bg: 'shade1',
-                  color: 'accent',
-                },
-                '@media (max-width: 40rem)': {
-                  px: 3,
-                  fontSize: 0,
-                  letterSpacing: '0.02',
-                },
               }}
-              onClick={createPlaylist}>
-              Create
-            </button>
+            />
+            <Button
+              primary={{bg: 'shade2', color: 'text'}}
+              hover={{bg: 'shade1', color: 'accent'}}
+              text='Create'
+              action={createPlaylist}
+            />
           </div>
         </Fragment>
       ) : (
@@ -241,7 +201,14 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
             mt: 0,
             mb: 2,
           }}>
-          <button
+          <Button
+            primary={{bg: 'shade2', color: 'text'}}
+            hover={{bg: 'shade1', color: 'accent'}}
+            action={() => setShowCreatePlaylist(true)}>
+            <BiPlus sx={{mb: '-0.2rem', mr: 1}} />
+            Create new playlist
+          </Button>
+          {/* <button
             sx={{
               py: 2,
               px: 4,
@@ -268,7 +235,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
             onClick={() => setShowCreatePlaylist(true)}>
             <BiPlus sx={{mb: '-0.2rem', mr: 1}} />
             Create new playlist
-          </button>
+          </button> */}
         </div>
       )}
     </Modal>

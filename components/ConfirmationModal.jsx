@@ -3,6 +3,7 @@
 import {jsx, useThemeUI} from 'theme-ui'
 import Modal from 'react-modal'
 import {IoClose} from 'react-icons/io5'
+import Button from './Button'
 
 const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
   Modal.setAppElement('main')
@@ -28,7 +29,7 @@ const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
       borderRadius: '25px',
       width: '75%',
       height: 'auto',
-      background: theme.colors.muted,
+      background: theme.colors.background,
       boxSizing: 'border-box',
       padding: 0,
     },
@@ -69,7 +70,7 @@ const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
           alignItems: 'center',
           py: 2,
           maxWidth: '85%',
-          m: '1rem auto',
+          m: '2rem auto 1rem auto',
         }}>
         <p>
           Are you sure want to delete {type} {name}?
@@ -82,59 +83,18 @@ const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
           justifyContent: 'flex-end',
           m: 3,
         }}>
-        <button
-          sx={{
-            py: 2,
-            px: 4,
-            mx: 2,
-            bg: 'muted',
-            color: 'text',
-            fontFamily: 'light',
-            fontSize: [1, 2],
-            textTransform: 'uppercase',
-            letterSpacing: '2px',
-            border: 'none',
-            borderRadius: '2rem',
-            cursor: 'pointer',
-            '&:hover': {
-              bg: 'shade1',
-              color: 'accent',
-            },
-            '@media (max-width: 40rem)': {
-              px: 2,
-              fontSize: 0,
-              letterSpacing: '0.02',
-            },
-          }}
-          onClick={close}>
-          Cancel
-        </button>
-        <button
-          sx={{
-            py: 2,
-            px: 4,
-            bg: 'dangerBorder',
-            color: 'primary',
-            fontFamily: 'light',
-            fontSize: 2,
-            textTransform: 'uppercase',
-            letterSpacing: '2px',
-            border: 'none',
-            borderRadius: '2rem',
-            cursor: 'pointer',
-            '&:hover': {
-              bg: 'danger',
-              color: 'secondary',
-            },
-            '@media (max-width: 40rem)': {
-              px: 3,
-              fontSize: 0,
-              letterSpacing: '0.02',
-            },
-          }}
-          onClick={action}>
-          Delete
-        </button>
+        <Button
+          primary={{bg: 'background', color: 'text'}}
+          hover={{bg: 'muted', color: 'accent'}}
+          text='Cancel'
+          action={close}
+        />
+        <Button
+          primary={{bg: 'dangerBorder', color: 'primary'}}
+          hover={{bg: 'danger', color: 'secondary'}}
+          text='Delete'
+          action={action}
+        />
       </div>
     </Modal>
   )

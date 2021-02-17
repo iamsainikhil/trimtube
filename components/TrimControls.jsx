@@ -6,6 +6,7 @@ import TimeInput from './TimeInput'
 import formatTime from '../utils/formatTime'
 import getTime from '../utils/getTime'
 import {BiCut} from 'react-icons/bi'
+import Button from './Button'
 
 const TrimControls = ({start, end, onTrim}) => {
   const [startTrimMinutes, setStartTrimMinutes] = useState(
@@ -112,28 +113,13 @@ const TrimControls = ({start, end, onTrim}) => {
         sx={{
           mx: 3,
         }}>
-        <button
-          sx={{
-            py: 2,
-            px: 4,
-            bg: 'shade2',
-            color: 'text',
-            fontFamily: 'medium',
-            fontSize: [1, 2],
-            textTransform: 'uppercase',
-            letterSpacing: '2px',
-            border: 'none',
-            borderRadius: '2rem',
-            cursor: 'pointer',
-            '&:hover': {
-              bg: 'shade1',
-              color: 'accent',
-            },
-          }}
-          onClick={handleTrim}>
+        <Button
+          primary={{bg: 'shade2', color: 'text'}}
+          hover={{bg: 'shade1', color: 'accent'}}
+          action={handleTrim}>
           <BiCut sx={{mb: '-0.2rem', mr: 1}} />
           Trim
-        </button>
+        </Button>
       </p>
     </div>
   )
