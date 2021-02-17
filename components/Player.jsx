@@ -1,5 +1,4 @@
 import YouTube from 'react-youtube'
-import video from '../pages/api/video'
 
 const Player = ({videoId, start, end}) => {
   const opts = {
@@ -29,7 +28,7 @@ const Player = ({videoId, start, end}) => {
 
   const _onStateChange = (event) => {
     if (event.data === -1 || event.data === 0) {
-      // event.target.seekTo(opts.playerVars.start, true)
+      event.target.seekTo(opts.playerVars.start, true)
       event.target.playVideo()
     }
   }
