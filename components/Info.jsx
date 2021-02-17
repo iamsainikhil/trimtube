@@ -8,18 +8,19 @@ import dayjs from 'dayjs'
 import {BiLike, BiDislike, BiShareAlt} from 'react-icons/bi'
 import {MdPlaylistAdd} from 'react-icons/md'
 import formatNumber from '../utils/formatNumber'
-import Share from './Share'
 import PlaylistModal from './PlaylistModal'
+import ShareModal from './ShareModal'
 
 const Info = ({data, start, end}) => {
   const {asPath: URL} = useRouter()
-  const [showShareIcons, setShowShareIcons] = useState(false)
-  const toggleShareIcons = () => {
-    setShowShareIcons(!showShareIcons)
-  }
-  const [isOpen, setIsOpen] = useState(false)
-  const openModal = () => {
-    setIsOpen(true)
+  const [showPlaylistModal, setShowPlaylistModal] = useState(false)
+  const [showShareModal, setShowShareModal] = useState(false)
+
+  const openModal = (type) => {
+    if (type === 'playlist') {
+      setShowPlaylistModal(true)
+    }
+    setShowShareModal(true)
   }
 
   return (
@@ -58,7 +59,7 @@ const Info = ({data, start, end}) => {
                   alignItems: 'flex-start',
                   mt: '-1.25rem',
                 }}>
-                <p sx={{mx: 2}}>
+                {/* <p sx={{mx: 2}}>
                   <BiLike
                     sx={{fontSize: [2], mb: '-0.2rem'}}
                     title='Likes'
@@ -68,8 +69,8 @@ const Info = ({data, start, end}) => {
                   <span sx={{fontSize: [1]}}>
                     {formatNumber(data.items[0].statistics.likeCount)}
                   </span>
-                </p>
-                <p sx={{mx: 2}}>
+                </p> */}
+                {/* <p sx={{mx: 2}}>
                   <BiDislike
                     sx={{fontSize: [2], mb: '-0.2rem'}}
                     title='Dislikes'
@@ -79,50 +80,45 @@ const Info = ({data, start, end}) => {
                   <span sx={{fontSize: [1]}}>
                     {formatNumber(data.items[0].statistics.dislikeCount)}
                   </span>
-                </p>
+                </p> */}
                 <p sx={{mx: 2}}>
                   <BiShareAlt
-                    sx={{fontSize: [2], mb: '-0.2rem', cursor: 'pointer'}}
+                    sx={{fontSize: 3, mt: 1, cursor: 'pointer'}}
                     title='Share'
                     aria-label='Share'
-                    onMouseEnter={toggleShareIcons}
-                    onClick={toggleShareIcons}
+                    onClick={() => {
+                      openModal('share')
+                    }}
                   />
                 </p>
                 <p sx={{mx: 2}}>
                   <MdPlaylistAdd
-                    sx={{fontSize: [3], mb: '-0.35rem', cursor: 'pointer'}}
+                    sx={{fontSize: 4, mt: 1, cursor: 'pointer'}}
                     title='Add to Playlist'
                     aria-label='Add to Playlist'
-                    onClick={openModal}
+                    onClick={() => {
+                      openModal('playlist')
+                    }}
                   />
                 </p>
               </div>
             </div>
-            {showShareIcons && (
-              <div
-                sx={{
-                  position: 'absolute',
-                  mt: '-1rem',
-                  right: 0,
-                }}
-                onMouseLeave={toggleShareIcons}>
-                <Share
-                  videoURL={URL}
-                  videoName={he.decode(data.items[0].snippet.title)}
-                  hideShareText={true}
-                />
-              </div>
-            )}
           </div>
+
+          <ShareModal
+            open={showShareModal}
+            close={() => setShowShareModal(false)}
+            url={URL}
+            name={he.decode(data.items[0].snippet.title)}
+          />
 
           <PlaylistModal
             data={data}
             start={start}
             end={end}
-            isOpen={isOpen}
+            open={showPlaylistModal}
             close={() => {
-              setIsOpen(false)
+              setShowPlaylistModal(false)
             }}
           />
         </Fragment>

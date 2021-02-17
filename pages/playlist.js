@@ -10,25 +10,22 @@ import VideoListing from '../components/VideoListing'
 import {FiTrash} from 'react-icons/fi'
 import {BiShareAlt} from 'react-icons/bi'
 import Loader from '../components/Loader'
-import Share from '../components/Share'
 import axios from 'axios'
 import siteUrl from './../utils/siteUrl'
 import ConfirmationModal from '../components/ConfirmationModal'
+import ShareModal from './../components/ShareModal'
 
 export default function Playlist({name, info, image, fetchData}) {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [details, setDetails] = useState(undefined)
-  const [showShareIcons, setShowShareIcons] = useState(false)
+  const [showShareModal, setShowShareModal] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [modalInfo, setModalInfo] = useState({
     type: '',
     name: '',
     action: null,
   })
-  const toggleShareIcons = () => {
-    setShowShareIcons(!showShareIcons)
-  }
 
   const pluralizeText = (value, text) => {
     if (value === 1) return `${value} ${text}`
@@ -134,8 +131,7 @@ export default function Playlist({name, info, image, fetchData}) {
                     sx={{mx: 3, cursor: 'pointer'}}
                     title='Share playlist on'
                     aria-label='Share'
-                    onMouseEnter={toggleShareIcons}
-                    onClick={toggleShareIcons}
+                    onClick={() => setShowShareModal(true)}
                   />
                   <FiTrash
                     sx={{mx: 3, cursor: 'pointer'}}
@@ -143,21 +139,6 @@ export default function Playlist({name, info, image, fetchData}) {
                     onClick={() => openModal('playlist', name, deletePlaylist)}
                   />
                 </p>
-                {showShareIcons && (
-                  <div
-                    sx={{
-                      position: 'absolute',
-                      mt: '9rem',
-                      mr: '2rem',
-                    }}
-                    onMouseLeave={toggleShareIcons}>
-                    <Share
-                      videoURL={getShareURL()}
-                      videoName={name}
-                      hideShareText={true}
-                    />
-                  </div>
-                )}
               </div>
               {details.videos && (
                 <div sx={{mt: 4, mb: 3}}>
@@ -176,6 +157,12 @@ export default function Playlist({name, info, image, fetchData}) {
           )}
         </div>
       )}
+      <ShareModal
+        open={showShareModal}
+        close={() => setShowShareModal(false)}
+        url={getShareURL()}
+        name={name}
+      />
       <ConfirmationModal open={showModal} close={closeModal} info={modalInfo} />
     </Layout>
   )

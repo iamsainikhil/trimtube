@@ -10,7 +10,7 @@ import {BiPlus} from 'react-icons/bi'
 import Button from './Button'
 import modalOptions from '../utils/modalOptions'
 
-const PlaylistModal = ({data, start, end, isOpen, close}) => {
+const PlaylistModal = ({data, start, end, open, close}) => {
   Modal.setAppElement('main')
   const {theme, colorMode} = useThemeUI()
   const [playlists, setPlaylists] = useState(null)
@@ -62,7 +62,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={open}
       onAfterOpen={afterOpenModal}
       onRequestClose={close}
       style={customStyles}
