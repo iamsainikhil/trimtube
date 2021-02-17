@@ -2,6 +2,7 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
 import {Fragment, useEffect, useState} from 'react'
+import {useRouter} from 'next/router'
 import Layout from '../components/Layout'
 import Alert from '../components/Alert'
 import dayjs from 'dayjs'
@@ -14,6 +15,7 @@ import axios from 'axios'
 import siteUrl from './../utils/siteUrl'
 
 export default function Playlist({name, info, image, fetchData}) {
+  const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [details, setDetails] = useState(undefined)
   const [showShareIcons, setShowShareIcons] = useState(false)
@@ -33,10 +35,30 @@ export default function Playlist({name, info, image, fetchData}) {
     router.push('/playlists')
   }
 
+  const deleteVideo = (v) => {
+    const playlists = JSON.parse(localStorage.getItem('playlists'))
+    let deleteIndex = null
+    const videos = [...playlists[name].videos]
+    for (let i = 0; i < videos.length; i++) {
+      if (
+        v.id === videos[i].id &&
+        v.start === videos[i].start &&
+        v.end === videos[i].end
+      ) {
+        deleteIndex = i
+        break
+      }
+    }
+    videos.splice(deleteIndex, 1)
+    playlists[name].videos = videos
+    localStorage.setItem('playlists', JSON.stringify(playlists))
+    setDetails(playlists[name])
+  }
+
   const getShareURL = () => {
     const videos = details.videos.map((v) => v.id)
     const videoIds = videos.join('-')
-    console.log(`${router.asPath}-${videoIds}`)
+    // console.log(`${router.asPath}-${videoIds}`)
     return `${router.asPath}-${videoIds}`
   }
 
@@ -86,7 +108,7 @@ export default function Playlist({name, info, image, fetchData}) {
                 <p sx={{mt: 0, position: 'relative'}}>
                   <BiShareAlt
                     sx={{mx: 3, cursor: 'pointer'}}
-                    title='Share'
+                    title='Share playlist on'
                     aria-label='Share'
                     onMouseEnter={toggleShareIcons}
                     onClick={toggleShareIcons}
@@ -115,7 +137,7 @@ export default function Playlist({name, info, image, fetchData}) {
               </div>
               {details.videos && (
                 <div sx={{mt: 4, mb: 3}}>
-                  <VideoListing videos={details.videos} />
+                  <VideoListing videos={details.videos} remove={deleteVideo} />
                 </div>
               )}
             </Fragment>

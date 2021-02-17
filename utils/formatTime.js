@@ -18,8 +18,11 @@ const getSeconds = (time) => {
 const formatTime = (time, type) => {
   if (type === 'Minutes') {
     return getMinutes(time)
+  } else if (type === 'Seconds') {
+    return getSeconds(time)
+  } else {
+    return `${getMinutes(time)}:${getSeconds(time)}`
   }
-  return getSeconds(time)
 }
 
 export default formatTime

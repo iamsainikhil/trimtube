@@ -51,16 +51,19 @@ const Header = () => {
             ) : null}
             {routePath !== '/playlists' ? (
               <p>
-                <MdPlaylistPlay
-                  title='Playlists'
-                  style={{
-                    cursor: 'pointer',
-                    verticalAlign: 'middle',
-                    fontSize: '1.5rem',
-                    marginTop: '0.7rem',
-                  }}
-                  onClick={() => router.push('/playlists')}
-                />
+                <NextLink href={'/playlists'} passHref>
+                  <a>
+                    <MdPlaylistPlay
+                      title='Playlists'
+                      style={{
+                        cursor: 'pointer',
+                        verticalAlign: 'middle',
+                        fontSize: '1.5rem',
+                        marginTop: '0.7rem',
+                      }}
+                    />
+                  </a>
+                </NextLink>
               </p>
             ) : null}
             <p>

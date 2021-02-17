@@ -5,8 +5,6 @@ import Alert from './Alert'
 import Listing from './Listing'
 
 const Results = ({data, error}) => {
-  console.log(data)
-
   return (
     <div>
       {error && <Alert type='danger' message={error.message || error} />}

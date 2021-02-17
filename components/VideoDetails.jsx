@@ -7,8 +7,9 @@ import he from 'he'
 import relativeTimeString from '../utils/relativeTimeString'
 import formatNumber from '../utils/formatNumber'
 import truncateText from '../utils/truncateText'
+import formatTime from '../utils/formatTime'
 
-const VideoDetails = ({data: {id, snippet, statistics}}) => {
+const VideoDetails = ({data: {start, end, video, snippet, statistics}}) => {
   const title = he.decode(snippet.title)
   const publishedTime = relativeTimeString(snippet.publishedAt)
 
@@ -75,6 +76,36 @@ const VideoDetails = ({data: {id, snippet, statistics}}) => {
           }}>
           {truncateText(he.decode(snippet.description), 75)}
         </p>
+        <div
+          sx={{
+            display: 'flex',
+            flexFlow: 'row nowrap',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            height: '2rem',
+          }}>
+          {start && (
+            <p
+              sx={{
+                fontSize: [1],
+                color: 'text',
+              }}>
+              Start:{' '}
+              <span sx={{color: 'secondary'}}>{formatTime(start, 'Both')}</span>
+            </p>
+          )}
+          {end && (
+            <p
+              sx={{
+                ml: 2,
+                fontSize: [1],
+                color: 'text',
+              }}>
+              End:{' '}
+              <span sx={{color: 'secondary'}}>{formatTime(end, 'Both')}</span>
+            </p>
+          )}
+        </div>
       </div>
     </Fragment>
   )

@@ -4,8 +4,9 @@ import {jsx, useThemeUI} from 'theme-ui'
 import styled from '@emotion/styled'
 import {default as NextLink} from 'next/link'
 import VideoDetails from './VideoDetails'
+import {FiTrash} from 'react-icons/fi'
 
-const VideoListing = ({videos}) => {
+const VideoListing = ({videos, remove}) => {
   const {theme} = useThemeUI()
 
   const GridLayout = styled.div`
@@ -42,10 +43,27 @@ const VideoListing = ({videos}) => {
           }}
           passHref
           key={index}>
-          <a>
+          <a sx={{position: 'relative'}}>
             <VideoCard>
               <VideoDetails data={video} />
             </VideoCard>
+            <p
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                mb: '1rem',
+              }}
+              onClick={(e) => {
+                remove({
+                  id: video.id,
+                  start: video.start,
+                  end: video.end,
+                })
+                e.preventDefault()
+              }}>
+              <FiTrash sx={{mx: 3, cursor: 'pointer'}} title='Delete video' />
+            </p>
           </a>
         </NextLink>
       ))}
