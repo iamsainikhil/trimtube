@@ -5,6 +5,7 @@ import Modal from 'react-modal'
 import {IoClose} from 'react-icons/io5'
 import modalOptions from '../utils/modalOptions'
 import Share from './Share'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 
 const ShareModal = ({open, close, url, name}) => {
   Modal.setAppElement('main')
@@ -32,6 +33,8 @@ const ShareModal = ({open, close, url, name}) => {
           mt: 3,
           mb: 0,
           mx: 3,
+          fontSize: 3,
+          textAlign: 'center',
         }}>
         Share
       </p>
@@ -67,7 +70,7 @@ const ShareModal = ({open, close, url, name}) => {
             alignItems: 'center',
             m: 4,
             py: 1,
-            px: 2,
+            pl: 2,
             bg: 'search',
             color: 'text',
             borderWidth: '1px',
@@ -88,19 +91,22 @@ const ShareModal = ({open, close, url, name}) => {
             }}>
             {url}
           </p>
-          <p
-            onClick={copyLink}
+          <div
             sx={{
-              mx: 2,
-              p: 1,
+              ml: 2,
+              py: 1,
+              px: 3,
               cursor: 'pointer',
+              textTransform: 'uppercase',
               '&:hover': {
                 bg: 'highlight',
                 borderRadius: '25px',
               },
             }}>
-            COPY
-          </p>
+            <CopyToClipboard text={url} onCopy={copyLink}>
+              <span>Copy</span>
+            </CopyToClipboard>
+          </div>
         </div>
       </div>
     </Modal>
