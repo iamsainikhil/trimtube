@@ -4,6 +4,7 @@ import {jsx, useThemeUI} from 'theme-ui'
 import Modal from 'react-modal'
 import {IoClose} from 'react-icons/io5'
 import Button from './Button'
+import modalOptions from '../utils/modalOptions'
 
 const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
   Modal.setAppElement('main')
@@ -11,29 +12,8 @@ const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
 
   const afterOpenModal = () => {}
 
-  const customStyles = {
-    overlay: {
-      backgroundColor:
-        colorMode === 'dark'
-          ? 'rgba(0, 0, 0, 0.95)'
-          : 'rgba(247,248,249, 0.95)',
-      zIndex: 10,
-    },
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      borderRadius: '25px',
-      width: '75%',
-      height: 'auto',
-      background: theme.colors.background,
-      boxSizing: 'border-box',
-      padding: 0,
-    },
-  }
+  const customStyles = modalOptions(theme, colorMode)
+
   return (
     <Modal
       isOpen={open}

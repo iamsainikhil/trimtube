@@ -6,8 +6,9 @@ import dayjs from 'dayjs'
 import Modal from 'react-modal'
 import PlaylistCheckbox from './PlaylistCheckbox'
 import {IoClose} from 'react-icons/io5'
-import {BiLike, BiDislike, BiShareAlt, BiPlus} from 'react-icons/bi'
+import {BiPlus} from 'react-icons/bi'
 import Button from './Button'
+import modalOptions from '../utils/modalOptions'
 
 const PlaylistModal = ({data, start, end, isOpen, close}) => {
   Modal.setAppElement('main')
@@ -50,29 +51,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
     }
   }
 
-  const customStyles = {
-    overlay: {
-      backgroundColor:
-        colorMode === 'dark'
-          ? 'rgba(0, 0, 0, 0.95)'
-          : 'rgba(247,248,249, 0.95)',
-      zIndex: 10,
-    },
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      borderRadius: '25px',
-      width: '75%',
-      height: 'auto',
-      background: theme.colors.background,
-      boxSizing: 'border-box',
-      padding: 0,
-    },
-  }
+  const customStyles = modalOptions(theme, colorMode)
 
   useEffect(() => {
     if (localStorage.getItem('playlists')) {
@@ -206,36 +185,8 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
             hover={{bg: 'shade1', color: 'accent'}}
             action={() => setShowCreatePlaylist(true)}>
             <BiPlus sx={{mb: '-0.2rem', mr: 1}} />
-            Create new playlist
+            Create playlist
           </Button>
-          {/* <button
-            sx={{
-              py: 2,
-              px: 4,
-              bg: 'shade2',
-              color: 'text',
-              fontFamily: 'light',
-              fontSize: 2,
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              border: 'none',
-              borderRadius: '2rem',
-              cursor: 'pointer',
-              '&:hover': {
-                bg: 'shade1',
-                color: 'accent',
-              },
-              '@media (max-width: 40rem)': {
-                width: '75%',
-                px: 2,
-                fontSize: 1,
-                letterSpacing: '0.02',
-              },
-            }}
-            onClick={() => setShowCreatePlaylist(true)}>
-            <BiPlus sx={{mb: '-0.2rem', mr: 1}} />
-            Create new playlist
-          </button> */}
         </div>
       )}
     </Modal>
