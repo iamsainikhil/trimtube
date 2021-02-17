@@ -37,6 +37,8 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
         }
       }
       localStorage.setItem('playlists', JSON.stringify(playlists))
+      setPlaylists(Object.keys(playlists))
+      setPlaylistName('')
       setShowCreatePlaylist(false)
     }
   }
@@ -117,11 +119,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
           overflowY: 'auto',
         }}>
         {playlists ? (
-          <div
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}>
+          <div>
             {playlists.map((name, index) => {
               return (
                 <div sx={{my: 2}} key={index}>
@@ -154,7 +152,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
               type='text'
               placeholder='Playlist Name'
               sx={{
-                bg: 'highlight',
+                bg: 'search',
                 color: 'text',
                 borderWidth: '1px',
                 borderStyle: 'solid',
@@ -201,7 +199,10 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
                   letterSpacing: '0.02',
                 },
               }}
-              onClick={() => setShowCreatePlaylist(false)}>
+              onClick={() => {
+                setPlaylistName('')
+                setShowCreatePlaylist(false)
+              }}>
               Cancel
             </button>
             <button

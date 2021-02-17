@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import {jsx, Checkbox} from 'theme-ui'
+import {jsx} from 'theme-ui'
 import {Fragment, useEffect, useState} from 'react'
 
 const PlaylistCheckbox = ({data, start, end, index, name}) => {
@@ -9,9 +9,12 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
   const videoExistsInPlaylist = (name) => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
     if (playlists[name]?.videos) {
-      const matched = playlists[name].videos.filter(
-        (v) => v.id === data.items[0].id
-      )
+      const matched = playlists[name].videos.filter((v) => {
+        const idMatch = v.id === data.items[0].id
+        const startMatch = v.start === start
+        const endMatch = v.end === end
+        return idMatch && startMatch && endMatch
+      })
       return matched.length > 0
     } else {
       return false
@@ -22,8 +25,8 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
     const videoDetails = {
       ...data.items[0],
-      start,
-      end,
+      start: isNaN(start) ? null : start,
+      end: isNaN(end) ? null : end,
     }
     if (playlists[name].videos) {
       playlists[name].videos.push(videoDetails)

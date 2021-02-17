@@ -33,8 +33,8 @@ export default function Video({data, error, title, image}) {
   }
 
   useEffect(() => {
-    setStart(Number(query.start))
-    setEnd(Number(query.end))
+    setStart(query.start ? Number(Number(query.start)) : null)
+    setEnd(query.end ? Number(Number(query.end)) : null)
     return () => {}
   }, [query.start, query.end])
 
