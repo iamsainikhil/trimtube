@@ -29,7 +29,8 @@ const VideoDetails = ({data: {start, end, video, snippet, statistics}}) => {
       <div
         sx={{
           px: 3,
-          py: 3,
+          pt: 3,
+          pb: statistics ? 3 : 4,
 
           '@media (max-width: 30rem)': {
             px: 3,

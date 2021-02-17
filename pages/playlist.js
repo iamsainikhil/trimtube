@@ -117,6 +117,7 @@ export default function Playlist({name, info, image, fetchData}) {
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  mt: 0,
                 }}>
                 <h3 sx={{mb: 0}}>{details.name}</h3>
                 <p>

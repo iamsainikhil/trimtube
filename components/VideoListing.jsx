@@ -52,7 +52,7 @@ const VideoListing = ({videos, remove}) => {
                 position: 'absolute',
                 bottom: 0,
                 right: 0,
-                mb: '1rem',
+                mb: '1.25rem',
               }}
               onClick={(e) => {
                 remove({
