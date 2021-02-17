@@ -118,7 +118,7 @@ const PlaylistModal = ({data, start, end, isOpen, close}) => {
           height: '200px',
           overflowY: 'auto',
         }}>
-        {playlists ? (
+        {playlists && playlists.length ? (
           <div>
             {playlists.map((name, index) => {
               return (

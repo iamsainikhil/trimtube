@@ -76,15 +76,15 @@ const VideoDetails = ({data: {start, end, video, snippet, statistics}}) => {
           }}>
           {truncateText(he.decode(snippet.description), 75)}
         </p>
-        <div
-          sx={{
-            display: 'flex',
-            flexFlow: 'row nowrap',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            height: '2rem',
-          }}>
-          {start && (
+        {statistics && (
+          <div
+            sx={{
+              display: 'flex',
+              flexFlow: 'row nowrap',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              height: '2rem',
+            }}>
             <p
               sx={{
                 fontSize: [1],
@@ -93,8 +93,6 @@ const VideoDetails = ({data: {start, end, video, snippet, statistics}}) => {
               Start:{' '}
               <span sx={{color: 'secondary'}}>{formatTime(start, 'Both')}</span>
             </p>
-          )}
-          {end && (
             <p
               sx={{
                 ml: 2,
@@ -104,8 +102,8 @@ const VideoDetails = ({data: {start, end, video, snippet, statistics}}) => {
               End:{' '}
               <span sx={{color: 'secondary'}}>{formatTime(end, 'Both')}</span>
             </p>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </Fragment>
   )

@@ -16,7 +16,7 @@ const search = async (req, res) => {
     }
     res.send(error)
   }
-  // res.status(200).json(SearchData)
+  //res.status(200).json(SearchData)
 }
 
 export default search

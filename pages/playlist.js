@@ -13,12 +13,19 @@ import Loader from '../components/Loader'
 import Share from '../components/Share'
 import axios from 'axios'
 import siteUrl from './../utils/siteUrl'
+import ConfirmationModal from '../components/ConfirmationModal'
 
 export default function Playlist({name, info, image, fetchData}) {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [details, setDetails] = useState(undefined)
   const [showShareIcons, setShowShareIcons] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [modalInfo, setModalInfo] = useState({
+    type: '',
+    name: '',
+    action: null,
+  })
   const toggleShareIcons = () => {
     setShowShareIcons(!showShareIcons)
   }
@@ -28,11 +35,26 @@ export default function Playlist({name, info, image, fetchData}) {
     return `${value} ${text}s`
   }
 
+  const openModal = (type, name, action) => {
+    setModalInfo({type, name, action})
+    setShowModal(true)
+  }
+
+  const closeModal = () => {
+    setModalInfo({type: '', name: '', action: null})
+    setShowModal(false)
+  }
+
   const deletePlaylist = () => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
     delete playlists[name]
     localStorage.setItem('playlists', JSON.stringify(playlists))
+    closeModal()
     router.push('/playlists')
+  }
+
+  const deleteVideoModal = (data) => {
+    openModal('video', data.name, deleteVideo)
   }
 
   const deleteVideo = (v) => {
@@ -52,6 +74,7 @@ export default function Playlist({name, info, image, fetchData}) {
     videos.splice(deleteIndex, 1)
     playlists[name].videos = videos
     localStorage.setItem('playlists', JSON.stringify(playlists))
+    closeModal()
     setDetails(playlists[name])
   }
 
@@ -116,7 +139,7 @@ export default function Playlist({name, info, image, fetchData}) {
                   <FiTrash
                     sx={{mx: 3, cursor: 'pointer'}}
                     title='Delete playlist'
-                    onClick={deletePlaylist}
+                    onClick={() => openModal('playlist', name, deletePlaylist)}
                   />
                 </p>
                 {showShareIcons && (
@@ -137,7 +160,10 @@ export default function Playlist({name, info, image, fetchData}) {
               </div>
               {details.videos && (
                 <div sx={{mt: 4, mb: 3}}>
-                  <VideoListing videos={details.videos} remove={deleteVideo} />
+                  <VideoListing
+                    videos={details.videos}
+                    remove={deleteVideoModal}
+                  />
                 </div>
               )}
             </Fragment>
@@ -149,6 +175,7 @@ export default function Playlist({name, info, image, fetchData}) {
           )}
         </div>
       )}
+      <ConfirmationModal open={showModal} close={closeModal} info={modalInfo} />
     </Layout>
   )
 }

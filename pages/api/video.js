@@ -15,7 +15,7 @@ const video = async (req, res) => {
     }
     res.send(error)
   }
-  // res.status(200).json(videoData)
+  //res.status(200).json(videoData)
 }
 
 export default video

@@ -59,6 +59,7 @@ const VideoListing = ({videos, remove}) => {
                   id: video.id,
                   start: video.start,
                   end: video.end,
+                  name: video.snippet.title,
                 })
                 e.preventDefault()
               }}>
