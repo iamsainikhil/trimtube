@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx, useThemeUI} from 'theme-ui'
-import {Fragment, useEffect, useState} from 'react'
+import {Fragment, useContext, useEffect, useState} from 'react'
 import dayjs from 'dayjs'
 import Modal from 'react-modal'
 import PlaylistCheckbox from './PlaylistCheckbox'
@@ -9,13 +9,19 @@ import {IoClose} from 'react-icons/io5'
 import {BiPlus} from 'react-icons/bi'
 import Button from './Button'
 import modalOptions from '../utils/modalOptions'
+import {ToastContext} from '../context/ToastContext'
 
 const PlaylistModal = ({data, start, end, open, close}) => {
-  Modal.setAppElement('main')
   const {theme, colorMode} = useThemeUI()
   const [playlists, setPlaylists] = useState(null)
   const [showCreatePlaylist, setShowCreatePlaylist] = useState(false)
   const [playlistName, setPlaylistName] = useState('')
+  const {setShow, setMessage} = useContext(ToastContext)
+
+  const showToast = (message) => {
+    setMessage(message)
+    setShow(true)
+  }
 
   const createPlaylist = () => {
     if (playlistName.trim()) {
@@ -41,6 +47,7 @@ const PlaylistModal = ({data, start, end, open, close}) => {
       localStorage.setItem('playlists', JSON.stringify(playlists))
       setPlaylists(Object.keys(playlists))
       setPlaylistName('')
+      showToast(`Created ${playlistName} playlist`)
       setShowCreatePlaylist(false)
     }
   }
@@ -66,7 +73,8 @@ const PlaylistModal = ({data, start, end, open, close}) => {
       onAfterOpen={afterOpenModal}
       onRequestClose={close}
       style={customStyles}
-      contentLabel='Add to Playlist Modal'>
+      contentLabel='Add to Playlist Modal'
+      ariaHideApp={false}>
       <p
         sx={{
           mt: 3,

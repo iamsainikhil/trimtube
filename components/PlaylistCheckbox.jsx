@@ -1,10 +1,17 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {Fragment, useEffect, useState} from 'react'
+import {Fragment, useContext, useEffect, useState} from 'react'
+import {ToastContext} from '../context/ToastContext'
 
 const PlaylistCheckbox = ({data, start, end, index, name}) => {
   const [checked, setChecked] = useState(false)
+  const {setShow, setMessage} = useContext(ToastContext)
+
+  const showToast = (message) => {
+    setMessage(message)
+    setShow(true)
+  }
 
   const videoExistsInPlaylist = (name) => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
@@ -34,6 +41,7 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
       playlists[name].videos = [videoDetails]
     }
     localStorage.setItem('playlists', JSON.stringify(playlists))
+    showToast(`Added to ${name} playlist!`)
   }
 
   const removeVideoFromPlaylist = () => {
@@ -43,6 +51,7 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
     )
     playlists[name].videos = videos
     localStorage.setItem('playlists', JSON.stringify(playlists))
+    showToast(`Removed from ${name} playlist!`)
   }
 
   const playlistCheckbox = () => {

@@ -19,8 +19,9 @@ const Info = ({data, start, end}) => {
   const openModal = (type) => {
     if (type === 'playlist') {
       setShowPlaylistModal(true)
+    } else {
+      setShowShareModal(true)
     }
-    setShowShareModal(true)
   }
 
   return (

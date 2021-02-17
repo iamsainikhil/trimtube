@@ -1,10 +1,8 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import {jsx, Styled} from 'theme-ui'
+import {jsx} from 'theme-ui'
 import PropTypes from 'prop-types'
 import Icon from './Icon'
-import {FiShare2} from 'react-icons/fi'
-import siteUrl from '../utils/siteUrl'
 
 const flexbox = {
   display: 'flex',
@@ -13,8 +11,7 @@ const flexbox = {
   alignItems: 'start',
 }
 
-const Share = ({videoURL, videoName}) => {
-  const URL = siteUrl(videoURL)
+const Share = ({URL, videoName}) => {
   const sharePlatforms = [
     {
       name: 'Facebook',

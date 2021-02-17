@@ -6,10 +6,14 @@ import {IoClose} from 'react-icons/io5'
 import modalOptions from '../utils/modalOptions'
 import Share from './Share'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
+import {useContext} from 'react'
+import {ToastContext} from '../context/ToastContext'
+import siteUrl from '../utils/siteUrl'
 
 const ShareModal = ({open, close, url, name}) => {
-  Modal.setAppElement('main')
   const {theme, colorMode} = useThemeUI()
+  const {setShow, setMessage} = useContext(ToastContext)
+  const URL = siteUrl(url)
 
   const afterOpenModal = () => {}
 
@@ -18,7 +22,8 @@ const ShareModal = ({open, close, url, name}) => {
   options.content.maxWidth = '550px'
 
   const copyLink = (link) => {
-    console.log(link)
+    setMessage('Video link copied to clipboard')
+    setShow(true)
   }
 
   return (
@@ -27,7 +32,8 @@ const ShareModal = ({open, close, url, name}) => {
       onAfterOpen={afterOpenModal}
       onRequestClose={close}
       style={options}
-      contentLabel='Share modal'>
+      contentLabel='Share modal'
+      ariaHideApp={false}>
       <p
         sx={{
           mt: 3,
@@ -61,7 +67,7 @@ const ShareModal = ({open, close, url, name}) => {
           maxWidth: '90%',
           m: '1rem auto',
         }}>
-        <Share videoURL={url} videoName={name} />
+        <Share URL={URL} videoName={name} />
         <div
           sx={{
             display: 'flex',
@@ -89,7 +95,7 @@ const ShareModal = ({open, close, url, name}) => {
               overflowX: 'auto',
               whiteSpace: 'pre',
             }}>
-            {url}
+            {URL}
           </p>
           <div
             sx={{
@@ -103,7 +109,7 @@ const ShareModal = ({open, close, url, name}) => {
                 borderRadius: '25px',
               },
             }}>
-            <CopyToClipboard text={url} onCopy={copyLink}>
+            <CopyToClipboard text={URL} onCopy={copyLink}>
               <span>Copy</span>
             </CopyToClipboard>
           </div>

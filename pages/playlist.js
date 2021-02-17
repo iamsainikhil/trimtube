@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {Fragment, useEffect, useState} from 'react'
+import {Fragment, useContext, useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
 import Layout from '../components/Layout'
 import Alert from '../components/Alert'
@@ -14,6 +14,7 @@ import axios from 'axios'
 import siteUrl from './../utils/siteUrl'
 import ConfirmationModal from '../components/ConfirmationModal'
 import ShareModal from './../components/ShareModal'
+import {ToastContext} from '../context/ToastContext'
 
 export default function Playlist({name, info, image, fetchData}) {
   const router = useRouter()
@@ -26,6 +27,12 @@ export default function Playlist({name, info, image, fetchData}) {
     name: '',
     action: null,
   })
+  const {setShow, setMessage} = useContext(ToastContext)
+
+  const showToast = (message) => {
+    setMessage(message)
+    setShow(true)
+  }
 
   const pluralizeText = (value, text) => {
     if (value === 1) return `${value} ${text}`
@@ -46,12 +53,15 @@ export default function Playlist({name, info, image, fetchData}) {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
     delete playlists[name]
     localStorage.setItem('playlists', JSON.stringify(playlists))
+    showToast(`Deleted ${name} playlist`)
     closeModal()
     router.push('/playlists')
   }
 
   const deleteVideoModal = (data) => {
-    openModal('video', data.name, deleteVideo)
+    openModal('video', data.name, () => {
+      deleteVideo(data)
+    })
   }
 
   const deleteVideo = (v) => {
@@ -72,6 +82,7 @@ export default function Playlist({name, info, image, fetchData}) {
     playlists[name].videos = videos
     localStorage.setItem('playlists', JSON.stringify(playlists))
     closeModal()
+    showToast(`Deleted ${v.name || v.id} from ${name} playlist`)
     setDetails(playlists[name])
   }
 
@@ -146,6 +157,12 @@ export default function Playlist({name, info, image, fetchData}) {
                     videos={details.videos}
                     remove={deleteVideoModal}
                   />
+                  <ShareModal
+                    open={showShareModal}
+                    close={() => setShowShareModal(false)}
+                    url={getShareURL()}
+                    name={name}
+                  />
                 </div>
               )}
             </Fragment>
@@ -157,12 +174,7 @@ export default function Playlist({name, info, image, fetchData}) {
           )}
         </div>
       )}
-      <ShareModal
-        open={showShareModal}
-        close={() => setShowShareModal(false)}
-        url={getShareURL()}
-        name={name}
-      />
+
       <ConfirmationModal open={showModal} close={closeModal} info={modalInfo} />
     </Layout>
   )

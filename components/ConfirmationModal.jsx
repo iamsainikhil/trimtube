@@ -7,7 +7,6 @@ import Button from './Button'
 import modalOptions from '../utils/modalOptions'
 
 const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
-  Modal.setAppElement('main')
   const {theme, colorMode} = useThemeUI()
 
   const afterOpenModal = () => {}
@@ -20,7 +19,8 @@ const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
       onAfterOpen={afterOpenModal}
       onRequestClose={close}
       style={customStyles}
-      contentLabel={`${type} ${name} delete confirmation modal`}>
+      contentLabel={`${type} ${name} delete confirmation modal`}
+      ariaHideApp={false}>
       {/* <p
         sx={{
           mt: 3,
