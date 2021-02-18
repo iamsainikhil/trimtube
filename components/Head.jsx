@@ -5,7 +5,7 @@ const Head = ({
   children,
   pathUrl,
   title,
-  page = 'Search',
+  page = 'Home',
   description,
   image,
 }) => {
@@ -14,7 +14,7 @@ const Head = ({
   const pageTitle = `${title ? `${title} | ` : ''}${page} | ${siteName}`
   const metaDescription =
     description ||
-    'LoopTube is a web application which allows user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.'
+    'LoopTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.'
   return (
     <>
       <GoogleFonts href='https://fonts.googleapis.com/css2?family=Damion' />

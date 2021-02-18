@@ -51,7 +51,7 @@ const Input = () => {
   }, [searchTerm])
 
   return (
-    <Layout>
+    <Layout title='Search'>
       <div sx={{bg: 'background'}}>
         <Search searchTerm={searchTerm} updateSearch={handleSearch} />
         {loading ? <Loader /> : <Results data={data} error={error} />}

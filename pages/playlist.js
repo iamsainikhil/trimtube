@@ -134,7 +134,9 @@ export default function Playlist({name, info, image, fetchData}) {
       title={name}
       page='Playlist'
       image={image}
-      description={`Watch the playlist ${name} with ${info?.videos} videos on LoopTube, a web application that also features a media player which allows the user to trim and loop any portion of a YouTube video with an ability to save the video(s) to a playlist.`}>
+      description={`Watch the playlist ${name} with ${
+        info?.videos ? info.videos.length : ''
+      } videos on LoopTube, a web application that features a media player which allows the user to trim and loop any portion of a YouTube video with an ability to save the video(s) to a playlist.`}>
       {loading ? (
         <Loader />
       ) : (
