@@ -1,6 +1,8 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import {jsx, useThemeUI} from 'theme-ui'
 import {default as NextLink} from 'next/link'
 import Headroom from 'react-headroom'
-import {Styled, useThemeUI} from 'theme-ui'
 import {GoSearch} from 'react-icons/go'
 import {FiSun, FiMoon} from 'react-icons/fi'
 import {MdPlaylistPlay} from 'react-icons/md'
@@ -8,19 +10,20 @@ import {trackGAEvent} from '../utils/googleAnalytics'
 import {useRouter} from 'next/router'
 
 const Header = () => {
-  const {theme, colorMode, setColorMode} = useThemeUI()
+  const {colorMode, setColorMode} = useThemeUI()
   const router = useRouter()
   const {asPath: routePath} = router
 
   return (
     <Headroom disableInlineStyles upTolerance={10} downTolerance={10}>
-      <header style={{background: `${theme.colors.muted}`}} className='header'>
+      <header sx={{bg: 'muted'}} className='header'>
         <div className='header-content'>
           <div>
-            <Styled.h1 style={{margin: '0'}}>
+            <h1 style={{margin: '0', variant: 'styles.h1'}}>
               <NextLink href='/' passHref>
-                <Styled.a
-                  style={{
+                <a
+                  sx={{
+                    variant: 'styles.a',
                     textDecoration: 'none',
                     fontFamily: `'Damion', 'Lato', -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif`,
                     letterSpacing: '0.15rem',
@@ -30,9 +33,9 @@ const Header = () => {
                   }
                   rel='noreferrer noopener'>
                   LoopTube
-                </Styled.a>
+                </a>
               </NextLink>
-            </Styled.h1>
+            </h1>
           </div>
           <div className='header-links'>
             {routePath !== '/' ? (
