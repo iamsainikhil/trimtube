@@ -1,5 +1,4 @@
 import NextHead from 'next/head'
-import GoogleFonts from 'next-google-fonts'
 
 const Head = ({
   children,
@@ -17,7 +16,6 @@ const Head = ({
     'LoopTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.'
   return (
     <>
-      <GoogleFonts href='https://fonts.googleapis.com/css2?family=Damion&display=swap' />
       <NextHead>
         <meta charSet='UTF-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
