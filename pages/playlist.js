@@ -14,6 +14,7 @@ import siteUrl from './../utils/siteUrl'
 import ConfirmationModal from '../components/ConfirmationModal'
 import ShareModal from './../components/ShareModal'
 import {ToastContext} from '../context/ToastContext'
+// import mergeImg from 'merge-img'
 
 export default function Playlist({name, info, image, fetchData}) {
   const router = useRouter()
@@ -216,7 +217,7 @@ export default function Playlist({name, info, image, fetchData}) {
   )
 }
 
-Playlist.getInitialProps = async function (context) {
+export async function getServerSideProps(context) {
   const {id} = context.query
   let image = null
   let info = undefined
@@ -236,26 +237,40 @@ Playlist.getInitialProps = async function (context) {
         created: dayjs().toISOString(),
         videos,
       }
+      const images = videos.map((v) => v.snippet.thumbnails.standard.url)
+      // mergeImg(images)
+      //   .then((img) => {
+      //     // Save image as file
+      //     img.write('/public/out.png', () => console.log('done'))
+      //   })
+      //   .catch((err) => console.error(err))
+
       return {
-        name,
-        image: info.videos[0].snippet.thumbnails.standard.url,
-        info,
-        fetchData: false,
+        props: {
+          name,
+          image: videos[0].snippet.thumbnails.standard.url,
+          info,
+          fetchData: false,
+        },
       }
     } catch (error) {
       return {
-        name,
-        image,
-        info,
-        fetchData: true,
+        props: {
+          name,
+          image,
+          info,
+          fetchData: true,
+        },
       }
     }
   } else {
     return {
-      name: id,
-      image,
-      info,
-      fetchData: true,
+      props: {
+        name: id,
+        image,
+        info,
+        fetchData: true,
+      },
     }
   }
 }
