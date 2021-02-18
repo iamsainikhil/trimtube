@@ -14,7 +14,7 @@ const Head = ({
   const pageTitle = `${title ? `${title} | ` : ''}${page} | ${siteName}`
   const metaDescription =
     description ||
-    'LoopTube is a media player that allows user to trim and loop any portion of a YouTube video.'
+    'LoopTube is a web application which allows user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.'
   return (
     <>
       <GoogleFonts href='https://fonts.googleapis.com/css2?family=Damion' />

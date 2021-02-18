@@ -6,7 +6,9 @@ import PlaylistListing from '../components/PlaylistListing'
 
 export default function Playlists() {
   return (
-    <Layout page='Playlists'>
+    <Layout
+      page='Playlists'
+      description={`Check the playlists you have created on LoopTube, , a web application that also features a media player which allows the user to trim and loop any portion of a YouTube video with an ability to save the video(s) to a playlist. The app also allows user to delete individual video(s) as well as a playlist.`}>
       <div sx={{bg: 'background'}}>
         <h3
           sx={{

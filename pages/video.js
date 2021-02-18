@@ -40,7 +40,11 @@ export default function Video({data, error, title, image}) {
   }, [query.start, query.end])
 
   return (
-    <Layout title={title} page='Video' image={image}>
+    <Layout
+      title={title}
+      page='Video'
+      image={image}
+      description={`Watch video ${title} on LoopTube, a web application that also features a media player which allows the user to trim and loop any portion of a YouTube video with an ability to save to a playlist.`}>
       <div
         sx={{
           display: 'flex',
