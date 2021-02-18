@@ -22,7 +22,7 @@ const Header = () => {
                 <Styled.a
                   style={{
                     textDecoration: 'none',
-                    fontFamily: 'Damion',
+                    fontFamily: `'Damion', 'Lato', -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif`,
                     letterSpacing: '0.15rem',
                   }}
                   onClick={() =>
