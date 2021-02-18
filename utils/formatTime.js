@@ -1,6 +1,6 @@
 const getMinutes = (time) => {
   const number = Number(time)
-  if (!time) return number
+  if (!time) return isNaN(number) ? 0 : number
   if (number < 60) return 0
   if (number >= 60) {
     return (number - (number % 60)) / 60
@@ -9,7 +9,7 @@ const getMinutes = (time) => {
 
 const getSeconds = (time) => {
   const number = Number(time)
-  if (!time || number < 60) return number
+  if (!time || number < 60) return isNaN(number) ? 0 : number
   if (number >= 60) {
     return number % 60
   }

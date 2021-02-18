@@ -7,8 +7,7 @@ import Layout from '../components/Layout'
 import Alert from '../components/Alert'
 import dayjs from 'dayjs'
 import VideoListing from '../components/VideoListing'
-import {FiTrash} from 'react-icons/fi'
-import {BiShareAlt} from 'react-icons/bi'
+import {BiSave, BiShareAlt, BiTrash} from 'react-icons/bi'
 import Loader from '../components/Loader'
 import axios from 'axios'
 import siteUrl from './../utils/siteUrl'
@@ -47,6 +46,25 @@ export default function Playlist({name, info, image, fetchData}) {
   const closeModal = () => {
     setModalInfo({type: '', name: '', action: null})
     setShowModal(false)
+  }
+
+  const savePlaylist = () => {
+    if (localStorage.getItem('playlists')) {
+      const playlists = JSON.parse(localStorage.getItem('playlists'))
+      if (playlists[name]) {
+        showToast(`Playlist with name ${name} already exists`)
+      } else {
+        playlists[name] = details
+        localStorage.setItem('playlists', JSON.stringify(newPlaylists))
+        showToast(`Added ${name} to playlists`)
+      }
+    } else {
+      let newPlaylists = {
+        [name]: details,
+      }
+      localStorage.setItem('playlists', JSON.stringify(newPlaylists))
+      showToast(`Added ${name} to playlists`)
+    }
   }
 
   const deletePlaylist = () => {
@@ -138,17 +156,29 @@ export default function Playlist({name, info, image, fetchData}) {
                   </span>
                 </p>
                 <p sx={{mt: 0, position: 'relative'}}>
+                  {!fetchData && (
+                    <BiSave
+                      sx={{mx: 3, cursor: 'pointer'}}
+                      title='Save playlist'
+                      aria-label='Share'
+                      onClick={savePlaylist}
+                    />
+                  )}
                   <BiShareAlt
                     sx={{mx: 3, cursor: 'pointer'}}
                     title='Share playlist on'
                     aria-label='Share'
                     onClick={() => setShowShareModal(true)}
                   />
-                  <FiTrash
-                    sx={{mx: 3, cursor: 'pointer'}}
-                    title='Delete playlist'
-                    onClick={() => openModal('playlist', name, deletePlaylist)}
-                  />
+                  {fetchData && (
+                    <BiTrash
+                      sx={{mx: 3, cursor: 'pointer'}}
+                      title='Delete playlist'
+                      onClick={() =>
+                        openModal('playlist', name, deletePlaylist)
+                      }
+                    />
+                  )}
                 </p>
               </div>
               {details.videos && (

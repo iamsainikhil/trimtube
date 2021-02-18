@@ -8,7 +8,7 @@ const Toast = () => {
 
   useEffect(() => {
     if (show) {
-      toast.info(message, {
+      toast.dark(message, {
         onClose: () => {
           setShow(false)
         },
@@ -19,7 +19,7 @@ const Toast = () => {
 
   return (
     <ToastContainer
-      autoClose={2000}
+      autoClose={2500}
       closeOnClick
       newestOnTop
       pauseOnHover
