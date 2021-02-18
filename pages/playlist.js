@@ -14,7 +14,6 @@ import siteUrl from './../utils/siteUrl'
 import ConfirmationModal from '../components/ConfirmationModal'
 import ShareModal from './../components/ShareModal'
 import {ToastContext} from '../context/ToastContext'
-// import mergeImg from 'merge-img'
 
 export default function Playlist({name, info, image, fetchData}) {
   const router = useRouter()
@@ -237,14 +236,6 @@ export async function getServerSideProps(context) {
         created: dayjs().toISOString(),
         videos,
       }
-      const images = videos.map((v) => v.snippet.thumbnails.standard.url)
-      // mergeImg(images)
-      //   .then((img) => {
-      //     // Save image as file
-      //     img.write('/public/out.png', () => console.log('done'))
-      //   })
-      //   .catch((err) => console.error(err))
-
       return {
         props: {
           name,
