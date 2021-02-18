@@ -16,11 +16,30 @@ const PlaylistModal = ({data, start, end, open, close}) => {
   const [playlists, setPlaylists] = useState(null)
   const [showCreatePlaylist, setShowCreatePlaylist] = useState(false)
   const [playlistName, setPlaylistName] = useState('')
+  const [error, setError] = useState(null)
   const {setShow, setMessage} = useContext(ToastContext)
 
   const showToast = (message) => {
     setMessage(message)
     setShow(true)
+  }
+
+  const playlistsExists = (v) => {
+    if (v.trim()) {
+      if (localStorage.getItem('playlists')) {
+        const localPlaylists = JSON.parse(localStorage.getItem('playlists'))
+
+        if (localPlaylists[v]) {
+          setError(`Playlist with name ${v} already exists.`)
+        } else {
+          setError('')
+        }
+      } else {
+        setError('')
+      }
+    } else {
+      setError("Playlist name can't be empty!")
+    }
   }
 
   const createPlaylist = () => {
@@ -33,22 +52,19 @@ const PlaylistModal = ({data, start, end, open, close}) => {
       if (localStorage.getItem('playlists')) {
         const localPlaylists = JSON.parse(localStorage.getItem('playlists'))
 
-        if (localPlaylists[playlistName]) {
-          playlists = {
-            ...localPlaylists,
-          }
-        } else {
+        if (!localPlaylists[playlistName]) {
           playlists = {
             ...localPlaylists,
             ...playlists,
           }
+          setError('')
+          localStorage.setItem('playlists', JSON.stringify(playlists))
+          setPlaylists(Object.keys(playlists))
+          setPlaylistName('')
+          showToast(`Created ${playlistName} playlist`)
+          setShowCreatePlaylist(false)
         }
       }
-      localStorage.setItem('playlists', JSON.stringify(playlists))
-      setPlaylists(Object.keys(playlists))
-      setPlaylistName('')
-      showToast(`Created ${playlistName} playlist`)
-      setShowCreatePlaylist(false)
     }
   }
 
@@ -133,7 +149,9 @@ const PlaylistModal = ({data, start, end, open, close}) => {
           <div
             sx={{
               display: 'flex',
+              flexDirection: 'column',
               justifyContent: 'center',
+              alignItems: 'center',
               my: 3,
             }}>
             <input
@@ -154,8 +172,14 @@ const PlaylistModal = ({data, start, end, open, close}) => {
                 outline: 'none',
               }}
               value={playlistName}
-              onChange={(e) => setPlaylistName(e.target.value)}
+              onChange={(e) => {
+                setPlaylistName(e.target.value)
+                playlistsExists(e.target.value)
+              }}
             />
+            {error && (
+              <p sx={{mt: 0, color: 'dangerBorder', fontSize: 0}}>{error}</p>
+            )}
           </div>
           <div
             sx={{
@@ -169,6 +193,7 @@ const PlaylistModal = ({data, start, end, open, close}) => {
               text='Cancel'
               action={() => {
                 setPlaylistName('')
+                setError('')
                 setShowCreatePlaylist(false)
               }}
             />
@@ -177,6 +202,7 @@ const PlaylistModal = ({data, start, end, open, close}) => {
               hover={{bg: 'shade1', color: 'accent'}}
               text='Create'
               action={createPlaylist}
+              disabled={error !== ''}
             />
           </div>
         </Fragment>

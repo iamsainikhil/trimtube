@@ -1,11 +1,12 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {Fragment} from 'react'
-import {jsx, useThemeUI} from 'theme-ui'
+import {jsx} from 'theme-ui'
 
-const Button = ({primary, hover, text, action, children}) => {
+const Button = ({primary, hover, text, action, children, disabled = false}) => {
   return (
     <button
+      disabled={disabled}
       sx={{
         py: 2,
         px: 4,
@@ -18,7 +19,8 @@ const Button = ({primary, hover, text, action, children}) => {
         letterSpacing: '2px',
         border: 'none',
         borderRadius: '2rem',
-        cursor: 'pointer',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        pointerEvents: disabled ? 'none' : 'auto',
         '&:hover': {
           bg: `${hover.bg}`,
           color: `${hover.color}`,
