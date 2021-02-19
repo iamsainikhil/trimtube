@@ -18,10 +18,17 @@ const PlaylistModal = ({data, start, end, open, close}) => {
   const [playlistName, setPlaylistName] = useState('')
   const [error, setError] = useState(null)
   const {setShow, setMessage} = useContext(ToastContext)
+  const helperText =
+    'Playlist name should be a single alphanumeric word without any spaces, hyphens, underscores, and special characters.'
 
   const showToast = (message) => {
     setMessage(message)
     setShow(true)
+  }
+
+  const isValidName = (name) => {
+    const regex = /^[a-zA-Z0-9]*$/
+    return regex.test(name)
   }
 
   /**
@@ -37,10 +44,10 @@ const PlaylistModal = ({data, start, end, open, close}) => {
         if (localPlaylists[name]) {
           setError(`Playlist with name ${name} already exists.`)
         } else {
-          setError('')
+          setError(isValidName(name) ? '' : helperText)
         }
       } else {
-        setError('')
+        setError(isValidName(name) ? '' : helperText)
       }
     } else {
       setError("Playlist name can't be empty!")
@@ -74,6 +81,7 @@ const PlaylistModal = ({data, start, end, open, close}) => {
   }
 
   const afterOpenModal = () => {
+    setPlaylistName('')
     if (localStorage.getItem('playlists')) {
       setPlaylists(Object.keys(JSON.parse(localStorage.getItem('playlists'))))
     }
@@ -182,8 +190,31 @@ const PlaylistModal = ({data, start, end, open, close}) => {
                 playlistsExists(e.target.value)
               }}
             />
+            {!error && playlistName.length === 0 && (
+              <p
+                sx={{
+                  mt: 1,
+                  mx: 'auto',
+                  width: '70%',
+                  color: 'warningBorder',
+                  fontSize: 0,
+                  lineHeight: 1,
+                }}>
+                {helperText}
+              </p>
+            )}
             {error && (
-              <p sx={{mt: 0, color: 'dangerBorder', fontSize: 0}}>{error}</p>
+              <p
+                sx={{
+                  mt: 1,
+                  mx: 'auto',
+                  width: '70%',
+                  color: 'dangerBorder',
+                  fontSize: 0,
+                  lineHeight: 1,
+                }}>
+                {error}
+              </p>
             )}
           </div>
           <div

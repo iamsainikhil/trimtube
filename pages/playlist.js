@@ -19,6 +19,7 @@ export default function Playlist({name, info, image, fetchData}) {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [details, setDetails] = useState(undefined)
+  const [showSave, setShowSave] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [modalInfo, setModalInfo] = useState({
@@ -55,7 +56,7 @@ export default function Playlist({name, info, image, fetchData}) {
         showToast(`Playlist with name ${name} already exists`)
       } else {
         playlists[name] = details
-        localStorage.setItem('playlists', JSON.stringify(newPlaylists))
+        localStorage.setItem('playlists', JSON.stringify(playlists))
         showToast(`Added ${name} to playlists`)
       }
     } else {
@@ -65,6 +66,7 @@ export default function Playlist({name, info, image, fetchData}) {
       localStorage.setItem('playlists', JSON.stringify(newPlaylists))
       showToast(`Added ${name} to playlists`)
     }
+    setShowSave(false)
   }
 
   const deletePlaylist = () => {
@@ -124,6 +126,7 @@ export default function Playlist({name, info, image, fetchData}) {
       }
     } else {
       setDetails(info)
+      setShowSave(true)
       setLoading(false)
     }
     return () => {}
@@ -162,7 +165,7 @@ export default function Playlist({name, info, image, fetchData}) {
                   </span>
                 </p>
                 <p sx={{mt: 0, position: 'relative'}}>
-                  {!fetchData && (
+                  {showSave && (
                     <BiSave
                       sx={{mx: 3, cursor: 'pointer'}}
                       title='Save playlist'
@@ -176,7 +179,7 @@ export default function Playlist({name, info, image, fetchData}) {
                     aria-label='Share'
                     onClick={() => setShowShareModal(true)}
                   />
-                  {fetchData && (
+                  {!showSave && (
                     <BiTrash
                       sx={{mx: 3, cursor: 'pointer'}}
                       title='Delete playlist'
