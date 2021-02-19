@@ -24,13 +24,18 @@ const PlaylistModal = ({data, start, end, open, close}) => {
     setShow(true)
   }
 
-  const playlistsExists = (v) => {
-    if (v.trim()) {
+  /**
+   * Check if a playlist already exist  in the localStorage with the given name
+   * TODO: Allow duplicate creation of a playlist in future by appending "number" like "name-1", "name-2", etc.
+   * @param {String} name
+   */
+  const playlistsExists = (name) => {
+    if (name.trim()) {
       if (localStorage.getItem('playlists')) {
         const localPlaylists = JSON.parse(localStorage.getItem('playlists'))
 
-        if (localPlaylists[v]) {
-          setError(`Playlist with name ${v} already exists.`)
+        if (localPlaylists[name]) {
+          setError(`Playlist with name ${name} already exists.`)
         } else {
           setError('')
         }

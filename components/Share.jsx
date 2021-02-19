@@ -55,9 +55,8 @@ const Share = ({URL, videoName}) => {
 }
 
 Share.propTypes = {
-  videoURL: PropTypes.string,
+  URL: PropTypes.string,
   videoName: PropTypes.string,
-  hideShareText: PropTypes.bool,
 }
 
 export default Share

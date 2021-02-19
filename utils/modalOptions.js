@@ -1,3 +1,8 @@
+/**
+ * compute custom styles for react-modal
+ * @param {Object} theme (theme-ui object)
+ * @param {String} colorMode (dark or default)
+ */
 const modalOptions = (theme, colorMode) => {
   return {
     overlay: {

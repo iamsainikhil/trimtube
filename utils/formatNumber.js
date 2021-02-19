@@ -1,5 +1,7 @@
+/**
+ * @param {Number} value
+ */
 const formatNumber = (value) => {
-  const units = ['K', 'M', 'B']
   if (value.length <= 3) return value
 
   if (value.length > 3 && value.length < 7) {

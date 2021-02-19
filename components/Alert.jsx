@@ -1,6 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
+import PropTypes from 'prop-types'
 
 const Alert = ({type, message}) => {
   return (
@@ -22,6 +23,11 @@ const Alert = ({type, message}) => {
       {message}
     </div>
   )
+}
+
+Alert.propTypes = {
+  type: PropTypes.string,
+  message: PropTypes.string,
 }
 
 export default Alert

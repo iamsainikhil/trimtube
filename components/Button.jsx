@@ -2,6 +2,7 @@
 /** @jsx jsx */
 import {Fragment} from 'react'
 import {jsx} from 'theme-ui'
+import PropTypes from 'prop-types'
 
 const Button = ({primary, hover, text, action, children, disabled = false}) => {
   return (
@@ -42,6 +43,13 @@ const Button = ({primary, hover, text, action, children, disabled = false}) => {
       {children ? <Fragment>{children}</Fragment> : text}
     </button>
   )
+}
+
+Button.propTypes = {
+  children: PropTypes.node,
+  primary: PropTypes.object,
+  hover: PropTypes.object,
+  action: PropTypes.func,
 }
 
 export default Button

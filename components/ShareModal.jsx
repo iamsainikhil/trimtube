@@ -93,7 +93,7 @@ const ShareModal = ({open, close, url, name}) => {
               p: 1,
               maxWidth: '80%',
               overflowX: 'auto',
-              whiteSpace: 'pre',
+              whiteSpace: 'nowrap',
             }}>
             {URL}
           </p>

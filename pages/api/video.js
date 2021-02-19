@@ -1,6 +1,5 @@
-// process.env.YOUTUBE_API_V3
 import axios from 'axios'
-import videoData from '../../constants/videoData'
+// import videoData from '../../constants/videoData'
 
 const video = async (req, res) => {
   const {videoId} = req.query

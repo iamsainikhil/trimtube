@@ -100,7 +100,7 @@ export default function Playlist({name, info, image, fetchData}) {
     playlists[name].videos = videos
     localStorage.setItem('playlists', JSON.stringify(playlists))
     closeModal()
-    showToast(`Deleted ${v.name || v.id} from ${name} playlist`)
+    showToast(`Removed ${v.name || v.id} from ${name} playlist`)
     setDetails(playlists[name])
   }
 

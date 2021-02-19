@@ -15,12 +15,18 @@ const getSeconds = (time) => {
   }
 }
 
+/**
+ * format time based on type
+ * @param {String | Number | null} time
+ * @param {String} type
+ */
 const formatTime = (time, type) => {
   if (type === 'Minutes') {
     return getMinutes(time)
   } else if (type === 'Seconds') {
     return getSeconds(time)
   } else {
+    // return string for use in VideoDetails card on a playlist page
     return `${getMinutes(time)}:${getSeconds(time)}`
   }
 }

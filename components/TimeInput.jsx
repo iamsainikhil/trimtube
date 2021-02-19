@@ -1,7 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
+import PropTypes from 'prop-types'
 
+/**
+ * @param {String} name (Start or End)
+ * @param {String} type (Minutes or Seconds)
+ * @param {String | Number} time
+ * @param {Function} valueChange
+ */
 const TimeInput = ({name, type, time, valueChange}) => {
   return (
     <div
@@ -37,6 +44,11 @@ const TimeInput = ({name, type, time, valueChange}) => {
       </label>
     </div>
   )
+}
+
+TimeInput.propTypes = {
+  name: PropTypes.string,
+  type: PropTypes.string,
 }
 
 export default TimeInput

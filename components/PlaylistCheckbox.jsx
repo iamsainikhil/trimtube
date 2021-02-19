@@ -13,6 +13,11 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
     setShow(true)
   }
 
+  /**
+   * Check if the video exists in the given playlist
+   * @param {String} name
+   * @returns {Boolean}
+   */
   const videoExistsInPlaylist = (name) => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
     if (playlists[name]?.videos) {

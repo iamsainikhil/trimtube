@@ -1,7 +1,5 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-// process.env.YOUTUBE_API_V3
 import axios from 'axios'
-import SearchData from '../../constants/SearchData'
+// import SearchData from '../../constants/SearchData'
 
 const search = async (req, res) => {
   const {searchTerm} = req.query
