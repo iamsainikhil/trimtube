@@ -43,6 +43,7 @@ const Info = ({data, start, end}) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'flex-start',
+                maxWidth: '70%',
               }}>
               <h3
                 sx={{

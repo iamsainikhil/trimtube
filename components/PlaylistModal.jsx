@@ -69,14 +69,15 @@ const PlaylistModal = ({data, start, end, open, close}) => {
             ...localPlaylists,
             ...playlists,
           }
-          setError('')
-          localStorage.setItem('playlists', JSON.stringify(playlists))
-          setPlaylists(Object.keys(playlists))
-          setPlaylistName('')
-          showToast(`Created ${playlistName} playlist`)
-          setShowCreatePlaylist(false)
         }
       }
+
+      setError('')
+      localStorage.setItem('playlists', JSON.stringify(playlists))
+      setPlaylists(Object.keys(playlists))
+      setPlaylistName('')
+      showToast(`Created ${playlistName} playlist`)
+      setShowCreatePlaylist(false)
     }
   }
 

@@ -53,7 +53,16 @@ export default function Playlist({name, info, image, fetchData}) {
     if (localStorage.getItem('playlists')) {
       const playlists = JSON.parse(localStorage.getItem('playlists'))
       if (playlists[name]) {
-        showToast(`Playlist with name ${name} already exists`)
+        playlists[name] = {
+          name,
+          created: playlists[name].created,
+          videos: [...details.videos, ...playlists[name].videos],
+        }
+        localStorage.setItem('playlists', JSON.stringify(playlists))
+        setDetails(playlists[name])
+        showToast(
+          `Merged videos since a playlist with name ${name} already exists.`
+        )
       } else {
         playlists[name] = details
         localStorage.setItem('playlists', JSON.stringify(playlists))
@@ -107,10 +116,11 @@ export default function Playlist({name, info, image, fetchData}) {
   }
 
   const getShareURL = () => {
-    const videos = details.videos.map((v) => v.id)
-    const videoIds = videos.join('-')
-    // console.log(`${router.asPath}-${videoIds}`)
-    return `${router.asPath}-${videoIds}`
+    const videoIds = details.videos.map((v) => v.id).join('_')
+    const startTimes = details.videos.map((v) => v.start || 0).join('-')
+    const endTimes = details.videos.map((v) => v.end || 0).join('-')
+    const created = details.created
+    return `${router.pathname}?id=${name}_${videoIds}&s=${startTimes}&e=${endTimes}&dt=${created}`
   }
 
   useEffect(() => {
@@ -220,11 +230,10 @@ export default function Playlist({name, info, image, fetchData}) {
 }
 
 export async function getServerSideProps(context) {
-  const {id} = context.query
-  let image = null
+  const {id, s, e, dt} = context.query
   let info = undefined
-  if (id && id.includes('-')) {
-    const [name, ...videoIds] = id.split('-')
+  if (id && id.includes('_')) {
+    const [name, ...videoIds] = id.split('_')
     let videos = []
     try {
       const baseURL = context.req ? siteUrl() : ''
@@ -234,10 +243,19 @@ export async function getServerSideProps(context) {
           baseURL,
         })
       ).data.items
+      const startTimes = s.split('-')
+      const endTimes = e.split('-')
+      const updatedVideos = videos.map((v, i) => {
+        return {
+          ...v,
+          start: startTimes[i],
+          end: endTimes[i],
+        }
+      })
       info = {
         name,
-        created: dayjs().toISOString(),
-        videos,
+        created: dt || dayjs().toISOString(),
+        videos: updatedVideos,
       }
       return {
         props: {
@@ -251,8 +269,6 @@ export async function getServerSideProps(context) {
       return {
         props: {
           name,
-          image,
-          info,
           fetchData: true,
         },
       }
@@ -261,8 +277,6 @@ export async function getServerSideProps(context) {
     return {
       props: {
         name: id,
-        image,
-        info,
         fetchData: true,
       },
     }
