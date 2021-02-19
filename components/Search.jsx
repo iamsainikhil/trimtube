@@ -22,6 +22,7 @@ const Search = ({searchTerm, updateSearch}) => {
           borderRadius: '2.5rem',
           height: '2rem',
           width: '75%',
+          maxWidth: '1280px',
           p: 4,
           fontFamily: 'light',
           fontSize: [2, 3, 4],
