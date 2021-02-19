@@ -34,8 +34,8 @@ export default function Video({data, error, title, image}) {
   }
 
   useEffect(() => {
-    setStart(query.start ? Number(Number(query.start)) : null)
-    setEnd(query.end ? Number(Number(query.end)) : null)
+    setStart(query.start ? Number(query.start) : null)
+    setEnd(query.end ? Number(query.end) : null)
     return () => {}
   }, [query.start, query.end])
 
@@ -85,7 +85,7 @@ export default function Video({data, error, title, image}) {
   )
 }
 
-Video.getInitialProps = async function (context) {
+export async function getServerSideProps(context) {
   let data = undefined
   let error = undefined
   let title = null
@@ -100,8 +100,19 @@ Video.getInitialProps = async function (context) {
     ).data
     title = data.items[0].snippet.title
     image = data.items[0].snippet.thumbnails.standard.url
+
+    return {
+      props: {
+        data,
+        title,
+        image,
+      },
+    }
   } catch (err) {
-    error = err
+    return {
+      props: {
+        error: err.message || err,
+      },
+    }
   }
-  return {data, error, title, image}
 }
