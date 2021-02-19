@@ -25,24 +25,32 @@ const Info = ({data, start, end}) => {
   }
 
   return (
-    <div>
+    <div sx={{mx: 'auto', px: 2, maxWidth: '640px', width: '100%'}}>
       {data.items && (
         <Fragment>
-          <div sx={{my: 3, position: 'relative'}}>
-            <h3
-              sx={{
-                mb: 1,
-                fontSize: [2, 3],
-              }}>
-              {he.decode(data.items[0].snippet.title)}
-            </h3>
+          <div
+            sx={{
+              mt: '-0.5rem',
+              mb: 2,
+              display: 'flex',
+              flexFlow: 'row wrap',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
             <div
               sx={{
                 display: 'flex',
-                flexFlow: 'row wrap',
-                justifyContent: 'space-between',
+                flexDirection: 'column',
+                justifyContent: 'center',
                 alignItems: 'flex-start',
               }}>
+              <h3
+                sx={{
+                  mb: 1,
+                  fontSize: [2, 3],
+                }}>
+                {he.decode(data.items[0].snippet.title)}
+              </h3>
               <p
                 sx={{
                   mt: 0,
@@ -52,15 +60,15 @@ const Info = ({data, start, end}) => {
                 {formatNumber(data.items[0].statistics.viewCount)} views |{' '}
                 {dayjs(data.items[0].snippet.publishedAt).format('MMM D, YYYY')}
               </p>
-              <div
-                sx={{
-                  display: 'flex',
-                  flexFlow: 'row wrap',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  mt: '-1.25rem',
-                }}>
-                {/* <p sx={{mx: 2}}>
+            </div>
+            <div
+              sx={{
+                display: 'flex',
+                flexFlow: 'row wrap',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              {/* <p sx={{mx: 2}}>
                   <BiLike
                     sx={{fontSize: [2], mb: '-0.2rem'}}
                     title='Likes'
@@ -71,7 +79,7 @@ const Info = ({data, start, end}) => {
                     {formatNumber(data.items[0].statistics.likeCount)}
                   </span>
                 </p> */}
-                {/* <p sx={{mx: 2}}>
+              {/* <p sx={{mx: 2}}>
                   <BiDislike
                     sx={{fontSize: [2], mb: '-0.2rem'}}
                     title='Dislikes'
@@ -82,28 +90,37 @@ const Info = ({data, start, end}) => {
                     {formatNumber(data.items[0].statistics.dislikeCount)}
                   </span>
                 </p> */}
-                <p sx={{mx: 2}}>
-                  <BiShareAlt
-                    sx={{fontSize: 3, mt: 1, cursor: 'pointer'}}
-                    title='Share'
-                    aria-label='Share'
-                    onClick={() => {
-                      openModal('share')
-                    }}
-                  />
-                </p>
-                <p sx={{mx: 2}}>
-                  <MdPlaylistAdd
-                    sx={{fontSize: 4, mt: 1, cursor: 'pointer'}}
-                    title='Add to Playlist'
-                    aria-label='Add to Playlist'
-                    onClick={() => {
-                      openModal('playlist')
-                    }}
-                  />
-                </p>
-              </div>
+              <p sx={{mx: 2}}>
+                <BiShareAlt
+                  sx={{fontSize: 3, mt: 1, cursor: 'pointer'}}
+                  title='Share'
+                  aria-label='Share'
+                  onClick={() => {
+                    openModal('share')
+                  }}
+                />
+              </p>
+              <p sx={{mx: 2}}>
+                <MdPlaylistAdd
+                  sx={{fontSize: 4, mt: 1, cursor: 'pointer'}}
+                  title='Add to Playlist'
+                  aria-label='Add to Playlist'
+                  onClick={() => {
+                    openModal('playlist')
+                  }}
+                />
+              </p>
             </div>
+            {/* <div
+              sx={{
+                display: 'flex',
+                flexFlow: 'row wrap',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+              }}>
+              
+              
+            </div> */}
           </div>
 
           <ShareModal
