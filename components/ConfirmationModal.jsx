@@ -6,7 +6,11 @@ import {IoClose} from 'react-icons/io5'
 import Button from './Button'
 import modalOptions from '../utils/modalOptions'
 
-const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
+const ConfirmationModal = ({
+  open,
+  close,
+  info: {name, type, message, action},
+}) => {
   const {theme, colorMode} = useThemeUI()
 
   const afterOpenModal = () => {}
@@ -19,7 +23,7 @@ const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
       onAfterOpen={afterOpenModal}
       onRequestClose={close}
       style={customStyles}
-      contentLabel={`${type} ${name} delete confirmation modal`}
+      contentLabel={`${type} ${name} confirmation modal`}
       ariaHideApp={false}>
       {/* <p
         sx={{
@@ -53,7 +57,7 @@ const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
           m: '2rem auto 1rem auto',
         }}>
         <p>
-          Are you sure want to delete {type} {name}?
+          {message ? message : `Are you sure want to delete ${type} ${name}?`}
         </p>
       </div>
       {/* <hr sx={{mx: 0, p: 0}} /> */}
@@ -72,7 +76,7 @@ const ConfirmationModal = ({open, close, info: {name, type, action}}) => {
         <Button
           primary={{bg: 'dangerBorder', color: 'primary'}}
           hover={{bg: 'danger', color: 'secondary'}}
-          text='Delete'
+          text={message ? 'Merge' : 'Delete'}
           action={action}
         />
       </div>

@@ -18,17 +18,10 @@ const PlaylistModal = ({data, start, end, open, close}) => {
   const [playlistName, setPlaylistName] = useState('')
   const [error, setError] = useState(null)
   const {setShow, setMessage} = useContext(ToastContext)
-  const helperText =
-    'Playlist name should be a single alphanumeric word without any spaces, hyphens, underscores, and special characters.'
 
   const showToast = (message) => {
     setMessage(message)
     setShow(true)
-  }
-
-  const isValidName = (name) => {
-    const regex = /^[a-zA-Z0-9]*$/
-    return regex.test(name)
   }
 
   /**
@@ -44,10 +37,10 @@ const PlaylistModal = ({data, start, end, open, close}) => {
         if (localPlaylists[name]) {
           setError(`Playlist with name ${name} already exists.`)
         } else {
-          setError(isValidName(name) ? '' : helperText)
+          setError('')
         }
       } else {
-        setError(isValidName(name) ? '' : helperText)
+        setError('')
       }
     } else {
       setError("Playlist name can't be empty!")
@@ -191,19 +184,6 @@ const PlaylistModal = ({data, start, end, open, close}) => {
                 playlistsExists(e.target.value)
               }}
             />
-            {!error && playlistName.length === 0 && (
-              <p
-                sx={{
-                  mt: 1,
-                  mx: 'auto',
-                  width: '70%',
-                  color: 'warningBorder',
-                  fontSize: 0,
-                  lineHeight: 1,
-                }}>
-                {helperText}
-              </p>
-            )}
             {error && (
               <p
                 sx={{

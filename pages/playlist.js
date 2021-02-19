@@ -39,34 +39,41 @@ export default function Playlist({name, info, image, fetchData}) {
     return `${value} ${text}s`
   }
 
-  const openModal = (type, name, action) => {
-    setModalInfo({type, name, action})
+  const openModal = (type, name, message, action) => {
+    setModalInfo({type, name, message, action})
     setShowModal(true)
   }
 
   const closeModal = () => {
-    setModalInfo({type: '', name: '', action: null})
+    setModalInfo({type: '', name: '', message: null, action: null})
     setShowModal(false)
+  }
+
+  const mergeVideos = () => {
+    const playlists = JSON.parse(localStorage.getItem('playlists'))
+    playlists[name] = {
+      name,
+      created: playlists[name].created,
+      videos: [...details.videos, ...playlists[name].videos],
+    }
+    localStorage.setItem('playlists', JSON.stringify(playlists))
+    setDetails(playlists[name])
+    setShowModal(false)
+    showToast(`Merged videos into the ${name} playlist`)
+    setShowSave(false)
   }
 
   const savePlaylist = () => {
     if (localStorage.getItem('playlists')) {
       const playlists = JSON.parse(localStorage.getItem('playlists'))
       if (playlists[name]) {
-        playlists[name] = {
-          name,
-          created: playlists[name].created,
-          videos: [...details.videos, ...playlists[name].videos],
-        }
-        localStorage.setItem('playlists', JSON.stringify(playlists))
-        setDetails(playlists[name])
-        showToast(
-          `Merged videos since a playlist with name ${name} already exists.`
-        )
+        const message = `A playlist with name ${name} already exists. Are you sure want to merge videos in this playlist with the existing one?`
+        openModal('playlist', name, message, mergeVideos)
       } else {
         playlists[name] = details
         localStorage.setItem('playlists', JSON.stringify(playlists))
         showToast(`Added ${name} to playlists`)
+        setShowSave(false)
       }
     } else {
       let newPlaylists = {
@@ -74,8 +81,10 @@ export default function Playlist({name, info, image, fetchData}) {
       }
       localStorage.setItem('playlists', JSON.stringify(newPlaylists))
       showToast(`Added ${name} to playlists`)
+      setShowSave(false)
     }
-    setShowSave(false)
+    // update the URL to have only playlist name as the query without reloading the page
+    router.push(`/playlist?id=${name}`, undefined, {shallow: true})
   }
 
   const deletePlaylist = () => {
@@ -88,7 +97,7 @@ export default function Playlist({name, info, image, fetchData}) {
   }
 
   const deleteVideoModal = (data) => {
-    openModal('video', data.name, () => {
+    openModal('video', data.name, null, () => {
       deleteVideo(data)
     })
   }
@@ -120,7 +129,7 @@ export default function Playlist({name, info, image, fetchData}) {
     const startTimes = details.videos.map((v) => v.start || 0).join('-')
     const endTimes = details.videos.map((v) => v.end || 0).join('-')
     const created = details.created
-    return `${router.pathname}?id=${name}_${videoIds}&s=${startTimes}&e=${endTimes}&dt=${created}`
+    return `${router.pathname}?id=${name}&v=${videoIds}&s=${startTimes}&e=${endTimes}&dt=${created}`
   }
 
   useEffect(() => {
@@ -194,7 +203,7 @@ export default function Playlist({name, info, image, fetchData}) {
                       sx={{mx: 3, cursor: 'pointer'}}
                       title='Delete playlist'
                       onClick={() =>
-                        openModal('playlist', name, deletePlaylist)
+                        openModal('playlist', name, null, deletePlaylist)
                       }
                     />
                   )}
@@ -230,10 +239,10 @@ export default function Playlist({name, info, image, fetchData}) {
 }
 
 export async function getServerSideProps(context) {
-  const {id, s, e, dt} = context.query
+  const {id: name, v, s, e, dt} = context.query
   let info = undefined
-  if (id && id.includes('_')) {
-    const [name, ...videoIds] = id.split('_')
+  if (name && v) {
+    const videoIds = v.split('_')
     let videos = []
     try {
       const baseURL = context.req ? siteUrl() : ''
@@ -243,13 +252,13 @@ export async function getServerSideProps(context) {
           baseURL,
         })
       ).data.items
-      const startTimes = s.split('-')
-      const endTimes = e.split('-')
-      const updatedVideos = videos.map((v, i) => {
+      const startTimes = s ? s.split('-') : []
+      const endTimes = e ? e.split('-') : []
+      const updatedVideos = videos.map((video, i) => {
         return {
-          ...v,
-          start: startTimes[i],
-          end: endTimes[i],
+          ...video,
+          start: startTimes.length ? startTimes[i] : 0,
+          end: endTimes.length ? endTimes[i] : 0,
         }
       })
       info = {
@@ -276,7 +285,7 @@ export async function getServerSideProps(context) {
   } else {
     return {
       props: {
-        name: id,
+        name,
         fetchData: true,
       },
     }

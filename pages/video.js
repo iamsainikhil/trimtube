@@ -87,7 +87,6 @@ export default function Video({data, error, title, image}) {
 
 export async function getServerSideProps(context) {
   let data = undefined
-  let error = undefined
   let title = null
   let image = null
   const baseURL = context.req ? siteUrl() : ''
