@@ -1,5 +1,5 @@
 import axios from 'axios'
-import videoData from '../../constants/videoData'
+// import videoData from '../../constants/videoData'
 
 const video = async (req, res) => {
   const {id} = req.query
@@ -14,7 +14,7 @@ const video = async (req, res) => {
     }
     res.send(error)
   }
-  //res.status(200).json(videoData)
+  // res.status(200).json(videoData)
 }
 
 export default video

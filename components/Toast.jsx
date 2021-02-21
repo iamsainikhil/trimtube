@@ -22,7 +22,8 @@ const Toast = () => {
 
   return (
     <ToastContainer
-      autoClose={2500}
+      position='bottom-left'
+      autoClose={3000}
       closeOnClick
       newestOnTop
       pauseOnHover
