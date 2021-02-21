@@ -2,6 +2,7 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
 import {useState, useEffect} from 'react'
+import {useRouter} from 'next/router'
 import axios from 'axios'
 import Search from '../components/Search'
 import Results from '../components/Results'
@@ -9,6 +10,7 @@ import Loader from '../components/Loader'
 import Layout from '../components/Layout'
 
 const Input = () => {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [data, setData] = useState(undefined)
   const [error, setError] = useState(undefined)
@@ -35,6 +37,15 @@ const Input = () => {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value)
   }
+
+  useEffect(() => {
+    window.addEventListener('appinstalled', () => {
+      const {pathname, search} = window.location
+      alert(`${pathname}${search}`)
+      router.push(`${pathname}${search}`)
+    })
+    return () => {}
+  }, [])
 
   useEffect(() => {
     if (searchTerm.trim()) {
