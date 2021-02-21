@@ -35,6 +35,11 @@ const PlaylistModal = ({data, start, end, open, close}) => {
         const localPlaylists = JSON.parse(localStorage.getItem('playlists'))
 
         if (localPlaylists[name]) {
+          trackGAEvent(
+            'playlist creation',
+            `Playlist with name ${name} already exists.`,
+            'errors'
+          )
           setError(`Playlist with name ${name} already exists.`)
         } else {
           setError('')
@@ -43,6 +48,11 @@ const PlaylistModal = ({data, start, end, open, close}) => {
         setError('')
       }
     } else {
+      trackGAEvent(
+        'playlist creation',
+        "Playlist name can't be empty!",
+        'errors'
+      )
       setError("Playlist name can't be empty!")
     }
   }

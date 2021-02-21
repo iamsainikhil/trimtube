@@ -7,6 +7,7 @@ import formatTime from '../utils/formatTime'
 import getTime from '../utils/getTime'
 import {BiCut} from 'react-icons/bi'
 import Button from './Button'
+import {trackGAEvent} from '../utils/googleAnalytics'
 
 const TrimControls = ({start, end, onTrim}) => {
   const [startTrimMinutes, setStartTrimMinutes] = useState(
@@ -37,6 +38,10 @@ const TrimControls = ({start, end, onTrim}) => {
       start: getTime(startTrimMinutes, startTrimSeconds),
       end: endTime,
     }
+    trackGAEvent(
+      'video trim',
+      `start: ${trimValues.start} end: ${trimValues.end}`
+    )
     onTrim(trimValues)
   }
 

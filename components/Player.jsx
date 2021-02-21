@@ -1,4 +1,5 @@
 import YouTube from 'react-youtube'
+import {trackGAEvent} from '../utils/googleAnalytics'
 
 const Player = ({videoId, start, end}) => {
   const opts = {
@@ -23,6 +24,7 @@ const Player = ({videoId, start, end}) => {
   const _onReady = (event) => {
     // access to player in all event handlers via event.target
     // console.log(event.target.h.outerHTML, opts.playerVars)
+    trackGAEvent('player', `loaded player for ${videoId}`, 'player ready')
     event.target.playVideo()
   }
 

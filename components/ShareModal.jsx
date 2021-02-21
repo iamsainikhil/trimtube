@@ -9,6 +9,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {useContext} from 'react'
 import {ToastContext} from '../context/ToastContext'
 import siteUrl from '../utils/siteUrl'
+import {trackGAEvent} from '../utils/googleAnalytics'
 
 const ShareModal = ({open, close, url, name}) => {
   const {theme, colorMode} = useThemeUI()
@@ -22,6 +23,7 @@ const ShareModal = ({open, close, url, name}) => {
   options.content.maxWidth = '550px'
 
   const copyLink = (link) => {
+    trackGAEvent('copy', `copied ${link} to clipboard`, 'copy button click')
     setMessage('Video link copied to clipboard')
     setShow(true)
   }

@@ -10,6 +10,7 @@ import {MdPlaylistAdd} from 'react-icons/md'
 import formatNumber from '../utils/formatNumber'
 import PlaylistModal from './PlaylistModal'
 import ShareModal from './ShareModal'
+import {trackGAEvent} from '../utils/googleAnalytics'
 
 const Info = ({data, start, end}) => {
   const {asPath: URL} = useRouter()
@@ -22,6 +23,8 @@ const Info = ({data, start, end}) => {
     } else {
       setShowShareModal(true)
     }
+    console.log(`clicked on ${URL} page ${type} icon`)
+    trackGAEvent(type, `clicked on ${URL} page ${type} icon`, 'icon click')
   }
 
   return (
