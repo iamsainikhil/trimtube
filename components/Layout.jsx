@@ -9,6 +9,7 @@ import routeURL from './../utils/routeURL'
 const Layout = ({title, pathUrl, page, description, image, children}) => {
   const URL = siteUrl(pathUrl || routeURL())
   const siteImage = image || siteUrl('/site_image.png')
+
   return (
     <>
       <Head
