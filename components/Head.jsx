@@ -68,7 +68,8 @@ const Head = ({
           href='/android-chrome-192x192.png'
         />
         <meta name='apple-mobile-web-app-capable' content='yes' />
-        <link rel='manifest' href='/site.webmanifest' />
+        {/* dynamic update of start_url in manifest json */}
+        <link rel='manifest' href={`/api/manifest?url=${pathUrl}`} />
         <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#333' />
         <meta name='msapplication-TileColor' content='#000' />
         <meta name='theme-color' content='#000' />

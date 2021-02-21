@@ -60,7 +60,9 @@ export default function Video({data, error, title, image}) {
           {error && (
             <Alert
               type='danger'
-              message={`Unable to show video details and the controls to save this video to a playlist. Something went wrong in fetching the information of videoId ${videoId}`}
+              message={`Unable to show video details and the controls to save this video to a playlist. Something went wrong in fetching the information of videoId ${
+                videoId || ''
+              }`}
             />
           )}
           {data && <Info data={data} start={start} end={end} />}
@@ -83,29 +85,35 @@ export default function Video({data, error, title, image}) {
 
 export async function getServerSideProps(context) {
   const baseURL = context.req ? siteUrl() : ''
-  try {
-    const {data} = await axios.get('/api/video', {
-      params: {id: context.query.id},
-      baseURL,
-    })
-    const {thumbnails} = data.items[0].snippet
-    const {title} = data.items[0].snippet
-    const image = thumbnails['standard']
-      ? thumbnails.standard.url
-      : thumbnails.high.url
+  if (context.query.id) {
+    try {
+      const {data} = await axios.get('/api/video', {
+        params: {id: context.query.id},
+        baseURL,
+      })
+      const {thumbnails} = data.items[0].snippet
+      const {title} = data.items[0].snippet
+      const image = thumbnails['standard']
+        ? thumbnails.standard.url
+        : thumbnails.high.url
 
-    return {
-      props: {
-        data,
-        title,
-        image,
-      },
+      return {
+        props: {
+          data,
+          title,
+          image,
+        },
+      }
+    } catch (err) {
+      return {
+        props: {
+          error: err.message || err,
+        },
+      }
     }
-  } catch (err) {
+  } else {
     return {
-      props: {
-        error: err.message || err,
-      },
+      props: {},
     }
   }
 }

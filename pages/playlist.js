@@ -239,8 +239,9 @@ export default function Playlist({name, info, image, fetchData}) {
 }
 
 export async function getServerSideProps(context) {
-  const {id: name, v, s, e, dt} = context.query
+  const {id, v, s, e, dt} = context.query
   let info = undefined
+  const name = id || null
   if (name && v) {
     const videoIds = v.split('_')
     let videos = []
