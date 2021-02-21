@@ -8,6 +8,7 @@ import relativeTimeString from '../utils/relativeTimeString'
 import formatNumber from '../utils/formatNumber'
 import truncateText from '../utils/truncateText'
 import formatTime from '../utils/formatTime'
+import {FiPlay} from 'react-icons/fi'
 
 const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
   const title = he.decode(snippet.title)
@@ -15,7 +16,7 @@ const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
 
   return (
     <Fragment>
-      <div style={{overflow: 'hidden'}}>
+      <div style={{overflow: 'hidden', position: 'relative'}}>
         <Image
           src={snippet.thumbnails.high.url}
           alt={title}
@@ -25,6 +26,30 @@ const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
           height='200'
           className='video-thumbnail'
         />
+        <p
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: ' flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <FiPlay
+            sx={{
+              border: 'none',
+              outline: 'none',
+              cursor: 'pointer',
+              fontSize: 6,
+              pl: 2,
+              bg: 'background',
+              borderRadius: '25px',
+            }}
+            title='Play video'
+          />
+        </p>
       </div>
       <div
         sx={{
