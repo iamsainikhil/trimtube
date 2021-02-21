@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
 import {useState, useEffect} from 'react'
-import useFirstRender from '../hooks/firstRender'
 import axios from 'axios'
 import Search from '../components/Search'
 import Results from '../components/Results'
@@ -14,24 +13,18 @@ const Input = () => {
   const [data, setData] = useState(undefined)
   const [error, setError] = useState(undefined)
   const [loading, setLoading] = useState(false)
-  const isFirstRender = useFirstRender()
 
   const fetchResults = () => {
-    if (searchTerm.trim()) {
-      setLoading(true)
-      axios
-        .get('/api/search', {params: {searchTerm}})
-        .then((res) => {
-          updateDataError(res.data, undefined)
-        })
-        .catch((error) => {
-          updateDataError(undefined, error)
-        })
-        .finally(() => setLoading(false))
-    } else {
-      setLoading(false)
-      updateDataError(undefined, 'No videos found!')
-    }
+    setLoading(true)
+    axios
+      .get('/api/search', {params: {searchTerm}})
+      .then((res) => {
+        updateDataError(res.data, undefined)
+      })
+      .catch((error) => {
+        updateDataError(undefined, error)
+      })
+      .finally(() => setLoading(false))
   }
 
   const updateDataError = (data, error) => {
@@ -44,7 +37,7 @@ const Input = () => {
   }
 
   useEffect(() => {
-    if (!isFirstRender) {
+    if (searchTerm.trim()) {
       fetchResults()
     }
     return () => {}
@@ -53,6 +46,15 @@ const Input = () => {
   return (
     <Layout title='Search'>
       <div sx={{bg: 'background'}}>
+        <h3
+          sx={{
+            textAlign: 'center',
+            mt: 0,
+            mb: 4,
+            fontSize: [3, 4, 5],
+          }}>
+          Search
+        </h3>
         <Search searchTerm={searchTerm} updateSearch={handleSearch} />
         {loading ? <Loader /> : <Results data={data} error={error} />}
       </div>

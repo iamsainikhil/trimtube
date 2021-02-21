@@ -15,7 +15,7 @@ const Results = ({data, error}) => {
               <h3
                 sx={{
                   textAlign: 'center',
-                  my: 4,
+                  my: 5,
                   fontSize: [3, 4, 5],
                 }}>
                 Videos
