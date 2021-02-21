@@ -15,6 +15,7 @@ const Layout = ({title, pathUrl, page, description, image, children}) => {
   useEffect(() => {
     window.addEventListener('appinstalled', () => {
       const {pathname, search} = window.location
+      alert(`${pathname}${search}`)
       router.push(`${pathname}${search}`)
     })
     return () => {}

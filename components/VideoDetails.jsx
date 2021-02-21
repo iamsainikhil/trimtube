@@ -43,7 +43,7 @@ const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
               outline: 'none',
               cursor: 'pointer',
               fontSize: 6,
-              pl: 2,
+              pl: 1,
               py: 2,
               bg: 'background',
               borderRadius: '50%',
