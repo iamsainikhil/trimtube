@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import PropTypes from 'prop-types'
 import Head from '../components/Head'
 import Header from '../components/Header'
@@ -9,6 +10,13 @@ import routeURL from './../utils/routeURL'
 const Layout = ({title, pathUrl, page, description, image, children}) => {
   const URL = siteUrl(pathUrl || routeURL())
   const siteImage = image || siteUrl('/site_image.png')
+
+  useEffect(() => {
+    window.addEventListener('appinstalled', (evt) => {
+      window.location.replace(window.location.href)
+    })
+    return () => {}
+  }, [])
 
   return (
     <>
