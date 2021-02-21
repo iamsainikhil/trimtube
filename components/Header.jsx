@@ -48,7 +48,14 @@ const Header = () => {
                     marginTop: '0.8rem',
                     cursor: 'pointer',
                   }}
-                  onClick={() => router.push('/')}
+                  onClick={() => {
+                    trackGAEvent(
+                      'search',
+                      `clicked on search icon`,
+                      'icon click'
+                    )
+                    router.push('/')
+                  }}
                 />
               </p>
             ) : null}

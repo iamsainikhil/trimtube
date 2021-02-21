@@ -74,6 +74,7 @@ const Footer = () => {
             sx={{
               color: 'text',
               marginBottom: '-0.25rem',
+              cursor: 'help',
             }}
             aria-label='NextJS'
             title='NextJS'

@@ -93,7 +93,11 @@ const Icon = ({name, url, style}) => {
       aria-label={name}
       title={name}
       onClick={() =>
-        trackGAEvent('social icons', `clicked on ${name} link`, 'icon click')
+        trackGAEvent(
+          'social icons',
+          `clicked on ${name} link for ${url}`,
+          'icon click'
+        )
       }>
       {renderIcon()}
     </a>
