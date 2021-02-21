@@ -30,7 +30,7 @@ const Search = ({searchTerm, updateSearch}) => {
         }}
         minLength={1}
         debounceTimeout={300}
-        placeholder='Search or paste a youtube video link'
+        placeholder='Type something or paste a youtube video link'
         value={searchTerm}
         onChange={updateSearch}
       />

@@ -39,12 +39,14 @@ const Input = () => {
   }
 
   useEffect(() => {
-    if (window.navigator.standalone) {
+    if (window.matchMedia('(display-mode: standalone)').matches) {
       const {pathname, search} = window.location
       alert(`${pathname}${search}`)
       router.push(`${pathname}${search}`)
     } else {
-      alert(router.query.feature)
+      if (router.query.feature) {
+        alert(router.query.feature)
+      }
     }
     return () => {}
   }, [])
