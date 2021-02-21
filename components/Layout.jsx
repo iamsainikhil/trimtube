@@ -1,19 +1,21 @@
 import {useEffect} from 'react'
+import {useRouter} from 'next/router'
 import PropTypes from 'prop-types'
 import Head from '../components/Head'
 import Header from '../components/Header'
 import Footer from './Footer'
 import {IoIosArrowDropupCircle} from 'react-icons/io'
 import siteUrl from '../utils/siteUrl'
-import routeURL from './../utils/routeURL'
 
 const Layout = ({title, pathUrl, page, description, image, children}) => {
-  const URL = siteUrl(pathUrl || routeURL())
+  const router = useRouter()
+  const URL = siteUrl(pathUrl || router.asPath)
   const siteImage = image || siteUrl('/site_image.png')
 
   useEffect(() => {
-    window.addEventListener('appinstalled', (evt) => {
-      window.location.replace(window.location.href)
+    window.addEventListener('appinstalled', () => {
+      const {pathname, search} = window.location
+      router.push(`${pathname}${search}`)
     })
     return () => {}
   }, [])
