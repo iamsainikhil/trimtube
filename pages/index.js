@@ -39,11 +39,13 @@ const Input = () => {
   }
 
   useEffect(() => {
-    window.addEventListener('appinstalled', () => {
+    if (window.navigator.standalone) {
       const {pathname, search} = window.location
       alert(`${pathname}${search}`)
       router.push(`${pathname}${search}`)
-    })
+    } else {
+      alert(router.query.feature)
+    }
     return () => {}
   }, [])
 
