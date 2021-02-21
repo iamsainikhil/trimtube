@@ -67,7 +67,7 @@ const ShareModal = ({open, close, url, name}) => {
           maxWidth: '90%',
           m: '1rem auto',
         }}>
-        <Share URL={URL} videoName={name} />
+        <Share URL={URL} name={name} />
         <div
           sx={{
             display: 'flex',

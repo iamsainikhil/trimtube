@@ -248,7 +248,7 @@ export async function getServerSideProps(context) {
       const baseURL = context.req ? siteUrl() : ''
       videos = (
         await axios.get('/api/video', {
-          params: {videoId: videoIds.join(',')},
+          params: {id: videoIds.join(',')},
           baseURL,
         })
       ).data.items

@@ -9,7 +9,7 @@ import formatNumber from '../utils/formatNumber'
 import truncateText from '../utils/truncateText'
 import formatTime from '../utils/formatTime'
 
-const VideoDetails = ({data: {start, end, video, snippet, statistics}}) => {
+const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
   const title = he.decode(snippet.title)
   const publishedTime = relativeTimeString(snippet.publishedAt)
 

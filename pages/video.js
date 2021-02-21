@@ -60,14 +60,10 @@ export default function Video({data, error, title, image}) {
           {error && (
             <Alert
               type='danger'
-              message={`Failed to fetch information of videoId ${videoId}`}
+              message={`Unable to show video details and the controls to save this video to a playlist. Something went wrong in fetching the information of videoId ${videoId}`}
             />
           )}
-          {data && (
-            <Fragment>
-              <Info data={data} start={start} end={end} />
-            </Fragment>
-          )}
+          {data && <Info data={data} start={start} end={end} />}
           <p style={{textAlign: 'center'}}>
             <Button
               primary={{bg: 'muted', color: 'text'}}
@@ -86,19 +82,17 @@ export default function Video({data, error, title, image}) {
 }
 
 export async function getServerSideProps(context) {
-  let data = undefined
-  let title = null
-  let image = null
   const baseURL = context.req ? siteUrl() : ''
   try {
-    data = (
-      await axios.get('/api/video', {
-        params: {videoId: context.query.id},
-        baseURL,
-      })
-    ).data
-    title = data.items[0].snippet.title
-    image = data.items[0].snippet.thumbnails.standard.url
+    const {data} = await axios.get('/api/video', {
+      params: {id: context.query.id},
+      baseURL,
+    })
+    const {thumbnails} = data.items[0].snippet
+    const {title} = data.items[0].snippet
+    const image = thumbnails['standard']
+      ? thumbnails.standard.url
+      : thumbnails.high.url
 
     return {
       props: {

@@ -11,7 +11,8 @@ const flexbox = {
   alignItems: 'start',
 }
 
-const Share = ({URL, videoName}) => {
+const Share = ({URL, name}) => {
+  const videoName = `Watch ${name} on LoopTube`
   const sharePlatforms = [
     {
       name: 'Facebook',
