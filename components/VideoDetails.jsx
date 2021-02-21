@@ -44,8 +44,9 @@ const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
               cursor: 'pointer',
               fontSize: 6,
               pl: 2,
+              py: 2,
               bg: 'background',
-              borderRadius: '25px',
+              borderRadius: '50%',
             }}
             title='Play video'
           />
