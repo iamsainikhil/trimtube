@@ -20,8 +20,7 @@ const Button = ({primary, hover, text, action, children, disabled = false}) => {
         letterSpacing: '2px',
         border: 'none',
         borderRadius: '2rem',
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        pointerEvents: disabled ? 'none' : 'auto',
+        cursor: disabled ? 'not-allowed !important' : 'pointer',
         '&:hover': {
           bg: `${hover.bg}`,
           color: `${hover.color}`,

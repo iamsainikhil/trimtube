@@ -10,6 +10,7 @@ import {BiPlus} from 'react-icons/bi'
 import Button from './Button'
 import modalOptions from '../utils/modalOptions'
 import {ToastContext} from '../context/ToastContext'
+import {trackGAEvent} from '../utils/googleAnalytics'
 
 const PlaylistModal = ({data, start, end, open, close}) => {
   const {theme, colorMode} = useThemeUI()
@@ -22,6 +23,12 @@ const PlaylistModal = ({data, start, end, open, close}) => {
   const showToast = (message) => {
     setMessage(message)
     setShow(true)
+  }
+
+  const loadPlaylists = () => {
+    if (localStorage.getItem('playlists')) {
+      setPlaylists(Object.keys(JSON.parse(localStorage.getItem('playlists'))))
+    }
   }
 
   /**
@@ -81,22 +88,20 @@ const PlaylistModal = ({data, start, end, open, close}) => {
       setPlaylistName('')
       showToast(`Created ${playlistName} playlist`)
       setShowCreatePlaylist(false)
+    } else {
+      setError("Playlist name can't be empty")
     }
   }
 
   const afterOpenModal = () => {
     setPlaylistName('')
-    if (localStorage.getItem('playlists')) {
-      setPlaylists(Object.keys(JSON.parse(localStorage.getItem('playlists'))))
-    }
+    loadPlaylists()
   }
 
   const customStyles = modalOptions(theme, colorMode)
 
   useEffect(() => {
-    if (localStorage.getItem('playlists')) {
-      setPlaylists(Object.keys(JSON.parse(localStorage.getItem('playlists'))))
-    }
+    loadPlaylists()
     return () => {}
   }, [])
 

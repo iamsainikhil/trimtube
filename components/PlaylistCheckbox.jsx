@@ -20,14 +20,15 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
    */
   const videoExistsInPlaylist = (name) => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
-    if (playlists[name]?.videos) {
-      const matched = playlists[name].videos.filter((v) => {
+    if (playlists[name]?.videos && playlists[name]?.videos.length) {
+      let matched = []
+      playlists[name].videos.forEach((v) => {
         const idMatch = v.id === data.items[0].id
-        const startMatch = v.start === start
-        const endMatch = v.end === end
-        return idMatch && startMatch && endMatch
+        const startMatch = v.start == start
+        const endMatch = v.end == end
+        matched.push(idMatch && startMatch && endMatch)
       })
-      return matched.length > 0
+      return matched.includes(true)
     } else {
       return false
     }
@@ -72,7 +73,7 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
   useEffect(() => {
     setChecked(videoExistsInPlaylist(name))
     return () => {}
-  }, [])
+  }, [name])
 
   return (
     <Fragment>

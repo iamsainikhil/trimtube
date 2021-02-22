@@ -23,7 +23,6 @@ const Info = ({data, start, end}) => {
     } else {
       setShowShareModal(true)
     }
-    console.log(`clicked on ${URL} page ${type} icon`)
     trackGAEvent(type, `clicked on ${URL} page ${type} icon`, 'icon click')
   }
 
