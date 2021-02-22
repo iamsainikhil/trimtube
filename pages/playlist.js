@@ -14,6 +14,7 @@ import siteUrl from './../utils/siteUrl'
 import ConfirmationModal from '../components/ConfirmationModal'
 import ShareModal from './../components/ShareModal'
 import {ToastContext} from '../context/ToastContext'
+import {trackGAEvent} from '../utils/googleAnalytics'
 
 export default function Playlist({name, info, image, fetchData}) {
   const router = useRouter()
@@ -60,19 +61,27 @@ export default function Playlist({name, info, image, fetchData}) {
     setDetails(playlists[name])
     setShowModal(false)
     showToast(`Merged videos into the ${name} playlist`)
+    trackGAEvent(
+      'save playlist',
+      `Merged videos into the ${name} playlist`,
+      'clicked on merge button'
+    )
     setShowSave(false)
   }
 
   const savePlaylist = () => {
     if (localStorage.getItem('playlists')) {
       const playlists = JSON.parse(localStorage.getItem('playlists'))
+      const successMessage = `Added ${name} to playlists`
       if (playlists[name]) {
         const message = `A playlist with name ${name} already exists. Are you sure want to merge videos in this playlist with the existing one?`
+        trackGAEvent('save playlist', message, 'clicked on save icon')
         openModal('playlist', name, message, mergeVideos)
       } else {
         playlists[name] = details
         localStorage.setItem('playlists', JSON.stringify(playlists))
-        showToast(`Added ${name} to playlists`)
+        showToast(message)
+        trackGAEvent('save playlist', message, 'clicked on save icon')
         setShowSave(false)
       }
     } else {
@@ -80,7 +89,8 @@ export default function Playlist({name, info, image, fetchData}) {
         [name]: details,
       }
       localStorage.setItem('playlists', JSON.stringify(newPlaylists))
-      showToast(`Added ${name} to playlists`)
+      showToast()
+      trackGAEvent('save playlist', message, 'clicked on save icon')
       setShowSave(false)
     }
     // update the URL to have only playlist name as the query without reloading the page
@@ -92,6 +102,11 @@ export default function Playlist({name, info, image, fetchData}) {
     delete playlists[name]
     localStorage.setItem('playlists', JSON.stringify(playlists))
     showToast(`Deleted ${name} playlist`)
+    trackGAEvent(
+      'delete playlist',
+      `Deleted ${name} playlist`,
+      'clicked on trash icon'
+    )
     closeModal()
     router.push('/playlists')
   }
@@ -121,6 +136,11 @@ export default function Playlist({name, info, image, fetchData}) {
     localStorage.setItem('playlists', JSON.stringify(playlists))
     closeModal()
     showToast(`Removed ${v.name || v.id} from ${name} playlist`)
+    trackGAEvent(
+      'delete video',
+      `Removed ${v.name || v.id} from ${name} playlist`,
+      'clicked on trash icon'
+    )
     setDetails(playlists[name])
   }
 
