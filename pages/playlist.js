@@ -145,7 +145,7 @@ export default function Playlist({name, info, image, fetchData}) {
   }
 
   const getShareURL = () => {
-    const videoIds = details.videos.map((v) => v.id).join('_')
+    const videoIds = details.videos.map((v) => v.id).join('***')
     const startTimes = details.videos.map((v) => v.start || 0).join('-')
     const endTimes = details.videos.map((v) => v.end || 0).join('-')
     const created = details.created
@@ -263,7 +263,7 @@ export async function getServerSideProps(context) {
   let info = undefined
   const name = id || null
   if (name && v) {
-    const videoIds = v.split('_')
+    const videoIds = v.split('***')
     let videos = []
     try {
       const baseURL = context.req ? siteUrl() : ''
