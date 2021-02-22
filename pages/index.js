@@ -7,6 +7,7 @@ import Search from '../components/Search'
 import Results from '../components/Results'
 import Loader from '../components/Loader'
 import Layout from '../components/Layout'
+import {trackGAEvent} from '../utils/googleAnalytics'
 
 const Input = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -38,6 +39,7 @@ const Input = () => {
 
   useEffect(() => {
     if (searchTerm.trim()) {
+      trackGAEvent('search', `search for ${searchTerm}`, 'search input')
       fetchResults()
     }
     return () => {}
