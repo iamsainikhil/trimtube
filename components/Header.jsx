@@ -4,7 +4,7 @@ import {jsx, useThemeUI} from 'theme-ui'
 import {default as NextLink} from 'next/link'
 import Headroom from 'react-headroom'
 import {GoSearch} from 'react-icons/go'
-import {FiSun, FiMoon} from 'react-icons/fi'
+import {FiHelpCircle, FiSun, FiMoon} from 'react-icons/fi'
 import {MdPlaylistPlay} from 'react-icons/md'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import {useRouter} from 'next/router'
@@ -76,6 +76,22 @@ const Header = () => {
                 </NextLink>
               </p>
             ) : null}
+            <p>
+              <a
+                href='https://github.com/iamsainikhil/looptube#--looptube'
+                target='_blank'
+                rel='noopener noreferrer'>
+                <FiHelpCircle
+                  title='About'
+                  style={{
+                    cursor: 'pointer',
+                    verticalAlign: 'middle',
+                    fontSize: '1.25rem',
+                    marginTop: '0.7rem',
+                  }}
+                />
+              </a>
+            </p>
             <p>
               {colorMode === 'light' ? (
                 <span
