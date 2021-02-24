@@ -47,13 +47,13 @@ const Info = ({data, start, end}) => {
                 alignItems: 'flex-start',
                 maxWidth: '70%',
               }}>
-              <h3
+              <h2
                 sx={{
                   mb: 1,
                   fontSize: [2, 3],
                 }}>
                 {he.decode(data.items[0].snippet.title)}
-              </h3>
+              </h2>
               <p
                 sx={{
                   mt: 0,

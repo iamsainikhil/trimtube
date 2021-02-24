@@ -10,7 +10,7 @@ export default function Playlists() {
       page='Playlists'
       description={`Check the playlists you have created on LoopTube, a web application that also features a media player which allows the user to trim and loop any portion of a YouTube video with an ability to save the video(s) to a playlist. The app also allows user to delete individual video(s) as well as a playlist.`}>
       <div sx={{bg: 'background'}}>
-        <h3
+        <h2
           sx={{
             textAlign: 'center',
             mt: 0,
@@ -18,7 +18,7 @@ export default function Playlists() {
             fontSize: [3, 4, 5],
           }}>
           Playlists
-        </h3>
+        </h2>
         <PlaylistListing />
       </div>
     </Layout>

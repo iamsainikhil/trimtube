@@ -106,6 +106,7 @@ export default {
     },
     root: {
       variant: 'textStyles.body',
+      fontDisplay: 'swap',
     },
     h1: {
       variant: 'textStyles.title',

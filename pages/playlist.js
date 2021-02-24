@@ -193,7 +193,7 @@ export default function Playlist({name, info, image, fetchData}) {
                   alignItems: 'center',
                   mt: 0,
                 }}>
-                <h3 sx={{mb: 0}}>{details.name}</h3>
+                <h2 sx={{mb: 0}}>{details.name}</h2>
                 <p>
                   <span>{dayjs(details.created).format('MMM D, YYYY')}</span>
                   <span style={{margin: 'auto 1rem'}}>|</span>

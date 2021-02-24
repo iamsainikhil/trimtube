@@ -48,7 +48,7 @@ const Input = () => {
   return (
     <Layout title='Search'>
       <div sx={{bg: 'background'}}>
-        <h3
+        <h2
           sx={{
             textAlign: 'center',
             mt: 0,
@@ -56,7 +56,7 @@ const Input = () => {
             fontSize: [3, 4, 5],
           }}>
           Search
-        </h3>
+        </h2>
         <Search searchTerm={searchTerm} updateSearch={handleSearch} />
         {loading ? <Loader /> : <Results data={data} error={error} />}
       </div>
