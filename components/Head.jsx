@@ -17,6 +17,9 @@ const Head = ({
   const hjid = process.env.NEXT_PUBLIC_HOTJAR_ID
   const hjsv = process.env.NEXT_PUBLIC_HOTJAR_VERSION
   const isProd = process.env.NODE_ENV === 'production'
+
+  // clear console logs
+  console.clear()
   return (
     <>
       <NextHead>
