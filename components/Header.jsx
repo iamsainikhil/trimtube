@@ -93,7 +93,7 @@ const Header = () => {
               </a>
             </p>
             <p>
-              {colorMode === 'light' ? (
+              {colorMode !== 'dark' ? (
                 <span
                   title='Switch to Dark Mode'
                   aria-label='Switch to Dark Mode'>
