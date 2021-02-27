@@ -338,6 +338,21 @@ const Head = ({
           media='(prefers-color-scheme: dark) and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)'
         />
         <title>{pageTitle}</title>
+        {/* Global site tag (gtag.js) - Google Analytics  */}
+        <script
+          async
+          src='https://www.googletagmanager.com/gtag/js?id=G-RSV8ZGQNEY'></script>
+        <script
+          async
+          defer
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+            
+              gtag('config', 'G-RSV8ZGQNEY');`,
+          }}
+        />
         {/* Hotjar Tracking Code */}
         {isProd ? (
           <script

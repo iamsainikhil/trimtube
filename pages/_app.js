@@ -11,7 +11,6 @@ import {initGA, trackGAEvent} from '../utils/googleAnalytics'
 export function reportWebVitals(metric) {
   /* Google Analytics */
   const {id, name, label, value} = metric
-  initGA()
   trackGAEvent(
     'Web Vitals',
     'NextJS Custom Metric',

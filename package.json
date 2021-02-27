@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "dayjs": "^1.10.4",
+    "ga-4-react": "^0.1.28",
     "he": "^1.2.0",
     "next": "^10.0.6",
     "next-pwa": "^5.0.5",
@@ -20,7 +21,6 @@
     "react-copy-to-clipboard": "^5.0.3",
     "react-debounce-input": "^3.2.3",
     "react-dom": "^17.0.1",
-    "react-ga": "^3.3.0",
     "react-headroom": "^3.1.0",
     "react-icons": "^4.2.0",
     "react-lottie": "^1.2.3",
