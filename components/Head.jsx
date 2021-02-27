@@ -1,4 +1,5 @@
 import NextHead from 'next/head'
+import LogRocket from 'logrocket'
 
 const Head = ({
   children,
@@ -14,9 +15,10 @@ const Head = ({
   const metaDescription =
     description ||
     'LoopTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.'
-  const hjid = process.env.NEXT_PUBLIC_HOTJAR_ID
-  const hjsv = process.env.NEXT_PUBLIC_HOTJAR_VERSION
-  const isProd = process.env.NODE_ENV === 'production'
+  // LogRocket setup
+  if (pathUrl && pathUrl.includes('notrack')) {
+    LogRocket.init(`${process.env.NEXT_PUBLIC_LOGROCKET_ID}`)
+  }
 
   // clear console logs
   console.clear()
