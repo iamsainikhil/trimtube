@@ -74,9 +74,12 @@ export default function Video({data, error, title, image}) {
               {showControls ? 'Hide' : 'Show'} Trim Controls
             </Button>
           </p>
-          {showControls ? (
-            <TrimControls start={start} end={end} onTrim={trimVideo} />
-          ) : null}
+          <TrimControls
+            start={start}
+            end={end}
+            onTrim={trimVideo}
+            displayCondition={showControls}
+          />
         </Fragment>
       </div>
     </Layout>

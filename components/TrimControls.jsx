@@ -9,7 +9,7 @@ import {BiCut} from 'react-icons/bi'
 import Button from './Button'
 import {trackGAEvent} from '../utils/googleAnalytics'
 
-const TrimControls = ({start, end, onTrim}) => {
+const TrimControls = ({start, end, onTrim, displayCondition}) => {
   const [startTrimMinutes, setStartTrimMinutes] = useState(
     formatTime(start, 'Minutes')
   )
@@ -48,6 +48,7 @@ const TrimControls = ({start, end, onTrim}) => {
   return (
     <div
       sx={{
+        visibility: displayCondition ? 'visible' : 'hidden',
         display: 'flex',
         flexFlow: 'row nowrap',
         justifyContent: 'space-between',
