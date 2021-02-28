@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import {jsx} from 'theme-ui'
+import {ColorMode, jsx, useThemeUI} from 'theme-ui'
 import {Fragment} from 'react'
 import Image from 'next/image'
 import he from 'he'
@@ -11,6 +11,7 @@ import formatTime from '../utils/formatTime'
 import {FiPlay} from 'react-icons/fi'
 
 const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
+  const {colorMode} = useThemeUI()
   const title = he.decode(snippet.title)
   const publishedTime = relativeTimeString(snippet.publishedAt)
 
@@ -29,13 +30,19 @@ const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
         <p
           sx={{
             position: 'absolute',
+            display: ' flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            display: ' flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            height: '100%',
+            width: '100%',
+            borderTopLeftRadius: '25px',
+            borderTopRightRadius: '25px',
+            background: `rgba(0,0,0, ${colorMode === 'dark' ? 0.3 : 0.2})`,
+            marginTop: '-0.05rem',
           }}>
           <FiPlay
             sx={{

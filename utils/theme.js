@@ -9,7 +9,7 @@ export default {
   borders: [0],
   colors: {
     text: '#000',
-    background: '#fff',
+    background: '#ffffff',
     primary: '#333',
     secondary: '#5b5b5b',
     muted: '#f6f6f6',
