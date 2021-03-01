@@ -54,6 +54,7 @@ export default function Video({data, error, title, image}) {
           justifyContent: 'center',
           alignItems: 'center',
           bg: 'background',
+          mt: 2,
         }}>
         <Player videoId={videoId} start={start} end={end} />
         <Fragment>
@@ -71,15 +72,12 @@ export default function Video({data, error, title, image}) {
               primary={{bg: 'muted', color: 'text'}}
               hover={{bg: 'shade1', color: 'accent'}}
               action={toggleControls}>
-              {showControls ? 'Hide' : 'Show'} Trim Controls
+              {showControls ? 'Hide Trim Controls' : 'Trim Video'}
             </Button>
           </p>
-          <TrimControls
-            start={start}
-            end={end}
-            onTrim={trimVideo}
-            displayCondition={showControls}
-          />
+          {showControls && (
+            <TrimControls start={start} end={end} onTrim={trimVideo} />
+          )}
         </Fragment>
       </div>
     </Layout>

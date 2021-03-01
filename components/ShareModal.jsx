@@ -24,7 +24,7 @@ const ShareModal = ({open, close, url, name}) => {
 
   const copyLink = (link) => {
     trackGAEvent('copy', `copied ${link} to clipboard`, 'copy button click')
-    setMessage('Video link copied to clipboard')
+    setMessage('Link copied to clipboard')
     setShow(true)
   }
 
