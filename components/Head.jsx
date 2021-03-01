@@ -10,11 +10,11 @@ const Head = ({
   image,
 }) => {
   const twitterHandle = '@iamsainikhil12'
-  const siteName = 'LoopTube'
+  const siteName = 'TrimTube'
   const pageTitle = `${title ? `${title} | ` : ''}${page} | ${siteName}`
   const metaDescription =
     description ||
-    'LoopTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.'
+    'TrimTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.'
   // LogRocket setup
   if (pathUrl && !pathUrl.includes('notrack')) {
     LogRocket.init(`${process.env.NEXT_PUBLIC_LOGROCKET_ID}`)

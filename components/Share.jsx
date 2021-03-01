@@ -12,7 +12,7 @@ const flexbox = {
 }
 
 const Share = ({URL, name}) => {
-  const videoName = `Watch ${name} on LoopTube`
+  const videoName = `Watch ${name} on TrimTube`
   const sharePlatforms = [
     {
       name: 'Facebook',

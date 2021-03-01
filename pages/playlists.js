@@ -8,7 +8,7 @@ export default function Playlists() {
   return (
     <Layout
       page='Playlists'
-      description={`Check the playlists you have created on LoopTube, a web application that also features a media player which allows the user to trim and loop any portion of a YouTube video with an ability to save the video(s) to a playlist. The app also allows user to delete individual video(s) as well as a playlist.`}>
+      description={`Check the playlists you have created on TrimTube, a web application that also features a media player which allows the user to trim and loop any portion of a YouTube video with an ability to save the video(s) to a playlist. The app also allows user to delete individual video(s) as well as a playlist.`}>
       <div sx={{bg: 'background'}}>
         <h2
           sx={{

@@ -1,8 +1,8 @@
 const manifest_json = {
-  name: 'LoopTube',
-  short_name: 'LoopTube',
+  name: 'TrimTube',
+  short_name: 'TrimTube',
   description:
-    'LoopTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.',
+    'TrimTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.',
   start_url: '/',
   theme_color: '#000',
   background_color: '#222',

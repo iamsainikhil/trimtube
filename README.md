@@ -1,10 +1,10 @@
 <p align="center">
   <a href="https://looptube.vercel.app/">
-    <img alt="LoopTube" src="https://raw.githubusercontent.com/iamsainikhil/looptube/main/public/logo.png" width="200" />
+    <img alt="TrimTube" src="https://raw.githubusercontent.com/iamsainikhil/looptube/main/public/logo.png" width="200" />
   </a>
 </p>
 <h1 align="center">
-  LoopTube
+  TrimTube
 </h1>
 
 <p align="center">
@@ -16,7 +16,7 @@
 </a>
 </p>
 
-LoopTube is a web application which allows user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.
+TrimTube is a web application which allows user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.
 
 # 👀 **Demo**
 
@@ -24,7 +24,7 @@ LoopTube is a web application which allows user to search for YouTube videos or 
 
 # 🎉 **Features**
 
-LoopTube provides multiple features like:
+TrimTube provides multiple features like:
 
 - **Search**: Search for YouTube videos by entering the keyword or pasting the entire youtube video link or just pasting the video id.
 - **Video**: Trim and loop a YouTube video with ability to share the URL as well as adding to playlist(s).
@@ -82,7 +82,7 @@ LoopTube provides multiple features like:
 
 ## Themes
 
-- LoopTube offers user the option to switch between `light` and `dark` theme. By default, theme is set using the user's system preferences.
+- TrimTube offers user the option to switch between `light` and `dark` theme. By default, theme is set using the user's system preferences.
 
 ![Themes Demo](https://raw.githubusercontent.com/iamsainikhil/looptube/main/README/Themes_Demo.gif)
 

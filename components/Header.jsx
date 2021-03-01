@@ -32,7 +32,7 @@ const Header = () => {
                     trackGAEvent('logo', `clicked on site logo`, 'link click')
                   }
                   rel='noreferrer noopener'>
-                  LoopTube
+                  TrimTube
                 </a>
               </NextLink>
             </h1>
