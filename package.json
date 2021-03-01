@@ -1,5 +1,5 @@
 {
-  "name": "looptube",
+  "name": "trimtube",
   "version": "0.0.0",
   "description": "TrimTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.",
   "author": "Sai Nikhil <contact@iamsainikhil.com>",
@@ -55,9 +55,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamsainikhil/looptube"
+    "url": "https://github.com/iamsainikhil/trimtube"
   },
   "bugs": {
-    "url": "https://github.com/iamsainikhil/looptube/issues"
+    "url": "https://github.com/iamsainikhil/trimtube/issues"
   }
 }

@@ -78,7 +78,7 @@ const Header = () => {
             ) : null}
             <p>
               <a
-                href='https://github.com/iamsainikhil/looptube#--looptube'
+                href='https://github.com/iamsainikhil/trimtube#--trimtube'
                 target='_blank'
                 rel='noopener noreferrer'>
                 <FiHelpCircle

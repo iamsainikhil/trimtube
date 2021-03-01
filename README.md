@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://looptube.vercel.app/">
-    <img alt="TrimTube" src="https://raw.githubusercontent.com/iamsainikhil/looptube/main/public/logo.png" width="200" />
+  <a href="https://trimtube.vercel.app/">
+    <img alt="TrimTube" src="https://raw.githubusercontent.com/iamsainikhil/trimtube/main/public/logo.png" width="200" />
   </a>
 </p>
 <h1 align="center">
@@ -8,7 +8,7 @@
 </h1>
 
 <p align="center">
-<a href="https://github.com/iamsainikhil/looptube/blob/main/LICENSE" target="_blank" rel="noreferrer noopener">
+<a href="https://github.com/iamsainikhil/trimtube/blob/main/LICENSE" target="_blank" rel="noreferrer noopener">
 <img alt="GitHub" src="https://img.shields.io/github/license/iamsainikhil/nextjs-prismic-blog-starter?style=flat-square">
 </a>
 <a href="http://commitizen.github.io/cz-cli/" target="_blank" rel="noreferrer noopener">
@@ -20,7 +20,7 @@ TrimTube is a web application which allows user to search for YouTube videos or 
 
 # 👀 **Demo**
 
-[https://looptube.vercel.app/](https://looptube.vercel.app/)
+[https://trimtube.vercel.app/](https://trimtube.vercel.app/)
 
 # 🎉 **Features**
 
@@ -36,19 +36,19 @@ TrimTube provides multiple features like:
 
 - Search by `Typing Something` to find the relevant YouTube videos.
 
-![Type Something](https://raw.githubusercontent.com/iamsainikhil/looptube/main/README/Search_Type_Something_Demo.gif)
+![Type Something](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Search_Type_Something_Demo.gif)
 
 <a href="https://fluvid.com/videos/detail/698A4IAOD7Fe5wdKG" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
 - Search with pasted `YouTube Video Link` to find the relevant YouTube videos.
 
-![YouTube Video Link](https://raw.githubusercontent.com/iamsainikhil/looptube/main/README/Search_Paste_YouTube_Link_Demo.gif)
+![YouTube Video Link](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Search_Paste_YouTube_Link_Demo.gif)
 
 <a href="https://fluvid.com/videos/detail/PgDo-uRn7Bsgj9XMx" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
 - Search with pasted `YouTube Video ID` to find the relevant YouTube videos.
 
-![YouTube Video ID](https://raw.githubusercontent.com/iamsainikhil/looptube/main/README/Search%20_YouTube_Video_ID_Demo.gif)
+![YouTube Video ID](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Search%20_YouTube_Video_ID_Demo.gif)
 
 <a href="https://fluvid.com/videos/detail/ZOmq-ID1wGI9PYq6k" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
@@ -56,7 +56,7 @@ TrimTube provides multiple features like:
 
 - Watch the video in a YouTube media player with the ability to `trim` the video, `share` the URL, and `save` to playlist(s).
 
-![Video page](https://raw.githubusercontent.com/iamsainikhil/looptube/main/README/Video_Demo.gif)
+![Video page](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Video_Demo.gif)
 
 <a href="https://fluvid.com/videos/detail/wz_2XCokyjcn2YLG5" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
@@ -66,7 +66,7 @@ TrimTube provides multiple features like:
 
 > Playlists are saved in user's browser localStorage
 
-![Playlists page](https://raw.githubusercontent.com/iamsainikhil/looptube/main/README/Playlists_Demo.gif)
+![Playlists page](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Playlists_Demo.gif)
 
 <a href="https://fluvid.com/videos/detail/R68rdCaV2DFMAy3MR" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
@@ -76,7 +76,7 @@ TrimTube provides multiple features like:
 
 > Shared playlists can also be saved locally. Moreover, user will be given the option to merge the videos if there is a playlist that exist locally with the same name of a shared playlist.
 
-![Playlist page](https://raw.githubusercontent.com/iamsainikhil/looptube/main/README/Playlist_Demo.gif)
+![Playlist page](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Playlist_Demo.gif)
 
 <a href="https://fluvid.com/videos/detail/y7X9zT37A_UYKgrAD" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
@@ -84,7 +84,7 @@ TrimTube provides multiple features like:
 
 - TrimTube offers user the option to switch between `light` and `dark` theme. By default, theme is set using the user's system preferences.
 
-![Themes Demo](https://raw.githubusercontent.com/iamsainikhil/looptube/main/README/Themes_Demo.gif)
+![Themes Demo](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Themes_Demo.gif)
 
 <a href="https://fluvid.com/videos/detail/7x8vGhXOKYidj71nE" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
@@ -93,7 +93,7 @@ TrimTube provides multiple features like:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/iamsainikhil/looptube.git
+   git clone https://github.com/iamsainikhil/trimtube.git
    ```
 
 2. **Install the packages**
@@ -163,12 +163,12 @@ In the project directory, you can run:
 # **🙌 Contribution**
 
 - Open pull request with improvements.
-- If you have any new idea, check the **[feature request](https://raw.githubusercontent.com/iamsainikhil/looptube/main/blob/main/.github/ISSUE_TEMPLATE/feature_request.md)** template to create a request.
-- If you found any issue or a bug, check the **[bug report](https://raw.githubusercontent.com/iamsainikhil/looptube/main/blob/main/.github/ISSUE_TEMPLATE/bug_report.md)** template to create a report.
+- If you have any new idea, check the **[feature request](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/blob/main/.github/ISSUE_TEMPLATE/feature_request.md)** template to create a request.
+- If you found any issue or a bug, check the **[bug report](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/blob/main/.github/ISSUE_TEMPLATE/bug_report.md)** template to create a report.
 
 # **📃 License**
 
-Have a look at the **[license file](https://raw.githubusercontent.com/iamsainikhil/looptube/main/raw/master/README_images/LICENSE)** for details
+Have a look at the **[license file](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/raw/master/README_images/LICENSE)** for details
 
 # **📧 Contact**
 
