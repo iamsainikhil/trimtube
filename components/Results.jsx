@@ -10,7 +10,7 @@ const Results = ({data, error}) => {
       {error && <Alert type='danger' message={error.message || error} />}
       {data && (
         <div>
-          {data.items && (
+          {data.items && data.items.length ? (
             <div>
               <h3
                 sx={{
@@ -22,6 +22,8 @@ const Results = ({data, error}) => {
               </h3>
               <Listing data={data} />
             </div>
+          ) : (
+            <Alert type='danger' message='No video found!' />
           )}
         </div>
       )}
