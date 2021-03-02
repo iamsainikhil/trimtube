@@ -27,7 +27,7 @@ const Info = ({data, start, end}) => {
   }
 
   return (
-    <div sx={{mx: 'auto', px: 2, maxWidth: '640px', width: '100%'}}>
+    <div sx={{mx: 'auto', px: 2, maxWidth: '720px', width: '100%'}}>
       {data.items && (
         <Fragment>
           <div
@@ -35,9 +35,13 @@ const Info = ({data, start, end}) => {
               mt: '-0.5rem',
               mb: 2,
               display: 'flex',
-              flexFlow: 'row wrap',
+              flexFlow: 'row nowrap',
               justifyContent: 'space-between',
               alignItems: 'center',
+              '@media (max-width: 47.94rem)': {
+                flexFlow: 'column nowrap',
+                justifyContent: 'center',
+              },
             }}>
             <div
               sx={{
@@ -46,6 +50,9 @@ const Info = ({data, start, end}) => {
                 justifyContent: 'center',
                 alignItems: 'flex-start',
                 maxWidth: '70%',
+                '@media (max-width: 47.94rem)': {
+                  maxWidth: '100%',
+                },
               }}>
               <h2
                 sx={{
@@ -67,7 +74,7 @@ const Info = ({data, start, end}) => {
             <div
               sx={{
                 display: 'flex',
-                flexFlow: 'row wrap',
+                flexFlow: 'row nowrap',
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
@@ -93,7 +100,14 @@ const Info = ({data, start, end}) => {
                     {formatNumber(data.items[0].statistics.dislikeCount)}
                   </span>
                 </p> */}
-              <p sx={{mx: 2}}>
+              <p
+                sx={{
+                  display: 'flex',
+                  flexFlow: 'row nowrap',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  mx: 2,
+                }}>
                 <BiShareAlt
                   sx={{fontSize: 3, mt: 1, cursor: 'pointer'}}
                   title='Share'
@@ -102,8 +116,30 @@ const Info = ({data, start, end}) => {
                     openModal('share')
                   }}
                 />
+                <p
+                  sx={{
+                    fontSize: [0, 1],
+                    mt: 3,
+                    pt: 1,
+                    mx: 1,
+                    cursor: 'pointer',
+                  }}
+                  title='Share'
+                  aria-label='Share'
+                  onClick={() => {
+                    openModal('share')
+                  }}>
+                  SHARE
+                </p>
               </p>
-              <p sx={{mx: 2}}>
+              <p
+                sx={{
+                  display: 'flex',
+                  flexFlow: 'row nowrap',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  mx: 2,
+                }}>
                 <MdPlaylistAdd
                   sx={{fontSize: 4, mt: 1, cursor: 'pointer'}}
                   title='Add to Playlist'
@@ -112,6 +148,21 @@ const Info = ({data, start, end}) => {
                     openModal('playlist')
                   }}
                 />
+                <p
+                  sx={{
+                    fontSize: [0, 1],
+                    mt: 3,
+                    pt: 1,
+                    mx: 1,
+                    cursor: 'pointer',
+                  }}
+                  title='Add to Playlist'
+                  aria-label='Add to Playlist'
+                  onClick={() => {
+                    openModal('playlist')
+                  }}>
+                  SAVE
+                </p>
               </p>
             </div>
             {/* <div

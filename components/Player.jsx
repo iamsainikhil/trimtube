@@ -4,7 +4,7 @@ import {trackGAEvent} from '../utils/googleAnalytics'
 const Player = ({videoId, start, end}) => {
   const opts = {
     height: '400',
-    width: '640',
+    width: '720',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
