@@ -100,7 +100,7 @@ const Info = ({data, start, end}) => {
                     {formatNumber(data.items[0].statistics.dislikeCount)}
                   </span>
                 </p> */}
-              <p
+              <div
                 sx={{
                   display: 'flex',
                   flexFlow: 'row nowrap',
@@ -131,8 +131,8 @@ const Info = ({data, start, end}) => {
                   }}>
                   SHARE
                 </p>
-              </p>
-              <p
+              </div>
+              <div
                 sx={{
                   display: 'flex',
                   flexFlow: 'row nowrap',
@@ -163,7 +163,7 @@ const Info = ({data, start, end}) => {
                   }}>
                   SAVE
                 </p>
-              </p>
+              </div>
             </div>
             {/* <div
               sx={{
