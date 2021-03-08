@@ -59,12 +59,14 @@ export default function Video({data, error, title, image}) {
         <Player videoId={videoId} start={start} end={end} />
         <Fragment>
           {error && (
-            <Alert
-              type='danger'
-              message={`Unable to show video details and the controls to save this video to a playlist. Something went wrong in fetching the information of videoId ${
-                videoId || ''
-              }`}
-            />
+            <div style={{maxWidth: '900px'}}>
+              <Alert
+                type='danger'
+                message={`Something went wrong in fetching the information of videoId ${
+                  videoId || ''
+                }, unable to show video details and the controls to save this video to a playlist.`}
+              />
+            </div>
           )}
           {data && <Info data={data} start={start} end={end} />}
           <p style={{textAlign: 'center'}}>
