@@ -70,9 +70,9 @@ export default function Playlist({name, info, image, fetchData}) {
   }
 
   const savePlaylist = () => {
+    const successMessage = `Added ${name} to playlists`
     if (localStorage.getItem('playlists')) {
       const playlists = JSON.parse(localStorage.getItem('playlists'))
-      const successMessage = `Added ${name} to playlists`
       if (playlists[name]) {
         const message = `A playlist with name ${name} already exists. Are you sure want to merge videos in this playlist with the existing one?`
         trackGAEvent('save playlist', message, 'clicked on save icon')
@@ -80,8 +80,8 @@ export default function Playlist({name, info, image, fetchData}) {
       } else {
         playlists[name] = details
         localStorage.setItem('playlists', JSON.stringify(playlists))
-        showToast(message)
-        trackGAEvent('save playlist', message, 'clicked on save icon')
+        showToast(successMessage)
+        trackGAEvent('save playlist', successMessage, 'clicked on save icon')
         setShowSave(false)
       }
     } else {
@@ -89,8 +89,8 @@ export default function Playlist({name, info, image, fetchData}) {
         [name]: details,
       }
       localStorage.setItem('playlists', JSON.stringify(newPlaylists))
-      showToast()
-      trackGAEvent('save playlist', message, 'clicked on save icon')
+      showToast(successMessage)
+      trackGAEvent('save playlist', successMessage, 'clicked on save icon')
       setShowSave(false)
     }
     // update the URL to have only playlist name as the query without reloading the page
