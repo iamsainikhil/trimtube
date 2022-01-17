@@ -1,7 +1,9 @@
 import {Fragment, useEffect, useState} from 'react'
 import {useThemeUI} from 'theme-ui'
 import styled from '@emotion/styled'
+import dayjs from 'dayjs'
 import truncateText from '../utils/truncateText'
+import demoPlaylist from '../constants/demoPlaylist'
 
 const PlaylistListing = () => {
   const {theme} = useThemeUI()
@@ -19,6 +21,16 @@ const PlaylistListing = () => {
   useEffect(() => {
     if (localStorage.getItem('playlists')) {
       setPlaylists(JSON.parse(localStorage.getItem('playlists')))
+    } else {
+      // load the demo playlist
+      const playlists = {
+        Demo: {
+          ...demoPlaylist,
+          created: dayjs().toISOString(),
+        },
+      }
+      localStorage.setItem('playlists', JSON.stringify(playlists))
+      setPlaylists(playlists)
     }
     return () => {}
   }, [])
@@ -38,7 +50,7 @@ const PlaylistListing = () => {
                     borderRadius: '25px',
                     cursor: 'pointer',
                     boxShadow: `inset -5px -5px 12px ${theme.colors.shade2},
-      inset 5px 5px 12px ${theme.colors.shade1}`,
+    inset 5px 5px 12px ${theme.colors.shade1}`,
                   }}>
                   <p title={name} aria-label={name}>
                     {truncateText(name, 10)}
