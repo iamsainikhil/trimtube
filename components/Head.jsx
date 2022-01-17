@@ -22,7 +22,7 @@ const Head = ({
   }
 
   // clear console logs
-  console.clear()
+  isProd && console.clear()
   return (
     <>
       <NextHead>
