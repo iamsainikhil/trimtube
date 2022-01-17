@@ -23,7 +23,7 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
     if (playlists[name]?.videos && playlists[name]?.videos.length) {
       let matched = []
       playlists[name].videos.forEach((v) => {
-        const idMatch = v.id === data.items[0].id
+        const idMatch = v.id === data.id
         const startMatch = v.start == start
         const endMatch = v.end == end
         matched.push(idMatch && startMatch && endMatch)
@@ -37,7 +37,7 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
   const addVideoToPlaylist = () => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
     const videoDetails = {
-      ...data.items[0],
+      ...data,
       start: isNaN(start) ? null : start,
       end: isNaN(end) ? null : end,
     }
@@ -52,9 +52,7 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
 
   const removeVideoFromPlaylist = () => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
-    const videos = playlists[name].videos.filter(
-      (v) => v.id !== data.items[0].id
-    )
+    const videos = playlists[name].videos.filter((v) => v.id !== data.id)
     playlists[name].videos = videos
     localStorage.setItem('playlists', JSON.stringify(playlists))
     showToast(`Removed from ${name} playlist!`)

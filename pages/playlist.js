@@ -232,6 +232,7 @@ export default function Playlist({name, info, image, fetchData}) {
               {details.videos && (
                 <div sx={{mt: 4, mb: 3}}>
                   <VideoListing
+                    playlistName={details.name}
                     videos={details.videos}
                     remove={deleteVideoModal}
                   />

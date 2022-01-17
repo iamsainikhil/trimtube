@@ -12,12 +12,16 @@ import Layout from '../components/Layout'
 import siteUrl from './../utils/siteUrl'
 import Button from './../components/Button'
 
-export default function Video({data, error, title, image}) {
+export default function Video({videoData, videoTitle, videoImage, error}) {
   const router = useRouter()
   const {query} = router
+  const [data, setData] = useState(videoData)
+  const [title, setTitle] = useState(videoTitle)
+  const [image, setImage] = useState(videoImage)
   const [start, setStart] = useState(0)
   const [end, setEnd] = useState(null)
   const [showControls, setShowControls] = useState(false)
+  const [playlistVideos, setPlaylistVideos] = useState([])
   const videoId = query.id
 
   const toggleControls = () => {
@@ -38,6 +42,27 @@ export default function Video({data, error, title, image}) {
     setEnd(query.end ? Number(query.end) : null)
     return () => {}
   }, [query.start, query.end])
+
+  useEffect(() => {
+    if (query.playlist && localStorage.getItem('playlists')) {
+      const playlists = JSON.parse(localStorage.getItem('playlists'))
+      if (playlists[query.playlist]) {
+        const {videos} = playlists[query.playlist]
+        setPlaylistVideos(videos)
+        const [video] = videos.filter(({id}) => id === videoId)
+        if (video) {
+          const {thumbnails, title} = video.snippet
+          const image = thumbnails['standard']
+            ? thumbnails.standard.url
+            : thumbnails.high.url
+          setData(video)
+          setTitle(title)
+          setImage(image)
+        }
+      }
+    }
+    return () => {}
+  }, [query.playlist])
 
   return (
     <Layout
@@ -88,23 +113,24 @@ export default function Video({data, error, title, image}) {
 
 export async function getServerSideProps(context) {
   const baseURL = context.req ? siteUrl() : ''
-  if (context.query.id) {
+  if (!context.query.playlist && context.query.id) {
     try {
       const {data} = await axios.get('/api/video', {
         params: {id: context.query.id},
         baseURL,
       })
-      const {thumbnails} = data.items[0].snippet
-      const {title} = data.items[0].snippet
+      const {thumbnails, title} = data.items[0].snippet
       const image = thumbnails['standard']
         ? thumbnails.standard.url
         : thumbnails.high.url
-
+      const videoData = {
+        ...data.items[0],
+      }
       return {
         props: {
-          data,
-          title,
-          image,
+          videoData,
+          videoTitle: title,
+          videoImage: image,
         },
       }
     } catch (err) {
@@ -114,9 +140,8 @@ export async function getServerSideProps(context) {
         },
       }
     }
-  } else {
-    return {
-      props: {},
-    }
+  }
+  return {
+    props: {},
   }
 }

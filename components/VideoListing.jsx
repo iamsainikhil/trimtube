@@ -6,7 +6,7 @@ import {default as NextLink} from 'next/link'
 import VideoDetails from './VideoDetails'
 import {FiTrash} from 'react-icons/fi'
 
-const VideoListing = ({videos, remove}) => {
+const VideoListing = ({playlistName, videos, remove}) => {
   const {theme} = useThemeUI()
 
   const GridLayout = styled.div`
@@ -39,6 +39,7 @@ const VideoListing = ({videos, remove}) => {
               id: video.id,
               start: video.start,
               end: video.end,
+              playlist: playlistName,
             },
           }}
           passHref
