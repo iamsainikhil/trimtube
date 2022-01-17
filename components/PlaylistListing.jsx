@@ -1,6 +1,5 @@
 import {Fragment, useEffect, useState} from 'react'
 import {useThemeUI} from 'theme-ui'
-import {default as NextLink} from 'next/link'
 import styled from '@emotion/styled'
 import truncateText from '../utils/truncateText'
 
@@ -30,16 +29,10 @@ const PlaylistListing = () => {
         <GridLayout>
           {Object.keys(playlists).map((name, index) => {
             return (
-              <NextLink
-                href={{
-                  pathname: '/playlist',
-                  query: {id: name},
-                }}
-                key={index}>
+              <a href={`/playlist?id=${name}`} key={index}>
                 <div
                   style={{
                     display: 'flex',
-                    flexDirection: 'row nowrap',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: '25px',
@@ -51,7 +44,7 @@ const PlaylistListing = () => {
                     {truncateText(name, 10)}
                   </p>
                 </div>
-              </NextLink>
+              </a>
             )
           })}
         </GridLayout>
