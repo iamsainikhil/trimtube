@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import {jsx, useThemeUI} from 'theme-ui'
 import {Fragment, useContext, useEffect, useState} from 'react'
-import dayjs from 'dayjs'
 import Modal from 'react-modal'
 import PlaylistCheckbox from './PlaylistCheckbox'
 import {IoClose} from 'react-icons/io5'
@@ -11,6 +10,7 @@ import Button from './Button'
 import modalOptions from '../utils/modalOptions'
 import {ToastContext} from '../context/ToastContext'
 import {trackGAEvent} from '../utils/googleAnalytics'
+import {dateNow} from './../utils/date'
 
 const PlaylistModal = ({data, start, end, open, close}) => {
   const {theme, colorMode} = useThemeUI()
@@ -69,7 +69,7 @@ const PlaylistModal = ({data, start, end, open, close}) => {
       let playlists = {}
       playlists[playlistName] = {
         name: playlistName,
-        created: dayjs().toISOString(),
+        created: dateNow(),
       }
       if (localStorage.getItem('playlists')) {
         const localPlaylists = JSON.parse(localStorage.getItem('playlists'))

@@ -1,9 +1,9 @@
 import {Fragment, useEffect, useState} from 'react'
 import {useThemeUI} from 'theme-ui'
 import styled from '@emotion/styled'
-import dayjs from 'dayjs'
 import truncateText from '../utils/truncateText'
 import demoPlaylist from '../constants/demoPlaylist'
+import {dateNow} from './../utils/date'
 
 const PlaylistListing = () => {
   const {theme} = useThemeUI()
@@ -26,7 +26,7 @@ const PlaylistListing = () => {
       const playlists = {
         Demo: {
           ...demoPlaylist,
-          created: dayjs().toISOString(),
+          created: dateNow(),
         },
       }
       localStorage.setItem('playlists', JSON.stringify(playlists))
