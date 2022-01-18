@@ -3,7 +3,6 @@
 import {jsx} from 'theme-ui'
 import {Fragment, useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
-import Image from 'next/image'
 import axios from 'axios'
 import Player from '../components/Player'
 import Info from '../components/Info'
@@ -12,7 +11,7 @@ import Alert from '../components/Alert'
 import Layout from '../components/Layout'
 import Button from './../components/Button'
 import siteUrl from './../utils/siteUrl'
-import formatTime from './../utils/formatTime'
+import Playlistvideos from '../components/PlaylistVideos'
 
 export default function Video({videoData, videoTitle, videoImage, error}) {
   const router = useRouter()
@@ -79,6 +78,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
+          flex: '1 1 auto',
           bg: 'background',
           mt: 2,
           '@media (min-width: 80rem)': {
@@ -126,81 +126,13 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
             )}
           </Fragment>
         </div>
-        {playlistVideos && (
-          <div
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              mx: 2,
-              p: 2,
-              height: '100%',
-              overflowY: 'auto',
-              border: '1px solid gray',
-              borderRadius: '15px',
-              '@media (max-width: 80rem)': {
-                my: 5,
-                mx: 'auto',
-              },
-            }}>
-            {playlistVideos.map(({id, snippet, start, end}) => (
-              <div
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  my: 1,
-                  width: '100%',
-                  borderRadius: '15px',
-                  bg: id === videoId ? 'muted' : 'background',
-                  '&:hover': {
-                    bg: 'muted',
-                    cursor: 'pointer',
-                  },
-                  '@media (max-width: 80rem)': {
-                    alignItems: 'center',
-                  },
-                }}
-                onClick={() => updateRouter(id, start, end)}
-                key={id}>
-                <Image
-                  src={snippet.thumbnails.medium.url}
-                  alt={snippet.title}
-                  title={snippet.title}
-                  layout='intrinsic'
-                  width='160'
-                  height='120'
-                  className='video-list-thumbnail'
-                />
-                <div
-                  sx={{
-                    p: 2,
-                    lineHeight: 1.25,
-                    fontSize: [0, 1],
-                    color: 'gray',
-                  }}>
-                  <p
-                    sx={{
-                      fontWeight: 600,
-                    }}>
-                    {snippet.title}
-                  </p>
-                  <p>{snippet.channelTitle}</p>
-                  <p sx={{color: 'text'}}>
-                    Start:{' '}
-                    <span sx={{color: 'secondary'}}>
-                      {formatTime(start, 'Both')}
-                    </span>
-                    &nbsp;&nbsp; End:{' '}
-                    <span sx={{color: 'secondary'}}>
-                      {formatTime(end, 'Both')}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+        {playlistVideos.length > 0 && (
+          <Playlistvideos
+            videoId={videoId}
+            playlistName={query.playlist}
+            playlistVideos={playlistVideos}
+            onVideoClick={updateRouter}
+          />
         )}
       </div>
     </Layout>
