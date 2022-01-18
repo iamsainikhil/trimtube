@@ -3,14 +3,16 @@
 import {jsx} from 'theme-ui'
 import {Fragment, useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
+import Image from 'next/image'
+import axios from 'axios'
 import Player from '../components/Player'
 import Info from '../components/Info'
-import axios from 'axios'
 import TrimControls from '../components/TrimControls'
 import Alert from '../components/Alert'
 import Layout from '../components/Layout'
-import siteUrl from './../utils/siteUrl'
 import Button from './../components/Button'
+import siteUrl from './../utils/siteUrl'
+import formatTime from './../utils/formatTime'
 
 export default function Video({videoData, videoTitle, videoImage, error}) {
   const router = useRouter()
@@ -28,12 +30,11 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
     setShowControls(!showControls)
   }
 
-  const trimVideo = ({start, end}) => {
-    setStart(start)
-    setEnd(end)
+  const updateRouter = (id, start, end) => {
+    setShowControls(false)
     router.push({
       pathname: '/video',
-      query: {id: videoId, start, end},
+      query: {id, start, end, playlist: query.playlist},
     })
   }
 
@@ -80,32 +81,127 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
           alignItems: 'center',
           bg: 'background',
           mt: 2,
+          '@media (min-width: 80rem)': {
+            flexFlow: 'row nowrap',
+            alignItems: 'flex-start',
+          },
         }}>
-        <Player videoId={videoId} start={start} end={end} />
-        <Fragment>
-          {error && (
-            <div style={{maxWidth: '900px'}}>
-              <Alert
-                type='danger'
-                message={`Something went wrong in fetching the information of videoId ${
-                  videoId || ''
-                }, unable to show video details and the controls to save this video to a playlist.`}
+        <div
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            mx: 2,
+          }}>
+          <Player videoId={videoId} start={start} end={end} />
+          <Fragment>
+            {error && (
+              <div style={{maxWidth: '900px'}}>
+                <Alert
+                  type='danger'
+                  message={`Something went wrong in fetching the information of videoId ${
+                    videoId || ''
+                  }, unable to show video details and the controls to save this video to a playlist.`}
+                />
+              </div>
+            )}
+            {data && <Info data={data} start={start} end={end} />}
+            {!error && (
+              <p style={{textAlign: 'center'}}>
+                <Button
+                  primary={{bg: 'muted', color: 'text'}}
+                  hover={{bg: 'shade1', color: 'accent'}}
+                  action={toggleControls}>
+                  {showControls ? 'Hide Trim Controls' : 'Trim Video'}
+                </Button>
+              </p>
+            )}
+            {showControls && (
+              <TrimControls
+                start={start}
+                end={end}
+                onTrim={() => updateRouter(videoId, start, end)}
               />
-            </div>
-          )}
-          {data && <Info data={data} start={start} end={end} />}
-          <p style={{textAlign: 'center'}}>
-            <Button
-              primary={{bg: 'muted', color: 'text'}}
-              hover={{bg: 'shade1', color: 'accent'}}
-              action={toggleControls}>
-              {showControls ? 'Hide Trim Controls' : 'Trim Video'}
-            </Button>
-          </p>
-          {showControls && (
-            <TrimControls start={start} end={end} onTrim={trimVideo} />
-          )}
-        </Fragment>
+            )}
+          </Fragment>
+        </div>
+        {playlistVideos && (
+          <div
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              mx: 2,
+              p: 2,
+              height: '100%',
+              overflowY: 'auto',
+              border: '1px solid gray',
+              borderRadius: '15px',
+              '@media (max-width: 80rem)': {
+                my: 5,
+                mx: 'auto',
+              },
+            }}>
+            {playlistVideos.map(({id, snippet, start, end}) => (
+              <div
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  my: 1,
+                  width: '100%',
+                  borderRadius: '15px',
+                  bg: id === videoId ? 'muted' : 'background',
+                  '&:hover': {
+                    bg: 'muted',
+                    cursor: 'pointer',
+                  },
+                  '@media (max-width: 80rem)': {
+                    alignItems: 'center',
+                  },
+                }}
+                onClick={() => updateRouter(id, start, end)}
+                key={id}>
+                <Image
+                  src={snippet.thumbnails.medium.url}
+                  alt={snippet.title}
+                  title={snippet.title}
+                  layout='intrinsic'
+                  width='160'
+                  height='120'
+                  className='video-list-thumbnail'
+                />
+                <div
+                  sx={{
+                    p: 2,
+                    lineHeight: 1.25,
+                    fontSize: [0, 1],
+                    color: 'gray',
+                  }}>
+                  <p
+                    sx={{
+                      fontWeight: 600,
+                    }}>
+                    {snippet.title}
+                  </p>
+                  <p>{snippet.channelTitle}</p>
+                  <p sx={{color: 'text'}}>
+                    Start:{' '}
+                    <span sx={{color: 'secondary'}}>
+                      {formatTime(start, 'Both')}
+                    </span>
+                    &nbsp;&nbsp; End:{' '}
+                    <span sx={{color: 'secondary'}}>
+                      {formatTime(end, 'Both')}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </Layout>
   )
