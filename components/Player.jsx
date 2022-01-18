@@ -39,7 +39,7 @@ const Player = ({
     if (loopStatus === 'LOOP_VIDEO') {
       startVideo(event)
     } else {
-      updateVideoNumber(videoNumber++)
+      videoNumber ? updateVideoNumber(videoNumber++) : startVideo(event)
     }
   }
 
