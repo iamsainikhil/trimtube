@@ -92,11 +92,13 @@ a {
 
 iframe {
   border-radius: 25px;
+  min-width: 720px;
+  max-width: 100%;
+  min-height: 400px;
+  max-height: 100%;
   @media only screen and (max-width: 767px) {
     min-width: 250px;
-    max-width: 100%;
     min-height: 150px;
-    max-height: 100%;
   }
 }
 
@@ -168,9 +170,18 @@ iframe {
   }
 }
 
-.video-thumbnail {
+%thumbnail {
   background: 'gray';
+  cursor: pointer;
+}
+
+.video-thumbnail {
+  @extend %thumbnail;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
-  cursor: pointer;
+}
+
+.video-list-thumbnail {
+  @extend %thumbnail;
+  border-radius: 15px;
 }
