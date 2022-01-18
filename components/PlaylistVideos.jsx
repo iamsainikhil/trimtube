@@ -4,24 +4,25 @@ import {jsx} from 'theme-ui'
 import {useState} from 'react'
 import Image from 'next/image'
 import formatTime from './../utils/formatTime'
-import {BiRepost, BiShuffle, BiChevronDown, BiChevronUp} from 'react-icons/bi'
+import {BiShuffle, BiChevronDown, BiChevronUp} from 'react-icons/bi'
+import {MdRepeatOne, MdRepeat} from 'react-icons/md'
+
+const LOOP_STATUS_MAPPERS = {
+  LOOP_VIDEO: 'video',
+  LOOP_PLAYLIST: 'playlist',
+  PLAY_PLAYLIST: 'off',
+}
 
 const Playlistvideos = ({
   videoId,
+  videoNumber,
   playlistName,
   playlistVideos,
+  loopStatus,
   onVideoClick,
+  onLoopClick,
 }) => {
   const [expand, setExpand] = useState(true)
-  const getVideoNumber = () => {
-    let videoNumber = 1
-    for (let i = 0; i < playlistVideos.length; i++) {
-      if (playlistVideos[i].id === videoId) {
-        return videoNumber
-      }
-      videoNumber++
-    }
-  }
   return (
     <div
       sx={{
@@ -73,12 +74,34 @@ const Playlistvideos = ({
               alignItems: 'center',
               mb: 3,
             }}>
-            <BiRepost
-              sx={{fontSize: 5, cursor: 'pointer'}}
-              title='Collapse List'
-              aria-label='Collapse videos list'
-              onClick={() => setExpand(false)}
-            />
+            {loopStatus === 'LOOP_VIDEO' && (
+              <MdRepeatOne
+                sx={{fontSize: 5, cursor: 'pointer'}}
+                title='Loop Playlist'
+                aria-label='Loop Playlist'
+                onClick={() => onLoopClick('LOOP_PLAYLIST')}
+              />
+            )}
+            {loopStatus === 'LOOP_PLAYLIST' && (
+              <MdRepeat
+                sx={{fontSize: 5, cursor: 'pointer'}}
+                title='Play Playlist'
+                aria-label='Play Playlist'
+                onClick={() => onLoopClick('PLAY_PLAYLIST')}
+              />
+            )}
+            {loopStatus === 'PLAY_PLAYLIST' && (
+              <MdRepeat
+                sx={{
+                  fontSize: 5,
+                  color: 'rgba(0,0,0,0.5)',
+                  cursor: 'pointer',
+                }}
+                title='Loop Video'
+                aria-label='Loop Video'
+                onClick={() => onLoopClick('LOOP_VIDEO')}
+              />
+            )}
             <BiShuffle
               sx={{ml: 3, fontSize: 4, cursor: 'pointer'}}
               title='Collapse List'
@@ -89,7 +112,7 @@ const Playlistvideos = ({
         </div>
         <div sx={{textAlign: 'center'}}>
           <p sx={{mb: 3}}>
-            {getVideoNumber()}&nbsp;/&nbsp;{playlistVideos.length}
+            {videoNumber}&nbsp;/&nbsp;{playlistVideos.length}
           </p>
           {expand ? (
             <BiChevronUp
@@ -125,7 +148,9 @@ const Playlistvideos = ({
                 cursor: 'pointer',
               },
             }}
-            onClick={() => onVideoClick(id, start, end)}
+            onClick={() =>
+              onVideoClick(id, start, end, LOOP_STATUS_MAPPERS[loopStatus])
+            }
             key={id}>
             <Image
               src={snippet.thumbnails.medium.url}

@@ -2,7 +2,14 @@ import React, {useState, useEffect} from 'react'
 import YouTube from 'react-youtube'
 import {trackGAEvent} from '../utils/googleAnalytics'
 
-const Player = ({videoId, start, end}) => {
+const Player = ({
+  videoId,
+  videoNumber,
+  start,
+  end,
+  loopStatus,
+  updateVideoNumber,
+}) => {
   const opts = {
     height: '400',
     width: '720',
@@ -28,6 +35,14 @@ const Player = ({videoId, start, end}) => {
     event.target.playVideo()
   }
 
+  const updateStatus = (event) => {
+    if (loopStatus === 'LOOP_VIDEO') {
+      startVideo(event)
+    } else {
+      updateVideoNumber(videoNumber++)
+    }
+  }
+
   const _onReady = (event) => {
     // access to player in all event handlers via event.target
     // console.log(event.target.h.outerHTML, opts.playerVars)
@@ -38,8 +53,17 @@ const Player = ({videoId, start, end}) => {
 
   const _onStateChange = (event) => {
     // video unstarted or stopped
-    if (event.data === -1 || event.data === 0) {
+    if (event.data === -1) {
       startVideo(event)
+    } else if (event.data === 0) {
+      updateStatus(event)
+    } else {
+      const currentTime = event.target.getCurrentTime()
+      if (currentTime < start) {
+        startVideo(event)
+      } else if (currentTime > end) {
+        updateStatus(event)
+      }
     }
     setPlayerEvent(event)
   }

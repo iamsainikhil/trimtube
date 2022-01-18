@@ -22,6 +22,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
   const [start, setStart] = useState(0)
   const [end, setEnd] = useState(null)
   const [showControls, setShowControls] = useState(false)
+  const [loopStatus, setLoopStatus] = useState('LOOP_VIDEO')
   const [playlistVideos, setPlaylistVideos] = useState([])
   const videoId = query.id
 
@@ -29,13 +30,78 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
     setShowControls(!showControls)
   }
 
-  const updateRouter = (id, start, end) => {
+  const updateRouter = (id, startTime, endTime, loopValue) => {
     setShowControls(false)
-    router.push({
-      pathname: '/video',
-      query: {id, start, end, playlist: query.playlist},
-    })
+    if (query.playlist) {
+      router.push({
+        pathname: '/video',
+        query: {
+          id,
+          start: startTime,
+          end: endTime,
+          playlist: query.playlist,
+          loop: loopValue || query.loop || 'video',
+        },
+      })
+    } else {
+      router.push({
+        pathname: '/video',
+        query: {id, start: startTime, end: endTime},
+      })
+    }
   }
+
+  const getVideoNumber = () => {
+    let videoNumber = 1
+    for (let i = 0; i < playlistVideos.length; i++) {
+      if (playlistVideos[i].id === videoId) {
+        return videoNumber
+      }
+      videoNumber++
+    }
+  }
+
+  const updateVideoProps = (video) => {
+    const {thumbnails, title} = video.snippet
+    const image = thumbnails['standard']
+      ? thumbnails.standard.url
+      : thumbnails.high.url
+    setData(video)
+    setTitle(title)
+    setImage(image)
+  }
+
+  const updateVideo = (newVideoNumber) => {
+    if (loopStatus === 'LOOP_PLAYLIST') {
+      if (newVideoNumber >= playlistVideos.length) {
+        const {id, start, end} = playlistVideos[0]
+        updateRouter(id, start, end, 'playlist')
+      } else {
+        const {id, start, end} = playlistVideos[newVideoNumber]
+        updateRouter(id, start, end, 'playlist')
+      }
+    } else {
+      if (playlistVideos[newVideoNumber]) {
+        const {id, start, end} = playlistVideos[newVideoNumber]
+        updateRouter(id, start, end, 'off')
+      }
+    }
+  }
+
+  useEffect(() => {
+    switch (query.loop) {
+      case 'playlist':
+        setLoopStatus('LOOP_PLAYLIST')
+        break
+      case 'off':
+        setLoopStatus('PLAY_PLAYLIST')
+        break
+      default:
+        setLoopStatus('LOOP_VIDEO')
+        break
+    }
+    return () => {}
+  }, [query.loop])
 
   useEffect(() => {
     setStart(query.start ? Number(query.start) : null)
@@ -51,18 +117,12 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
         setPlaylistVideos(videos)
         const [video] = videos.filter(({id}) => id === videoId)
         if (video) {
-          const {thumbnails, title} = video.snippet
-          const image = thumbnails['standard']
-            ? thumbnails.standard.url
-            : thumbnails.high.url
-          setData(video)
-          setTitle(title)
-          setImage(image)
+          updateVideoProps(video)
         }
       }
     }
     return () => {}
-  }, [query.playlist])
+  }, [videoId, query.playlist])
 
   return (
     <Layout
@@ -81,7 +141,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
           flex: '1 1 auto',
           bg: 'background',
           mt: 2,
-          '@media (min-width: 80rem)': {
+          '@media (min-width: 79rem)': {
             flexFlow: 'row nowrap',
             alignItems: 'flex-start',
           },
@@ -94,7 +154,14 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
             alignItems: 'center',
             mx: 2,
           }}>
-          <Player videoId={videoId} start={start} end={end} />
+          <Player
+            videoId={videoId}
+            videoNumber={getVideoNumber()}
+            start={start}
+            end={end}
+            loopStatus={loopStatus}
+            updateVideoNumber={updateVideo}
+          />
           <Fragment>
             {error && (
               <div style={{maxWidth: '900px'}}>
@@ -121,7 +188,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
               <TrimControls
                 start={start}
                 end={end}
-                onTrim={() => updateRouter(videoId, start, end)}
+                onTrim={({start, end}) => updateRouter(videoId, start, end)}
               />
             )}
           </Fragment>
@@ -129,9 +196,12 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
         {playlistVideos.length > 0 && (
           <Playlistvideos
             videoId={videoId}
+            videoNumber={getVideoNumber()}
             playlistName={query.playlist}
             playlistVideos={playlistVideos}
+            loopStatus={loopStatus}
             onVideoClick={updateRouter}
+            onLoopClick={setLoopStatus}
           />
         )}
       </div>
