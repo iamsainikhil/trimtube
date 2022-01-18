@@ -53,7 +53,7 @@ const TrimControls = ({start, end, onTrim}) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         my: 3,
-        p: 2,
+        p: 3,
         borderRadius: '10px',
         borderWidth: '1px',
         borderStyle: 'solid',
@@ -61,11 +61,6 @@ const TrimControls = ({start, end, onTrim}) => {
         '@media (max-width: 40rem)': {
           flexFlow: 'column nowrap',
           justifyContent: 'center',
-          p: 3,
-        },
-        '@media (min-width: 50rem)': {
-          py: 3,
-          px: 5,
         },
       }}>
       <div
@@ -79,13 +74,13 @@ const TrimControls = ({start, end, onTrim}) => {
         <p sx={{mx: 1}}>Start</p>
         <TimeInput
           name='Start'
-          type='Minutes'
+          type='Minute'
           time={startTrimMinutes}
           valueChange={(e) => handleTime('start', 'm', e)}
         />
         <TimeInput
           name='Start'
-          type='Seconds'
+          type='Second'
           time={startTrimSeconds}
           valueChange={(e) => handleTime('start', 's', e)}
         />
@@ -102,13 +97,13 @@ const TrimControls = ({start, end, onTrim}) => {
         <p sx={{mx: 1}}>End</p>
         <TimeInput
           name='End'
-          type='Minutes'
+          type='Minute'
           time={endTrimMinutes}
           valueChange={(e) => handleTime('end', 'm', e)}
         />
         <TimeInput
           name='End'
-          type='Seconds'
+          type='Second'
           time={endTrimSeconds}
           valueChange={(e) => handleTime('end', 's', e)}
         />

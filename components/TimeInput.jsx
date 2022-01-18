@@ -2,6 +2,7 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
 import PropTypes from 'prop-types'
+import pluralizeText from '../utils/pluralizeText'
 
 /**
  * @param {String} name (Start or End)
@@ -40,7 +41,7 @@ const TimeInput = ({name, type, time, valueChange}) => {
         onChange={valueChange}
       />
       <label htmlFor={`${name}${type}`} sx={{fontSize: 0}}>
-        {type}
+        {pluralizeText(isNaN(time) ? 0 : Number(time), type)}
       </label>
     </div>
   )

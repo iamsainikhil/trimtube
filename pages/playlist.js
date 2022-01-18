@@ -15,6 +15,7 @@ import ConfirmationModal from '../components/ConfirmationModal'
 import ShareModal from './../components/ShareModal'
 import {ToastContext} from '../context/ToastContext'
 import {trackGAEvent} from '../utils/googleAnalytics'
+import pluralizeText from '../utils/pluralizeText'
 
 export default function Playlist({name, info, image, fetchData}) {
   const router = useRouter()
@@ -33,11 +34,6 @@ export default function Playlist({name, info, image, fetchData}) {
   const showToast = (message) => {
     setMessage(message)
     setShow(true)
-  }
-
-  const pluralizeText = (value, text) => {
-    if (value === 1) return `${value} ${text}`
-    return `${value} ${text}s`
   }
 
   const openModal = (type, name, message, action) => {
@@ -199,7 +195,10 @@ export default function Playlist({name, info, image, fetchData}) {
                   <span style={{margin: 'auto 1rem'}}>|</span>
                   <span>
                     {details.videos
-                      ? `${pluralizeText(details.videos.length, 'video')}`
+                      ? `${details.videos.length} ${pluralizeText(
+                          details.videos.length,
+                          'video'
+                        )}`
                       : '0 videos'}
                   </span>
                 </p>
