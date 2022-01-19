@@ -122,6 +122,7 @@ const Playlistvideos = ({
     setShowPlaylistModal(false)
     return () => {}
   }, [router.query.modal])
+
   return (
     <Fragment>
       <div
@@ -178,9 +179,10 @@ const Playlistvideos = ({
                   sx={{fontSize: 5, cursor: 'pointer'}}
                   title='Loop Playlist'
                   aria-label='Loop Playlist'
-                  onClick={() =>
+                  onClick={() => {
                     onLoopClick(LOOP_STATUS_MAPPERS['LOOP_PLAYLIST'])
-                  }
+                    showToast('Playlist repeat is ON')
+                  }}
                 />
               )}
               {loopStatus === 'LOOP_PLAYLIST' && (
@@ -188,9 +190,10 @@ const Playlistvideos = ({
                   sx={{fontSize: 5, cursor: 'pointer'}}
                   title='Play Playlist'
                   aria-label='Play Playlist'
-                  onClick={() =>
+                  onClick={() => {
                     onLoopClick(LOOP_STATUS_MAPPERS['PLAY_PLAYLIST'])
-                  }
+                    showToast('Playlist repeat is OFF')
+                  }}
                 />
               )}
               {loopStatus === 'PLAY_PLAYLIST' && (
@@ -202,7 +205,10 @@ const Playlistvideos = ({
                   }}
                   title='Loop Video'
                   aria-label='Loop Video'
-                  onClick={() => onLoopClick(LOOP_STATUS_MAPPERS['LOOP_VIDEO'])}
+                  onClick={() => {
+                    onLoopClick(LOOP_STATUS_MAPPERS['LOOP_VIDEO'])
+                    showToast('Video will repeat')
+                  }}
                 />
               )}
               <BiShuffle
@@ -214,7 +220,10 @@ const Playlistvideos = ({
                 }}
                 title={`${shuffle ? 'Not' : ''} Shuffle Playlist`}
                 aria-label={`${shuffle ? 'Not' : ''} Shuffle Playlist`}
-                onClick={() => onShuffleClick(!shuffle)}
+                onClick={() => {
+                  onShuffleClick(!shuffle)
+                  showToast(`Playlist shuffle is ${shuffle ? 'OFF' : 'ON'}`)
+                }}
               />
             </div>
           </div>
