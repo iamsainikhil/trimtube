@@ -108,7 +108,8 @@ const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
             color: 'primary',
             maxHeight: '2rem',
           }}>
-          {truncateText(he.decode(snippet.description), 75)}
+          {truncateText(he.decode(snippet.description), 75) ||
+            'No description.'}
         </p>
         {statistics && (
           <div
