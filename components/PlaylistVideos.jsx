@@ -31,9 +31,16 @@ const Playlistvideos = ({
 }) => {
   const router = useRouter()
   const [expand, setExpand] = useState(true)
+  const [localLoopStatus, setLocalLoopStatus] = useState(loopStatus)
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [video, setVideo] = useState(null)
+  const [modalInfo, setModalInfo] = useState({
+    type: '',
+    name: '',
+    action: null,
+  })
+  const {setShow, setMessage} = useContext(ToastContext)
   const dynamicBorderRadius = expand
     ? {
         borderTopLeftRadius: '15px',
@@ -42,12 +49,15 @@ const Playlistvideos = ({
     : {
         borderRadius: '15px',
       }
-  const [modalInfo, setModalInfo] = useState({
-    type: '',
-    name: '',
-    action: null,
-  })
-  const {setShow, setMessage} = useContext(ToastContext)
+  const loopShuffleIconStyles = {
+    p: 1,
+    fontSize: '36px',
+    cursor: 'pointer',
+    '&:hover': {
+      borderRadius: '50%',
+      bg: 'shade2',
+    },
+  }
 
   const showToast = (message) => {
     setMessage(message)
@@ -148,16 +158,17 @@ const Playlistvideos = ({
             bg: 'muted',
             width: '100%',
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            // alignItems: 'center',
             px: 5,
+            py: 0,
             ...dynamicBorderRadius,
           }}>
           <div
             sx={{
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
+              justifyContent: 'space-between',
               alignItems: 'center',
             }}>
             <h3
@@ -167,45 +178,56 @@ const Playlistvideos = ({
               }}>
               {playlistName}
             </h3>
-            <div
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                mb: 3,
-              }}>
-              {loopStatus === 'LOOP_VIDEO' && (
+            <p>
+              {videoNumber}&nbsp;/&nbsp;{playlistVideos.length}
+            </p>
+          </div>
+          <div
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <div>
+              {localLoopStatus === 'LOOP_VIDEO' && (
                 <MdRepeatOne
-                  sx={{fontSize: 5, cursor: 'pointer'}}
+                  sx={loopShuffleIconStyles}
                   title='Loop Playlist'
                   aria-label='Loop Playlist'
                   onClick={() => {
+                    setLocalLoopStatus('LOOP_PLAYLIST')
                     onLoopClick(LOOP_STATUS_MAPPERS['LOOP_PLAYLIST'])
                     showToast('Playlist repeat is ON')
                   }}
                 />
               )}
-              {loopStatus === 'LOOP_PLAYLIST' && (
+              {localLoopStatus === 'LOOP_PLAYLIST' && (
                 <MdRepeat
-                  sx={{fontSize: 5, cursor: 'pointer'}}
+                  sx={loopShuffleIconStyles}
                   title='Play Playlist'
                   aria-label='Play Playlist'
                   onClick={() => {
+                    setLocalLoopStatus('PLAY_PLAYLIST')
                     onLoopClick(LOOP_STATUS_MAPPERS['PLAY_PLAYLIST'])
                     showToast('Playlist repeat is OFF')
                   }}
                 />
               )}
-              {loopStatus === 'PLAY_PLAYLIST' && (
+              {localLoopStatus === 'PLAY_PLAYLIST' && (
                 <MdRepeat
                   sx={{
-                    fontSize: 5,
+                    ...loopShuffleIconStyles,
                     color: 'rgba(0,0,0,0.5)',
                     cursor: 'pointer',
+                    '&:hover': {
+                      borderRadius: '50%',
+                      bg: 'highlight',
+                    },
                   }}
                   title='Loop Video'
                   aria-label='Loop Video'
                   onClick={() => {
+                    setLocalLoopStatus('LOOP_VIDEO')
                     onLoopClick(LOOP_STATUS_MAPPERS['LOOP_VIDEO'])
                     showToast('Video will repeat')
                   }}
@@ -213,10 +235,15 @@ const Playlistvideos = ({
               )}
               <BiShuffle
                 sx={{
+                  p: 1,
                   ml: 3,
-                  fontSize: '28px',
+                  fontSize: '36px',
                   color: shuffle ? '' : 'rgba(0,0,0,0.5)',
                   cursor: 'pointer',
+                  '&:hover': {
+                    borderRadius: '50%',
+                    bg: 'highlight',
+                  },
                 }}
                 title={`${shuffle ? 'Not' : ''} Shuffle Playlist`}
                 aria-label={`${shuffle ? 'Not' : ''} Shuffle Playlist`}
@@ -226,26 +253,39 @@ const Playlistvideos = ({
                 }}
               />
             </div>
-          </div>
-          <div sx={{textAlign: 'center'}}>
-            <p sx={{mb: 3}}>
-              {videoNumber}&nbsp;/&nbsp;{playlistVideos.length}
-            </p>
-            {expand ? (
-              <BiChevronUp
-                sx={{fontSize: 5, mt: 1, cursor: 'pointer'}}
-                title='Collapse List'
-                aria-label='Collapse videos list'
-                onClick={() => setExpand(false)}
-              />
-            ) : (
-              <BiChevronDown
-                sx={{fontSize: 5, mt: 1, cursor: 'pointer'}}
-                title='Expand List'
-                aria-label='Expand videos list'
-                onClick={() => setExpand(true)}
-              />
-            )}
+            <div>
+              {expand ? (
+                <BiChevronUp
+                  sx={{
+                    fontSize: 5,
+                    mt: 2,
+                    cursor: 'pointer',
+                    '&:hover': {
+                      borderRadius: '50%',
+                      bg: 'shade2',
+                    },
+                  }}
+                  title='Collapse List'
+                  aria-label='Collapse videos list'
+                  onClick={() => setExpand(false)}
+                />
+              ) : (
+                <BiChevronDown
+                  sx={{
+                    fontSize: 5,
+                    mt: 2,
+                    cursor: 'pointer',
+                    '&:hover': {
+                      borderRadius: '50%',
+                      bg: 'shade2',
+                    },
+                  }}
+                  title='Expand List'
+                  aria-label='Expand videos list'
+                  onClick={() => setExpand(true)}
+                />
+              )}
+            </div>
           </div>
         </div>
         {expand && (
@@ -302,24 +342,43 @@ const Playlistvideos = ({
                       {snippet.title}
                     </p>
                     {/* <p>{snippet.channelTitle}</p> */}
-                    <p sx={{color: 'text'}}>
+                    <p sx={{color: 'gray'}}>
                       Start:{' '}
-                      <span sx={{color: 'secondary'}}>
+                      <span sx={{color: 'accent'}}>
                         {formatTime(start, 'Both')}
                       </span>
                       &nbsp;&nbsp; End:{' '}
-                      <span sx={{color: 'secondary'}}>
+                      <span sx={{color: 'accent'}}>
                         {formatTime(end, 'Both')}
                       </span>
                     </p>
                     <MdPlaylistAdd
-                      sx={{fontSize: 4, mb: 0, cursor: 'pointer'}}
+                      sx={{
+                        fontSize: 5,
+                        mb: 0,
+                        p: 1,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          borderRadius: '50%',
+                          bg: 'shade2',
+                        },
+                      }}
                       title='Add to Playlist'
                       aria-label='Add to Playlist'
                       onClick={(e) => saveToPlaylist(e, video)}
                     />
                     <BiTrashAlt
-                      sx={{fontSize: 2, ml: 3, mb: 1, cursor: 'pointer'}}
+                      sx={{
+                        fontSize: 5,
+                        ml: 3,
+                        mb: '1px',
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          borderRadius: '50%',
+                          bg: 'shade2',
+                        },
+                      }}
                       title='Delete video'
                       onClick={(e) => deleteVideoModal(e, video)}
                     />
