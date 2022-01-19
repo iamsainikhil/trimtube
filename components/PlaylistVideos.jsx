@@ -79,7 +79,9 @@ const Playlistvideos = ({
                 sx={{fontSize: 5, cursor: 'pointer'}}
                 title='Loop Playlist'
                 aria-label='Loop Playlist'
-                onClick={() => onLoopClick('LOOP_PLAYLIST')}
+                onClick={() =>
+                  onLoopClick(LOOP_STATUS_MAPPERS['LOOP_PLAYLIST'])
+                }
               />
             )}
             {loopStatus === 'LOOP_PLAYLIST' && (
@@ -87,7 +89,9 @@ const Playlistvideos = ({
                 sx={{fontSize: 5, cursor: 'pointer'}}
                 title='Play Playlist'
                 aria-label='Play Playlist'
-                onClick={() => onLoopClick('PLAY_PLAYLIST')}
+                onClick={() =>
+                  onLoopClick(LOOP_STATUS_MAPPERS['PLAY_PLAYLIST'])
+                }
               />
             )}
             {loopStatus === 'PLAY_PLAYLIST' && (
@@ -99,14 +103,14 @@ const Playlistvideos = ({
                 }}
                 title='Loop Video'
                 aria-label='Loop Video'
-                onClick={() => onLoopClick('LOOP_VIDEO')}
+                onClick={() => onLoopClick(LOOP_STATUS_MAPPERS['LOOP_VIDEO'])}
               />
             )}
             <BiShuffle
-              sx={{ml: 3, fontSize: 4, cursor: 'pointer'}}
-              title='Collapse List'
-              aria-label='Collapse videos list'
-              onClick={() => setExpand(false)}
+              sx={{ml: 3, fontSize: '28px', cursor: 'pointer'}}
+              title='Shuffle Playlist'
+              aria-label='Shuffle Playlist'
+              onClick={() => {}}
             />
           </div>
         </div>

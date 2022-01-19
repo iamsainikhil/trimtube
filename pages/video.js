@@ -88,6 +88,11 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
     }
   }
 
+  const updateLoopStatus = (status) => {
+    setLoopStatus(status)
+    updateRouter(videoId, start, end, status)
+  }
+
   useEffect(() => {
     switch (query.loop) {
       case 'playlist':
@@ -201,7 +206,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
             playlistVideos={playlistVideos}
             loopStatus={loopStatus}
             onVideoClick={updateRouter}
-            onLoopClick={setLoopStatus}
+            onLoopClick={updateLoopStatus}
           />
         )}
       </div>
