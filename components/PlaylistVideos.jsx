@@ -19,8 +19,10 @@ const Playlistvideos = ({
   playlistName,
   playlistVideos,
   loopStatus,
+  shuffle,
   onVideoClick,
   onLoopClick,
+  onShuffleClick,
 }) => {
   const [expand, setExpand] = useState(true)
   return (
@@ -107,10 +109,15 @@ const Playlistvideos = ({
               />
             )}
             <BiShuffle
-              sx={{ml: 3, fontSize: '28px', cursor: 'pointer'}}
-              title='Shuffle Playlist'
-              aria-label='Shuffle Playlist'
-              onClick={() => {}}
+              sx={{
+                ml: 3,
+                fontSize: '28px',
+                color: shuffle ? '' : 'rgba(0,0,0,0.5)',
+                cursor: 'pointer',
+              }}
+              title={`${shuffle ? 'Not' : ''} Shuffle Playlist`}
+              aria-label={`${shuffle ? 'Not' : ''} Shuffle Playlist`}
+              onClick={() => onShuffleClick(!shuffle)}
             />
           </div>
         </div>
@@ -153,15 +160,20 @@ const Playlistvideos = ({
               },
             }}
             onClick={() =>
-              onVideoClick(id, start, end, LOOP_STATUS_MAPPERS[loopStatus])
+              onVideoClick({
+                id,
+                start,
+                end,
+                loopValue: LOOP_STATUS_MAPPERS[loopStatus],
+                shuffleValue: shuffle ? 'on' : 'off',
+              })
             }
             key={id}>
             <Image
               src={snippet.thumbnails.medium.url}
               alt={snippet.title}
               title={snippet.title}
-              layout='intrinsic'
-              width='200'
+              width='220'
               height='160'
               className='video-list-thumbnail'
             />
