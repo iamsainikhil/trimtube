@@ -255,7 +255,7 @@ const Playlistvideos = ({
                   cursor: 'pointer',
                   '&:hover': {
                     borderRadius: '50%',
-                    bg: 'highlight',
+                    bg: shuffle ? 'shade2' : 'highlight',
                   },
                 }}
                 title={`${shuffle ? 'Not' : ''} Shuffle Playlist`}
