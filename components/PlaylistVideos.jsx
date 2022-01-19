@@ -157,7 +157,7 @@ const Playlistvideos = ({
               alt={snippet.title}
               title={snippet.title}
               layout='intrinsic'
-              width='160'
+              width='200'
               height='160'
               className='video-list-thumbnail'
             />
