@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {jsx} from 'theme-ui'
 import {useRouter} from 'next/router'
 import he from 'he'
@@ -13,7 +13,7 @@ import ShareModal from './ShareModal'
 import {trackGAEvent} from '../utils/googleAnalytics'
 
 const Info = ({data, start, end}) => {
-  const {asPath: URL} = useRouter()
+  const {query, asPath: URL} = useRouter()
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
 
@@ -25,6 +25,11 @@ const Info = ({data, start, end}) => {
     }
     trackGAEvent(type, `clicked on ${URL} page ${type} icon`, 'icon click')
   }
+
+  useEffect(() => {
+    setShowPlaylistModal(query.modal === 'on')
+    return () => {}
+  }, [query.modal])
 
   return (
     <div sx={{mx: 'auto', px: 2, maxWidth: '720px', width: '100%'}}>

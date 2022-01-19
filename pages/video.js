@@ -165,7 +165,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
       updateVideoProps(video)
     }
     return () => {}
-  }, [videoId, query.playlist])
+  }, [videoId, query.playlist, query.modal])
 
   return (
     <Layout
@@ -249,6 +249,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
             onVideoClick={updateRouter}
             onLoopClick={updateLoopStatus}
             onShuffleClick={shufflePlaylist}
+            onVideoDelete={updateRouter}
           />
         )}
       </div>
