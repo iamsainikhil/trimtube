@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
 import {useState} from 'react'
-import Image from 'next/image'
 import formatTime from './../utils/formatTime'
 import {BiShuffle, BiChevronDown, BiChevronUp} from 'react-icons/bi'
 import {MdRepeatOne, MdRepeat} from 'react-icons/md'
@@ -25,6 +24,14 @@ const Playlistvideos = ({
   onShuffleClick,
 }) => {
   const [expand, setExpand] = useState(true)
+  const dynamicBorderRadius = expand
+    ? {
+        borderTopLeftRadius: '15px',
+        borderTopRightRadius: '15px',
+      }
+    : {
+        borderRadius: '15px',
+      }
   return (
     <div
       sx={{
@@ -34,9 +41,7 @@ const Playlistvideos = ({
         alignItems: 'center',
         ml: 3,
         p: 0,
-        height: '100%',
         width: '400px',
-        overflowY: 'auto',
         border: '1px solid gray',
         borderRadius: '15px',
         '@media (max-width: 79rem)': {
@@ -54,6 +59,7 @@ const Playlistvideos = ({
           justifyContent: 'space-between',
           alignItems: 'center',
           px: 5,
+          ...dynamicBorderRadius,
         }}>
         <div
           sx={{
@@ -142,66 +148,72 @@ const Playlistvideos = ({
           )}
         </div>
       </div>
-      {expand &&
-        playlistVideos.map(({id, snippet, start, end}) => (
-          <div
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              my: 1,
-              px: 2,
-              width: '100%',
-              borderRadius: '15px',
-              bg: id === videoId ? 'search' : 'background',
-              '&:hover': {
-                bg: 'search',
-                cursor: 'pointer',
-              },
-            }}
-            onClick={() =>
-              onVideoClick({
-                id,
-                start,
-                end,
-                loopValue: LOOP_STATUS_MAPPERS[loopStatus],
-                shuffleValue: shuffle ? 'on' : 'off',
-              })
-            }
-            key={id}>
-            <Image
-              src={snippet.thumbnails.medium.url}
-              alt={snippet.title}
-              title={snippet.title}
-              width='220'
-              height='160'
-              className='video-list-thumbnail'
-            />
+      {expand && (
+        <div sx={{height: '600px', overflowY: 'auto'}}>
+          {playlistVideos.map(({id, snippet, start, end}, index) => (
             <div
               sx={{
-                p: 2,
-                lineHeight: 1.25,
-                fontSize: [0, 1],
-                color: 'gray',
-              }}>
-              <p
+                display: 'flex',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                my: 1,
+                px: 2,
+                width: '100%',
+                borderRadius: '15px',
+                bg: id === videoId ? 'search' : 'background',
+                '&:hover': {
+                  bg: 'search',
+                  cursor: 'pointer',
+                },
+              }}
+              onClick={() =>
+                onVideoClick({
+                  id,
+                  start,
+                  end,
+                  loopValue: LOOP_STATUS_MAPPERS[loopStatus],
+                })
+              }
+              key={`${id}-${index}`}>
+              <img
+                src={snippet.thumbnails.medium.url}
+                alt={snippet.title}
+                title={snippet.title}
                 sx={{
-                  variant: 'medium',
+                  width: '150px',
+                  height: '120px',
+                }}
+                className='video-list-thumbnail'
+              />
+              <div
+                sx={{
+                  p: 2,
+                  lineHeight: 1.25,
+                  fontSize: [0, 1],
+                  color: 'gray',
                 }}>
-                {snippet.title}
-              </p>
-              <p>{snippet.channelTitle}</p>
-              <p sx={{color: 'text'}}>
-                Start:{' '}
-                <span sx={{color: 'secondary'}}>
-                  {formatTime(start, 'Both')}
-                </span>
-                &nbsp;&nbsp; End:{' '}
-                <span sx={{color: 'secondary'}}>{formatTime(end, 'Both')}</span>
-              </p>
+                <p
+                  sx={{
+                    variant: 'medium',
+                  }}>
+                  {snippet.title}
+                </p>
+                <p>{snippet.channelTitle}</p>
+                <p sx={{color: 'text'}}>
+                  Start:{' '}
+                  <span sx={{color: 'secondary'}}>
+                    {formatTime(start, 'Both')}
+                  </span>
+                  &nbsp;&nbsp; End:{' '}
+                  <span sx={{color: 'secondary'}}>
+                    {formatTime(end, 'Both')}
+                  </span>
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+      )}
     </div>
   )
 }
