@@ -30,6 +30,16 @@ export default function Playlist({name, info, image, fetchData}) {
     action: null,
   })
   const {setShow, setMessage} = useContext(ToastContext)
+  const iconStyle = {
+    mx: 3,
+    p: '6px',
+    fontSize: 5,
+    cursor: 'pointer',
+    '&:hover': {
+      borderRadius: '50%',
+      bg: 'shade2',
+    },
+  }
 
   const showToast = (message) => {
     setMessage(message)
@@ -205,21 +215,21 @@ export default function Playlist({name, info, image, fetchData}) {
                 <p sx={{mt: 0, position: 'relative'}}>
                   {showSave && (
                     <BiSave
-                      sx={{mx: 3, cursor: 'pointer'}}
+                      sx={iconStyle}
                       title='Save playlist'
                       aria-label='Share'
                       onClick={savePlaylist}
                     />
                   )}
                   <BiShareAlt
-                    sx={{mx: 3, cursor: 'pointer'}}
+                    sx={iconStyle}
                     title='Share playlist on'
                     aria-label='Share'
                     onClick={() => setShowShareModal(true)}
                   />
                   {!showSave && (
                     <BiTrash
-                      sx={{mx: 3, cursor: 'pointer'}}
+                      sx={iconStyle}
                       title='Delete playlist'
                       onClick={() =>
                         openModal('playlist', name, null, deletePlaylist)

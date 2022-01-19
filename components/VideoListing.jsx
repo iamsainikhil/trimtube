@@ -53,7 +53,7 @@ const VideoListing = ({playlistName, videos, remove}) => {
                 position: 'absolute',
                 bottom: 0,
                 right: 0,
-                mb: '1.25rem',
+                mb: '1rem',
               }}
               onClick={(e) => {
                 remove({
@@ -64,7 +64,19 @@ const VideoListing = ({playlistName, videos, remove}) => {
                 })
                 e.preventDefault()
               }}>
-              <FiTrash sx={{mx: 3, cursor: 'pointer'}} title='Delete video' />
+              <FiTrash
+                sx={{
+                  mx: 3,
+                  p: '6px',
+                  fontSize: 5,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    borderRadius: '50%',
+                    bg: 'shade2',
+                  },
+                }}
+                title='Delete video'
+              />
             </p>
           </a>
         </NextLink>
