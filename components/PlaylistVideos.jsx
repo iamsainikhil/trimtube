@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {Fragment, useState, useContext, useEffect} from 'react'
+import {Fragment, useState, useContext, useEffect, createRef} from 'react'
 import {useRouter} from 'next/router'
 import {BiShuffle, BiChevronDown, BiChevronUp, BiTrashAlt} from 'react-icons/bi'
 import {MdRepeatOne, MdRepeat, MdPlaylistAdd} from 'react-icons/md'
@@ -18,7 +18,6 @@ const LOOP_STATUS_MAPPERS = {
 }
 
 const Playlistvideos = ({
-  videoId,
   videoNumber,
   playlistName,
   playlistVideos,
@@ -58,6 +57,10 @@ const Playlistvideos = ({
       bg: 'shade2',
     },
   }
+  const refs = playlistVideos.reduce((acc, curr, index) => {
+    acc[index] = createRef()
+    return acc
+  }, {})
 
   const showToast = (message) => {
     setMessage(message)
@@ -132,6 +135,16 @@ const Playlistvideos = ({
     setShowPlaylistModal(false)
     return () => {}
   }, [router.query.modal])
+
+  useEffect(() => {
+    if (refs[videoNumber - 1] && refs[videoNumber - 1].current) {
+      refs[videoNumber - 1].current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }
+    return () => {}
+  }, [videoNumber])
 
   return (
     <Fragment>
@@ -289,11 +302,13 @@ const Playlistvideos = ({
           </div>
         </div>
         {expand && (
-          <div sx={{height: '100%', maxHeight: '600px', overflowY: 'auto'}}>
+          <div
+            sx={{my: 2, height: '100%', maxHeight: '600px', overflowY: 'auto'}}>
             {playlistVideos.map((video, index) => {
               const {id, snippet, start, end} = video
               return (
                 <div
+                  ref={refs[index]}
                   sx={{
                     display: 'flex',
                     justifyContent: 'flex-start',

@@ -240,7 +240,6 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
         </div>
         {playlistVideos.length > 0 && (
           <Playlistvideos
-            videoId={videoId}
             videoNumber={getVideoNumber()}
             playlistName={query.playlist}
             playlistVideos={playlistVideos}
