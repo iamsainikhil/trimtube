@@ -90,7 +90,7 @@ const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
           {snippet.channelTitle}
           {!statistics && ` | ${publishedTime}`}
         </p>
-        {statistics && (
+        {/* {statistics && (
           <p
             sx={{
               mt: 0,
@@ -99,7 +99,7 @@ const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
             }}>
             {formatNumber(statistics.viewCount)} views | {publishedTime}
           </p>
-        )}
+        )} */}
         <p
           sx={{
             mt: 0,
