@@ -1,13 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {Fragment, useState, useContext} from 'react'
-import formatTime from './../utils/formatTime'
+import {Fragment, useState, useContext, useEffect} from 'react'
+import {useRouter} from 'next/router'
 import {BiShuffle, BiChevronDown, BiChevronUp, BiTrashAlt} from 'react-icons/bi'
 import {MdRepeatOne, MdRepeat, MdPlaylistAdd} from 'react-icons/md'
 import PlaylistModal from './PlaylistModal'
 import {ToastContext} from '../context/ToastContext'
 import ConfirmationModal from './ConfirmationModal'
+import formatTime from './../utils/formatTime'
 import {trackGAEvent} from './../utils/googleAnalytics'
 
 const LOOP_STATUS_MAPPERS = {
@@ -28,6 +29,7 @@ const Playlistvideos = ({
   onShuffleClick,
   onVideoDelete,
 }) => {
+  const router = useRouter()
   const [expand, setExpand] = useState(true)
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -99,7 +101,15 @@ const Playlistvideos = ({
     const video =
       playlists[playlistName].videos[videoNumber] ||
       playlists[playlistName].videos[0]
-    onVideoDelete({id: video?.id, start: video?.start, end: video?.end})
+    const {id, start, end} = router.query
+    const videoParams = video
+      ? {
+          id: video?.id,
+          start: video?.start,
+          end: video?.end,
+        }
+      : {id, start, end}
+    onVideoDelete(videoParams)
   }
 
   const saveToPlaylist = (e, video) => {
@@ -107,6 +117,11 @@ const Playlistvideos = ({
     setVideo(video)
     setShowPlaylistModal(true)
   }
+
+  useEffect(() => {
+    setShowPlaylistModal(false)
+    return () => {}
+  }, [router.query.modal])
   return (
     <Fragment>
       <div

@@ -27,7 +27,7 @@ const Info = ({data, start, end}) => {
   }
 
   useEffect(() => {
-    setShowPlaylistModal(query.modal === 'on')
+    setShowPlaylistModal(false)
     return () => {}
   }, [query.modal])
 

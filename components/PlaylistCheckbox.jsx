@@ -57,7 +57,7 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
         id: videoDetails.id,
         start: videoDetails.start,
         end: videoDetails.end,
-        modal: 'off',
+        modal: router.query.modal === 'off' ? 'on' : 'off',
       },
     })
   }
@@ -81,26 +81,24 @@ const PlaylistCheckbox = ({data, start, end, index, name}) => {
     localStorage.setItem('playlists', JSON.stringify(playlists))
     showToast(`Removed from ${name} playlist!`)
     const video = videos[deleteIndex] || videos[0]
+    const videoParams = video
+      ? {
+          id: video?.id,
+          start: video?.start,
+          end: video?.end,
+        }
+      : {}
     router.push({
       pathname: '/video',
       query: {
         ...router.query,
-        id: video?.id,
-        start: video?.start,
-        end: video?.end,
-        modal: 'off',
+        ...videoParams,
+        modal: router.query.modal === 'off' ? 'on' : 'off',
       },
     })
   }
 
   const playlistCheckbox = () => {
-    router.push({
-      pathname: '/video',
-      query: {
-        ...router.query,
-        modal: 'on',
-      },
-    })
     if (!checked) {
       if (!videoExistsInPlaylist()) {
         addVideoToPlaylist()
