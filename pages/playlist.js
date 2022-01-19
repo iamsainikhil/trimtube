@@ -58,10 +58,27 @@ export default function Playlist({name, info, image, fetchData}) {
 
   const mergeVideos = () => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
+    // merge incoming playlist videos and locally stored playlist videos
+    const shallowMergedVideos = [...details.videos, ...playlists[name].videos]
+    const mergedVideosObj = shallowMergedVideos.reduce((acc, curr) => {
+      if (acc[curr.id]) {
+        for (let i = 0; i < acc[curr.id].length; i++) {
+          const {start, end} = acc[curr.id][i]
+          if (start === curr.start && end === curr.end) {
+            return acc
+          }
+        }
+        acc[curr.id].push(curr)
+      } else {
+        acc[curr.id] = [curr]
+      }
+      return acc
+    }, {})
+    const mergedVideos = Object.values(mergedVideosObj).flatMap((v) => v)
     playlists[name] = {
       name,
       created: playlists[name].created,
-      videos: [...details.videos, ...playlists[name].videos],
+      videos: mergedVideos,
     }
     localStorage.setItem('playlists', JSON.stringify(playlists))
     setDetails(playlists[name])
