@@ -147,7 +147,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
 
   useEffect(() => {
     let videos = []
-    if (playlistVideos.length === 0) {
+    if (playlistVideos.length === 0 || !shuffle) {
       videos = getPlaylists()
     } else {
       // use the already existing videos
