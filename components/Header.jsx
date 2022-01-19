@@ -13,6 +13,15 @@ const Header = () => {
   const {colorMode, setColorMode} = useThemeUI()
   const router = useRouter()
   const {asPath: routePath} = router
+  const iconStyle = {
+    verticalAlign: 'middle',
+    mt: '0.7rem',
+    cursor: 'pointer',
+    '&:hover': {
+      borderRadius: '50%',
+      bg: 'shade2',
+    },
+  }
 
   return (
     <Headroom disableInlineStyles upTolerance={10} downTolerance={10}>
@@ -42,11 +51,12 @@ const Header = () => {
               <p>
                 <GoSearch
                   title='Search'
-                  style={{
-                    fontSize: '1.1rem',
+                  sx={{
+                    p: '6px',
+                    fontSize: '1.85rem',
                     verticalAlign: 'middle',
                     marginTop: '0.8rem',
-                    cursor: 'pointer',
+                    ...iconStyle,
                   }}
                   onClick={() => {
                     trackGAEvent(
@@ -65,11 +75,10 @@ const Header = () => {
                   <a>
                     <MdPlaylistPlay
                       title='Playlists'
-                      style={{
-                        cursor: 'pointer',
-                        verticalAlign: 'middle',
-                        fontSize: '1.5rem',
-                        marginTop: '0.7rem',
+                      sx={{
+                        p: '2px',
+                        fontSize: '2rem',
+                        ...iconStyle,
                       }}
                     />
                   </a>
@@ -83,11 +92,12 @@ const Header = () => {
                 rel='noopener noreferrer'>
                 <FiHelpCircle
                   title='About'
-                  style={{
-                    cursor: 'pointer',
+                  sx={{
+                    p: '6px',
+                    fontSize: '2rem',
                     verticalAlign: 'middle',
-                    fontSize: '1.25rem',
                     marginTop: '0.7rem',
+                    ...iconStyle,
                   }}
                 />
               </a>
@@ -98,7 +108,13 @@ const Header = () => {
                   title='Switch to Dark Mode'
                   aria-label='Switch to Dark Mode'>
                   <FiSun
-                    className='theme-icon'
+                    sx={{
+                      p: '6px',
+                      fontSize: '2rem',
+                      mt: '0.7rem',
+                      verticalAlign: 'middle',
+                      ...iconStyle,
+                    }}
                     onClick={() => {
                       setColorMode('dark')
                       trackGAEvent(
@@ -114,7 +130,13 @@ const Header = () => {
                   title='Switch to Light Mode'
                   aria-label='Switch to Light Mode'>
                   <FiMoon
-                    className='theme-icon'
+                    sx={{
+                      p: '6px',
+                      fontSize: '2rem',
+                      mt: '0.7rem',
+                      verticalAlign: 'middle',
+                      ...iconStyle,
+                    }}
                     onClick={() => {
                       setColorMode('light')
                       trackGAEvent(
