@@ -337,8 +337,8 @@ const Playlistvideos = ({
                     alt={snippet.title}
                     title={snippet.title}
                     sx={{
-                      width: '160px',
-                      height: '120px',
+                      width: '180px',
+                      height: '140px',
                     }}
                     className='video-list-thumbnail'
                   />
