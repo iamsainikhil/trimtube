@@ -5,7 +5,8 @@ import {default as NextLink} from 'next/link'
 import Headroom from 'react-headroom'
 import {GoSearch} from 'react-icons/go'
 import {FiHelpCircle, FiSun, FiMoon} from 'react-icons/fi'
-import {MdPlaylistPlay} from 'react-icons/md'
+import {RiPlayListFill} from 'react-icons/ri'
+// import {MdPlaylistPlay} from 'react-icons/md'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import {useRouter} from 'next/router'
 
@@ -15,6 +16,7 @@ const Header = () => {
   const {asPath: routePath} = router
   const iconStyle = {
     verticalAlign: 'middle',
+    p: '6px',
     mt: '0.7rem',
     cursor: 'pointer',
     '&:hover': {
@@ -52,11 +54,9 @@ const Header = () => {
                 <GoSearch
                   title='Search'
                   sx={{
-                    p: '6px',
-                    fontSize: '1.85rem',
-                    verticalAlign: 'middle',
-                    marginTop: '0.8rem',
+                    fontSize: '1.75rem',
                     ...iconStyle,
+                    marginTop: '1rem',
                   }}
                   onClick={() => {
                     trackGAEvent(
@@ -73,11 +73,10 @@ const Header = () => {
               <p>
                 <NextLink href={'/playlists'} passHref>
                   <a>
-                    <MdPlaylistPlay
+                    <RiPlayListFill
                       title='Playlists'
                       sx={{
-                        p: '2px',
-                        fontSize: '2rem',
+                        fontSize: '1.85rem',
                         ...iconStyle,
                       }}
                     />
@@ -93,10 +92,7 @@ const Header = () => {
                 <FiHelpCircle
                   title='About'
                   sx={{
-                    p: '6px',
                     fontSize: '2rem',
-                    verticalAlign: 'middle',
-                    marginTop: '0.7rem',
                     ...iconStyle,
                   }}
                 />
@@ -109,10 +105,7 @@ const Header = () => {
                   aria-label='Switch to Dark Mode'>
                   <FiSun
                     sx={{
-                      p: '6px',
                       fontSize: '2rem',
-                      mt: '0.7rem',
-                      verticalAlign: 'middle',
                       ...iconStyle,
                     }}
                     onClick={() => {
@@ -131,10 +124,7 @@ const Header = () => {
                   aria-label='Switch to Light Mode'>
                   <FiMoon
                     sx={{
-                      p: '6px',
                       fontSize: '2rem',
-                      mt: '0.7rem',
-                      verticalAlign: 'middle',
                       ...iconStyle,
                     }}
                     onClick={() => {
