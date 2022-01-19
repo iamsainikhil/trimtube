@@ -240,7 +240,7 @@ const Playlistvideos = ({
           </div>
         </div>
         {expand && (
-          <div sx={{height: '600px', overflowY: 'auto'}}>
+          <div sx={{height: '100%', maxHeight: '600px', overflowY: 'auto'}}>
             {playlistVideos.map((video, index) => {
               const {id, snippet, start, end} = video
               return (
