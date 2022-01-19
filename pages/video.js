@@ -68,7 +68,12 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
   const getVideoNumber = () => {
     let videoNumber = 1
     for (let i = 0; i < playlistVideos.length; i++) {
-      if (playlistVideos[i].id === videoId) {
+      const {id, start: startTime, end: endTime} = playlistVideos[i]
+      if (
+        id === videoId &&
+        Number(startTime) === start &&
+        Number(endTime) === end
+      ) {
         return videoNumber
       }
       videoNumber++
