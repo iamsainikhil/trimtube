@@ -2,12 +2,13 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
 import {Fragment, useState, useContext, useEffect, createRef} from 'react'
-import {BiShuffle, BiChevronDown, BiChevronUp} from 'react-icons/bi'
+import {BiShuffle, BiChevronDown, BiChevronUp, BiShareAlt} from 'react-icons/bi'
 import {MdRepeatOne, MdRepeat, MdPlaylistAdd} from 'react-icons/md'
-import PlaylistModal from './PlaylistModal'
 import {ToastContext} from '../context/ToastContext'
 import formatTime from './../utils/formatTime'
-import {trackGAEvent} from './../utils/googleAnalytics'
+import {dateNow} from './../utils/date'
+import PlaylistModal from './PlaylistModal'
+import ShareModal from './ShareModal'
 
 const LOOP_STATUS_MAPPERS = {
   LOOP_VIDEO: 'video',
@@ -27,6 +28,7 @@ const Playlistvideos = ({
 }) => {
   const [expand, setExpand] = useState(true)
   const [localLoopStatus, setLocalLoopStatus] = useState(loopStatus)
+  const [showShareModal, setShowShareModal] = useState(false)
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
   const [video, setVideo] = useState(null)
   const [hoveredVideoIndex, setHoveredVideoIndex] = useState(null)
@@ -62,6 +64,16 @@ const Playlistvideos = ({
     e.stopPropagation()
     setVideo(video)
     setShowPlaylistModal(true)
+  }
+
+  const getShareURL = () => {
+    const playlists = JSON.parse(localStorage.getItem('playlists'))
+    const playlist = playlists[playlistName]
+    const videoIds = playlistVideos.map((v) => v.id).join('***')
+    const startTimes = playlistVideos.map((v) => v.start || 0).join('-')
+    const endTimes = playlistVideos.map((v) => v.end || 0).join('-')
+    const created = playlist?.created || dateNow()
+    return `/playlist?id=${playlistName}&v=${videoIds}&s=${startTimes}&e=${endTimes}&dt=${created}`
   }
 
   useEffect(() => {
@@ -191,6 +203,18 @@ const Playlistvideos = ({
                 onClick={() => {
                   onShuffleClick(!shuffle)
                   showToast(`Playlist shuffle is ${shuffle ? 'OFF' : 'ON'}`)
+                }}
+              />
+              <BiShareAlt
+                sx={{
+                  ...loopShuffleIconStyles,
+                  ml: 3,
+                  fontSize: 5,
+                }}
+                title='Share'
+                aria-label='Share'
+                onClick={() => {
+                  setShowShareModal(true)
                 }}
               />
             </div>
@@ -337,6 +361,13 @@ const Playlistvideos = ({
           close={() => setShowPlaylistModal(false)}
         />
       )}
+
+      <ShareModal
+        open={showShareModal}
+        close={() => setShowShareModal(false)}
+        url={getShareURL()}
+        name={playlistName}
+      />
     </Fragment>
   )
 }
