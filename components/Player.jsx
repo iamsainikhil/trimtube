@@ -10,7 +10,7 @@ const Player = ({
   loopStatus,
   updateVideoNumber,
 }) => {
-  const opts = {
+  const getOptions = () => ({
     height: '400',
     width: '720',
     playerVars: {
@@ -23,11 +23,12 @@ const Player = ({
       start: Number(start) || 0,
       end: Number(end) || 0,
       iv_load_policy: 3,
-      color: 'white',
+      // color: 'white',
       // playlist: videoId,
       playsinline: 1,
     },
-  }
+  })
+  const [opts, setOpts] = useState(getOptions())
   const [playerEvent, setPlayerEvent] = useState(null)
 
   const startVideo = (event) => {
@@ -61,7 +62,7 @@ const Player = ({
       const currentTime = event.target.getCurrentTime()
       if (currentTime < start) {
         startVideo(event)
-      } else if (currentTime > end) {
+      } else if (end && currentTime > end) {
         updateStatus(event)
       }
     }
@@ -73,6 +74,7 @@ const Player = ({
   }
 
   useEffect(() => {
+    setOpts(getOptions())
     if (playerEvent) {
       startVideo(playerEvent)
     }
