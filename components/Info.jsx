@@ -26,11 +26,6 @@ const Info = ({data, start, end}) => {
     trackGAEvent(type, `clicked on ${URL} page ${type} icon`, 'icon click')
   }
 
-  // useEffect(() => {
-  //   setShowPlaylistModal(false)
-  //   return () => {}
-  // }, [query.modal])
-
   return (
     <div sx={{mx: 'auto', px: 2, maxWidth: '720px', width: '100%'}}>
       <div
