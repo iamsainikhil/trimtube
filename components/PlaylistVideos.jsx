@@ -111,18 +111,8 @@ const Playlistvideos = ({
       `Removed ${v.snippet.title || v.id} from ${playlistName} playlist`,
       'clicked on trash icon'
     )
-    const video =
-      playlists[playlistName].videos[videoNumber] ||
-      playlists[playlistName].videos[0]
     const {id, start, end} = router.query
-    const videoParams = video
-      ? {
-          id: video?.id,
-          start: video?.start,
-          end: video?.end,
-        }
-      : {id, start, end}
-    onVideoDelete(videoParams)
+    onVideoDelete({id, start, end})
   }
 
   const saveToPlaylist = (e, video) => {
@@ -337,8 +327,8 @@ const Playlistvideos = ({
                     alt={snippet.title}
                     title={snippet.title}
                     sx={{
-                      width: '180px',
-                      height: '140px',
+                      width: '120px',
+                      height: '90px',
                     }}
                     className='video-list-thumbnail'
                   />

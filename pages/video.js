@@ -55,7 +55,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
     router.push({
       pathname: '/video',
       query: {
-        id,
+        id: id,
         start: startTime,
         end: endTime,
         ...playlistParam,
