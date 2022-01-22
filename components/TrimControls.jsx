@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import TimeInput from './TimeInput'
 import formatTime from '../utils/formatTime'
 import getTime from '../utils/getTime'
@@ -44,6 +44,13 @@ const TrimControls = ({start, end, onTrim}) => {
     )
     onTrim(trimValues)
   }
+
+  useEffect(() => {
+    setStartTrimMinutes(formatTime(start, 'Minutes'))
+    setStartTrimSeconds(formatTime(start, 'Seconds'))
+    setEndTrimMinutes(formatTime(end, 'Minutes'))
+    setEndTrimSeconds(formatTime(end, 'Seconds'))
+  }, [start, end])
 
   return (
     <div

@@ -50,7 +50,6 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
     loopValue,
     shuffleValue,
   }) => {
-    setShowControls(false)
     const playlistParam = query.playlist ? {playlist: query.playlist} : {}
     router.push({
       pathname: '/video',
