@@ -247,7 +247,6 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
             onVideoClick={updateRouter}
             onLoopClick={updateLoopStatus}
             onShuffleClick={shufflePlaylist}
-            onVideoDelete={updateRouter}
           />
         )}
       </div>

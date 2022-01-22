@@ -2,12 +2,10 @@
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
 import {Fragment, useState, useContext, useEffect, createRef} from 'react'
-import {useRouter} from 'next/router'
-import {BiShuffle, BiChevronDown, BiChevronUp, BiTrashAlt} from 'react-icons/bi'
+import {BiShuffle, BiChevronDown, BiChevronUp} from 'react-icons/bi'
 import {MdRepeatOne, MdRepeat, MdPlaylistAdd} from 'react-icons/md'
 import PlaylistModal from './PlaylistModal'
 import {ToastContext} from '../context/ToastContext'
-import ConfirmationModal from './ConfirmationModal'
 import formatTime from './../utils/formatTime'
 import {trackGAEvent} from './../utils/googleAnalytics'
 
@@ -26,19 +24,12 @@ const Playlistvideos = ({
   onVideoClick,
   onLoopClick,
   onShuffleClick,
-  onVideoDelete,
 }) => {
-  const router = useRouter()
   const [expand, setExpand] = useState(true)
   const [localLoopStatus, setLocalLoopStatus] = useState(loopStatus)
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
-  const [showModal, setShowModal] = useState(false)
   const [video, setVideo] = useState(null)
-  const [modalInfo, setModalInfo] = useState({
-    type: '',
-    name: '',
-    action: null,
-  })
+  const [hoveredVideoIndex, setHoveredVideoIndex] = useState(null)
   const {setShow, setMessage} = useContext(ToastContext)
   const dynamicBorderRadius = expand
     ? {
@@ -65,54 +56,6 @@ const Playlistvideos = ({
   const showToast = (message) => {
     setMessage(message)
     setShow(true)
-  }
-
-  const openModal = (type, name, message, action) => {
-    setModalInfo({type, name, message, action})
-    setShowModal(true)
-  }
-
-  const closeModal = () => {
-    setModalInfo({type: '', name: '', message: null, action: null})
-    setShowModal(false)
-  }
-
-  const deleteVideoModal = (e, video) => {
-    e.stopPropagation()
-    setVideo(video)
-    openModal('video', video.snippet.title, null, () => {
-      deleteVideo(video)
-    })
-  }
-
-  const deleteVideo = (v) => {
-    const playlists = JSON.parse(localStorage.getItem('playlists'))
-    let deleteIndex = null
-    const videos = [...playlists[playlistName].videos]
-    for (let i = 0; i < videos.length; i++) {
-      if (
-        v.id === videos[i].id &&
-        v.start === videos[i].start &&
-        v.end === videos[i].end
-      ) {
-        deleteIndex = i
-        break
-      }
-    }
-    videos.splice(deleteIndex, 1)
-    playlists[playlistName].videos = videos
-    localStorage.setItem('playlists', JSON.stringify(playlists))
-    closeModal()
-    showToast(
-      `Removed ${v.snippet.title || v.id} from ${playlistName} playlist`
-    )
-    trackGAEvent(
-      'delete video',
-      `Removed ${v.snippet.title || v.id} from ${playlistName} playlist`,
-      'clicked on trash icon'
-    )
-    const {id, start, end} = router.query
-    onVideoDelete({id, start, end})
   }
 
   const saveToPlaylist = (e, video) => {
@@ -295,6 +238,7 @@ const Playlistvideos = ({
                 <div
                   ref={refs[index]}
                   sx={{
+                    position: 'relative',
                     display: 'flex',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
@@ -316,6 +260,8 @@ const Playlistvideos = ({
                       loopValue: LOOP_STATUS_MAPPERS[loopStatus],
                     })
                   }
+                  onMouseEnter={() => setHoveredVideoIndex(index)}
+                  onMouseLeave={() => setHoveredVideoIndex(null)}
                   key={`${id}-${index}`}>
                   <img
                     src={snippet.thumbnails.medium.url}
@@ -352,36 +298,28 @@ const Playlistvideos = ({
                         {formatTime(end, 'Both')}
                       </span>
                     </p>
-                    <MdPlaylistAdd
-                      sx={{
-                        fontSize: 5,
-                        mb: 0,
-                        p: 1,
-                        cursor: 'pointer',
-                        '&:hover': {
-                          borderRadius: '50%',
-                          bg: 'shade2',
-                        },
-                      }}
-                      title='Add to Playlist'
-                      aria-label='Add to Playlist'
-                      onClick={(e) => saveToPlaylist(e, video)}
-                    />
-                    <BiTrashAlt
-                      sx={{
-                        fontSize: 5,
-                        ml: 3,
-                        mb: '1px',
-                        p: 2,
-                        cursor: 'pointer',
-                        '&:hover': {
-                          borderRadius: '50%',
-                          bg: 'shade2',
-                        },
-                      }}
-                      title='Delete video'
-                      onClick={(e) => deleteVideoModal(e, video)}
-                    />
+                    {index + 1 === videoNumber ||
+                    hoveredVideoIndex === index ? (
+                      <MdPlaylistAdd
+                        sx={{
+                          position: 'absolute',
+                          bottom: 0,
+                          right: 0,
+                          fontSize: 5,
+                          mb: 3,
+                          mr: 3,
+                          p: 1,
+                          cursor: 'pointer',
+                          '&:hover': {
+                            borderRadius: '50%',
+                            bg: 'shade2',
+                          },
+                        }}
+                        title='Add to Playlist'
+                        aria-label='Add to Playlist'
+                        onClick={(e) => saveToPlaylist(e, video)}
+                      />
+                    ) : null}
                   </div>
                 </div>
               )
@@ -399,8 +337,6 @@ const Playlistvideos = ({
           close={() => setShowPlaylistModal(false)}
         />
       )}
-
-      <ConfirmationModal open={showModal} close={closeModal} info={modalInfo} />
     </Fragment>
   )
 }
