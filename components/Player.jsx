@@ -60,10 +60,10 @@ const Player = ({
       updateStatus(event)
     } else {
       const currentTime = event.target.getCurrentTime()
-      if (currentTime < start) {
+      // fix the iframe issue playing video from the beginning
+      // even though start time is different
+      if (currentTime < 2) {
         startVideo(event)
-      } else if (end && currentTime > end) {
-        updateStatus(event)
       }
     }
     setPlayerEvent(event)
