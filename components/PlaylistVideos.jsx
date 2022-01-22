@@ -121,10 +121,10 @@ const Playlistvideos = ({
     setShowPlaylistModal(true)
   }
 
-  useEffect(() => {
-    setShowPlaylistModal(false)
-    return () => {}
-  }, [router.query.modal])
+  // useEffect(() => {
+  //   setShowPlaylistModal(false)
+  //   return () => {}
+  // }, [router.query.modal])
 
   useEffect(() => {
     if (refs[videoNumber - 1] && refs[videoNumber - 1].current) {
