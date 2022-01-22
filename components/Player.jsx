@@ -62,7 +62,7 @@ const Player = ({
       const currentTime = event.target.getCurrentTime()
       // fix the iframe issue playing video from the beginning
       // even though start time is different
-      if (currentTime < 2) {
+      if (start > 2 && currentTime < 2) {
         startVideo(event)
       }
     }
