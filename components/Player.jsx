@@ -34,9 +34,9 @@ const Player = ({
   const startVideo = (event) => {
     // autoplay doesn't work on mobile devices unless muted
     event.target.mute()
-    event.target.setVolume(100)
     event.target.seekTo(start, true)
     event.target.playVideo()
+    event.target.unMute()
   }
 
   const updateStatus = (event) => {
