@@ -349,7 +349,7 @@ const Playlistvideos = ({
                             bg: 'shade2',
                           },
                           '@media (min-width: 64rem)': {
-                            mb: 3,
+                            mb: '14px',
                           },
                         }}
                         title='Add to Playlist'

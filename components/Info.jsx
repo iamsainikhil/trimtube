@@ -27,7 +27,7 @@ const Info = ({data, start, end}) => {
   }
 
   return (
-    <div sx={{mx: 'auto', px: 2, maxWidth: '640px', width: '100%'}}>
+    <div sx={{mx: 'auto', px: 2, maxWidth: '680px', width: '100%'}}>
       <div
         sx={{
           mt: '-0.5rem',
