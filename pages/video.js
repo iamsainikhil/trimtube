@@ -196,16 +196,14 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
             // flex: '1 1 auto',
             mx: 2,
           }}>
-          {videoId && (
-            <Player
-              videoId={videoId}
-              videoNumber={getVideoNumber()}
-              start={start}
-              end={end}
-              loopStatus={loopStatus}
-              updateVideoNumber={updateVideo}
-            />
-          )}
+          <Player
+            videoId={videoId}
+            videoNumber={getVideoNumber()}
+            start={start}
+            end={end}
+            loopStatus={loopStatus}
+            updateVideoNumber={updateVideo}
+          />
           <Fragment>
             {error && (
               <div style={{maxWidth: '900px'}}>
