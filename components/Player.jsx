@@ -12,7 +12,7 @@ const Player = ({
 }) => {
   const getOptions = () => ({
     height: '360',
-    width: '640',
+    width: '680',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
@@ -32,6 +32,9 @@ const Player = ({
   const [playerEvent, setPlayerEvent] = useState(null)
 
   const startVideo = (event) => {
+    // autoplay doesn't work on mobile devices unless muted
+    event.target.mute()
+    event.target.setVolume(100)
     event.target.seekTo(start, true)
     event.target.playVideo()
   }
