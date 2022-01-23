@@ -40,9 +40,9 @@ const Player = ({
     // mute the video to fix the autoplay issue on mobile device
     event.target.mute()
     event.target.seekTo(start, true)
+    event.target.unMute()
     setTimeout(() => {
       event.target.playVideo()
-      event.target.unMute()
     }, 1000)
   }
 
