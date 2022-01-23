@@ -15,17 +15,22 @@ const Player = ({
     width: '680',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-      loop: 1,
-      controls: 1,
-      modestbranding: 1,
-      rel: 0,
       start: Number(start) || 0,
       end: Number(end) || 0,
-      iv_load_policy: 3,
       // color: 'white',
       // playlist: videoId,
       playsinline: 1,
+      autoplay: 1, // Auto-play the video on load
+      controls: 1, // Show pause/play buttons in player
+      showinfo: 1, // Hide the video title
+      modestbranding: 1, // Hide the Youtube Logo
+      rel: 0, // Show related videos only from the video owner
+      loop: 1, // Run the video in a loop
+      fs: 0, // Hide the full screen button
+      cc_load_policy: 0, // Hide closed captions
+      iv_load_policy: 3, // Hide the Video Annotations
+      autohide: 1, // Hide video controls when playing
+      playsinline: 1, //forbid fullscreen on ios
     },
   })
   const [opts, setOpts] = useState(getOptions())
@@ -33,10 +38,10 @@ const Player = ({
 
   const startVideo = (event) => {
     // autoplay doesn't work on mobile devices unless muted
-    event.target.mute()
+    event.target.setVolume(0)
     event.target.seekTo(start, true)
     event.target.playVideo()
-    event.target.unMute()
+    event.target.setVolume(100)
   }
 
   const updateStatus = (event) => {
