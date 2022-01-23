@@ -37,8 +37,13 @@ const Player = ({
   const [playerEvent, setPlayerEvent] = useState(null)
 
   const startVideo = (event) => {
+    // mute the video to fix the autoplay issue on mobile device
+    event.target.mute()
     event.target.seekTo(start, true)
     event.target.playVideo()
+    setTimeout(() => {
+      event.target.unMute()
+    }, 100)
   }
 
   const updateStatus = (event) => {
@@ -88,15 +93,13 @@ const Player = ({
 
   return (
     <div>
-      {opts && (
-        <YouTube
-          videoId={videoId}
-          opts={opts}
-          onReady={_onReady}
-          onStateChange={_onStateChange}
-          onError={_onError}
-        />
-      )}
+      <YouTube
+        videoId={videoId}
+        opts={opts}
+        onReady={_onReady}
+        onStateChange={_onStateChange}
+        onError={_onError}
+      />
     </div>
   )
 }
