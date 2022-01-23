@@ -37,13 +37,8 @@ const Player = ({
   const [playerEvent, setPlayerEvent] = useState(null)
 
   const startVideo = (event) => {
-    // mute the video to fix the autoplay issue on mobile device
-    event.target.mute()
     event.target.seekTo(start, true)
-    event.target.unMute()
-    setTimeout(() => {
-      event.target.playVideo()
-    }, 1000)
+    event.target.playVideo()
   }
 
   const updateStatus = (event) => {
@@ -59,7 +54,9 @@ const Player = ({
     // console.log(event.target.h.outerHTML, opts.playerVars)
     setPlayerEvent(event)
     trackGAEvent('player', `loaded player for ${videoId}`, 'player ready')
-    startVideo(event)
+    // // mute the video to fix the autoplay issue on mobile device
+    // event.target.mute()
+    // startVideo(event)
   }
 
   const _onStateChange = (event) => {
