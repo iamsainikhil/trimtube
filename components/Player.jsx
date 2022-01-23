@@ -38,6 +38,8 @@ const Player = ({
 
   const startVideo = (event) => {
     event.target.seekTo(start, true)
+    // mute the video to fix the autoplay issue on mobile device
+    event.target.mute()
     event.target.playVideo()
   }
 
@@ -54,9 +56,7 @@ const Player = ({
     // console.log(event.target.h.outerHTML, opts.playerVars)
     setPlayerEvent(event)
     trackGAEvent('player', `loaded player for ${videoId}`, 'player ready')
-    // // mute the video to fix the autoplay issue on mobile device
-    // event.target.mute()
-    // startVideo(event)
+    startVideo(event)
   }
 
   const _onStateChange = (event) => {
@@ -74,6 +74,7 @@ const Player = ({
       }
     }
     setPlayerEvent(event)
+    event.target.unMute()
   }
 
   const _onError = (event) => {
@@ -89,15 +90,13 @@ const Player = ({
   }, [start, end])
 
   return (
-    <div>
-      <YouTube
-        videoId={videoId}
-        opts={opts}
-        onReady={_onReady}
-        onStateChange={_onStateChange}
-        onError={_onError}
-      />
-    </div>
+    <YouTube
+      videoId={videoId}
+      opts={opts}
+      onReady={_onReady}
+      onStateChange={_onStateChange}
+      onError={_onError}
+    />
   )
 }
 
