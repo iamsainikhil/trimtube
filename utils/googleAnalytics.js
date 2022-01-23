@@ -13,5 +13,7 @@ const ga4react = new GA4React(
 
 export const trackGAEvent = (category, action, label, value = 0) => {
   //ga4react.event(action, label, category)
-  ga4react.gtag('event', action, {category, label, value})
+  if (process.env.NODE_ENV === 'production') {
+    ga4react.gtag('event', action, {category, label, value})
+  }
 }
