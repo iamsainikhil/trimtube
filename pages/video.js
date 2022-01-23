@@ -180,10 +180,9 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          flex: '1 1 auto',
           bg: 'background',
           mt: 2,
-          '@media (min-width: 79rem)': {
+          '@media (min-width: 64rem)': {
             flexFlow: 'row nowrap',
             alignItems: 'flex-start',
           },
@@ -194,6 +193,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
             flexDirection: 'column',
             justifyContent: 'flex-start',
             alignItems: 'center',
+            // flex: '1 1 auto',
             mx: 2,
           }}>
           <Player

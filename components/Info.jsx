@@ -27,19 +27,15 @@ const Info = ({data, start, end}) => {
   }
 
   return (
-    <div sx={{mx: 'auto', px: 2, maxWidth: '720px', width: '100%'}}>
+    <div sx={{mx: 'auto', px: 2, maxWidth: '640px', width: '100%'}}>
       <div
         sx={{
           mt: '-0.5rem',
           mb: 2,
           display: 'flex',
-          flexFlow: 'row nowrap',
-          justifyContent: 'space-between',
+          flexFlow: 'column nowrap',
+          justifyContent: 'center',
           alignItems: 'center',
-          '@media (max-width: 47.94rem)': {
-            flexFlow: 'column nowrap',
-            justifyContent: 'center',
-          },
         }}>
         <div
           sx={{
@@ -47,10 +43,7 @@ const Info = ({data, start, end}) => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'flex-start',
-            maxWidth: '70%',
-            '@media (max-width: 47.94rem)': {
-              maxWidth: '100%',
-            },
+            maxWidth: '100%',
           }}>
           <h2
             sx={{
@@ -108,8 +101,8 @@ const Info = ({data, start, end}) => {
             }}>
             <BiShareAlt
               sx={{fontSize: 3, mt: 1, cursor: 'pointer'}}
-              title='Share'
-              aria-label='Share'
+              title='Share Video'
+              aria-label='Share Video'
               onClick={() => {
                 openModal('share')
               }}
@@ -122,8 +115,8 @@ const Info = ({data, start, end}) => {
                 mx: 1,
                 cursor: 'pointer',
               }}
-              title='Share'
-              aria-label='Share'
+              title='Share Video'
+              aria-label='Share Video'
               onClick={() => {
                 openModal('share')
               }}>
@@ -140,8 +133,8 @@ const Info = ({data, start, end}) => {
             }}>
             <MdPlaylistAdd
               sx={{fontSize: 4, mt: 1, cursor: 'pointer'}}
-              title='Add to Playlist'
-              aria-label='Add to Playlist'
+              title='Save to Playlist'
+              aria-label='Save to Playlist'
               onClick={() => {
                 openModal('playlist')
               }}
@@ -154,8 +147,8 @@ const Info = ({data, start, end}) => {
                 mx: 1,
                 cursor: 'pointer',
               }}
-              title='Add to Playlist'
-              aria-label='Add to Playlist'
+              title='Save to Playlist'
+              aria-label='Save to Playlist'
               onClick={() => {
                 openModal('playlist')
               }}>

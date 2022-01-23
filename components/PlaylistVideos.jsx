@@ -99,7 +99,7 @@ const Playlistvideos = ({
           width: '400px',
           border: '1px solid gray',
           borderRadius: '15px',
-          '@media (max-width: 79rem)': {
+          '@media (max-width: 63rem)': {
             my: 5,
             mx: 'auto',
             minWidth: '300px',
@@ -113,7 +113,6 @@ const Playlistvideos = ({
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            // alignItems: 'center',
             px: 5,
             py: 0,
             ...dynamicBorderRadius,
@@ -157,8 +156,8 @@ const Playlistvideos = ({
               {localLoopStatus === 'LOOP_PLAYLIST' && (
                 <MdRepeat
                   sx={loopShuffleIconStyles}
-                  title='Play Playlist'
-                  aria-label='Play Playlist'
+                  title="Don't Loop Playlist"
+                  aria-label="Don't Loop Playlist"
                   onClick={() => {
                     setLocalLoopStatus('PLAY_PLAYLIST')
                     onLoopClick(LOOP_STATUS_MAPPERS['PLAY_PLAYLIST'])
@@ -211,8 +210,8 @@ const Playlistvideos = ({
                   ml: 3,
                   fontSize: 5,
                 }}
-                title='Share'
-                aria-label='Share'
+                title='Share Playlist'
+                aria-label='Share Playlist'
                 onClick={() => {
                   setShowShareModal(true)
                 }}
@@ -255,7 +254,12 @@ const Playlistvideos = ({
         </div>
         {expand && (
           <div
-            sx={{my: 2, height: '100%', maxHeight: '600px', overflowY: 'auto'}}>
+            sx={{
+              my: 2,
+              height: '100%',
+              maxHeight: '600px',
+              overflowY: 'auto',
+            }}>
             {playlistVideos.map((video, index) => {
               const {id, snippet, start, end} = video
               return (
@@ -268,7 +272,6 @@ const Playlistvideos = ({
                     alignItems: 'center',
                     my: 1,
                     px: 2,
-                    width: '100%',
                     borderRadius: '15px',
                     bg: index + 1 === videoNumber ? 'search' : 'background',
                     '&:hover': {
@@ -276,6 +279,7 @@ const Playlistvideos = ({
                       cursor: 'pointer',
                     },
                   }}
+                  title={snippet.title}
                   onClick={() =>
                     onVideoClick({
                       id,
@@ -292,7 +296,7 @@ const Playlistvideos = ({
                     alt={snippet.title}
                     title={snippet.title}
                     sx={{
-                      width: '120px',
+                      width: '140px',
                       height: '90px',
                     }}
                     className='video-list-thumbnail'
@@ -308,6 +312,12 @@ const Playlistvideos = ({
                     <p
                       sx={{
                         variant: 'medium',
+                        '@media (min-width: 64rem)': {
+                          width: '200px',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                        },
                       }}>
                       {snippet.title}
                     </p>
@@ -330,13 +340,16 @@ const Playlistvideos = ({
                           bottom: 0,
                           right: 0,
                           fontSize: 5,
-                          mb: 3,
-                          mr: 3,
+                          mb: '12px',
+                          mx: 2,
                           p: 1,
                           cursor: 'pointer',
                           '&:hover': {
                             borderRadius: '50%',
                             bg: 'shade2',
+                          },
+                          '@media (min-width: 64rem)': {
+                            mb: 3,
                           },
                         }}
                         title='Add to Playlist'

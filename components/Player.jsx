@@ -11,8 +11,8 @@ const Player = ({
   updateVideoNumber,
 }) => {
   const getOptions = () => ({
-    height: '400',
-    width: '720',
+    height: '360',
+    width: '640',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
