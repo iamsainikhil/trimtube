@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import {useState, useEffect} from 'react'
 import {jsx} from 'theme-ui'
-import {useRouter} from 'next/router'
 import he from 'he'
 import dayjs from 'dayjs'
 import {BiLike, BiDislike, BiShareAlt} from 'react-icons/bi'
@@ -13,7 +12,7 @@ import ShareModal from './ShareModal'
 import {trackGAEvent} from '../utils/googleAnalytics'
 
 const Info = ({data, start, end}) => {
-  const {query, asPath: URL} = useRouter()
+  const URL = `/video?id=${data?.id}&start=${start}&end=${end}`
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
 
