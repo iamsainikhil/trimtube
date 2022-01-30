@@ -216,7 +216,7 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
               </div>
             )}
             {data && <Info data={data} start={start} end={end} />}
-            {!error && (
+            {data && !error && (
               <p style={{textAlign: 'center'}}>
                 <Button
                   primary={{bg: 'muted', color: 'text'}}
