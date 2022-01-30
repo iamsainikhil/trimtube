@@ -77,6 +77,7 @@ const Player = ({
   }
 
   useEffect(() => {
+    setRenderIframe(false)
     setOpts(getOptions())
     setRenderIframe(true)
     return () => {
