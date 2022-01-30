@@ -37,8 +37,6 @@ const Player = ({
   const [playerEvent, setPlayerEvent] = useState(null)
 
   const startVideo = (event) => {
-    // mute the video to fix the autoplay issue on mobile device
-    event.target.mute()
     event.target.seekTo(start, true)
     event.target.playVideo()
   }
@@ -74,7 +72,6 @@ const Player = ({
       }
     }
     setPlayerEvent(event)
-    event.target.unMute()
   }
 
   const _onError = (event) => {
