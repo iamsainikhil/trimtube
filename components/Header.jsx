@@ -29,24 +29,27 @@ const Header = () => {
     <Headroom disableInlineStyles upTolerance={10} downTolerance={10}>
       <header sx={{bg: 'muted'}} className='header'>
         <div className='header-content'>
-          <div>
-            <h1 style={{margin: '0', variant: 'styles.h1'}}>
-              <NextLink href='/' passHref>
-                <a
-                  sx={{
-                    variant: 'styles.a',
-                    textDecoration: 'none',
-                    fontFamily: `'Damion', 'Lato', -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif`,
-                    letterSpacing: '0.15rem',
-                  }}
-                  onClick={() =>
-                    trackGAEvent('logo', `clicked on site logo`, 'link click')
-                  }
-                  rel='noreferrer noopener'>
-                  TrimTube
-                </a>
-              </NextLink>
-            </h1>
+          <div
+            sx={{
+              m: 0,
+              variant: 'textStyles.title',
+              fontSize: ['2rem', 5, 6],
+            }}>
+            <NextLink href='/' passHref>
+              <a
+                sx={{
+                  variant: 'styles.a',
+                  textDecoration: 'none',
+                  fontFamily: `'Damion', 'Lato', -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif`,
+                  letterSpacing: '0.15rem',
+                }}
+                onClick={() =>
+                  trackGAEvent('logo', `clicked on site logo`, 'link click')
+                }
+                rel='noreferrer noopener'>
+                TrimTube
+              </a>
+            </NextLink>
           </div>
           <div className='header-links'>
             {routePath !== '/' ? (
