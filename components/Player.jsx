@@ -35,6 +35,7 @@ const Player = ({
   })
   const [opts, setOpts] = useState(getOptions())
   const [playerEvent, setPlayerEvent] = useState(null)
+  const [renderIframe, setRenderIframe] = useState(false)
 
   const startVideo = (event) => {
     event.target.seekTo(start, true)
@@ -80,10 +81,16 @@ const Player = ({
 
   useEffect(() => {
     setOpts(getOptions())
-    if (playerEvent) {
-      startVideo(playerEvent)
+    const Timeout = setTimeout(() => {
+      setRenderIframe(true)
+      if (playerEvent) {
+        startVideo(playerEvent)
+      }
+    }, 1000)
+    return () => {
+      setRenderIframe(false)
+      clearTimeout(Timeout)
     }
-    return () => {}
   }, [start, end])
 
   return (
