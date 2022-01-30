@@ -66,8 +66,12 @@
     p {
       margin: 0 1rem;
       padding: 0.25rem 0.15rem;
+    }
 
-      @media (max-width: 640px) {
+    @media (max-width: 640px) {
+      margin-left: 1rem;
+      margin-bottom: 0.5rem;
+      p {
         margin: 0 0.5rem;
       }
     }
