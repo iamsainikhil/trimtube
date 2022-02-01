@@ -34,7 +34,7 @@ const Player = ({
     },
   })
   const [opts, setOpts] = useState(getOptions())
-  const [renderIframe, setRenderIframe] = useState(false)
+  const [playerEvent, setPlayerEvent] = useState(null)
 
   const startVideo = (event) => {
     event.target.seekTo(start, true)
@@ -52,6 +52,7 @@ const Player = ({
   const _onReady = (event) => {
     // access to player in all event handlers via event.target
     // console.log(event.target.h.outerHTML, opts.playerVars)
+    setPlayerEvent(event)
     trackGAEvent('player', `loaded player for ${videoId}`, 'player ready')
     startVideo(event)
   }
@@ -70,6 +71,7 @@ const Player = ({
         startVideo(event)
       }
     }
+    setPlayerEvent(event)
   }
 
   const _onError = (event) => {
@@ -77,24 +79,21 @@ const Player = ({
   }
 
   useEffect(() => {
-    setRenderIframe(false)
     setOpts(getOptions())
-    setRenderIframe(true)
-    return () => {
-      setRenderIframe(false)
+    if (playerEvent) {
+      startVideo(playerEvent)
     }
+    return () => {}
   }, [start, end])
 
   return (
-    renderIframe && (
-      <YouTube
-        videoId={videoId}
-        opts={opts}
-        onReady={_onReady}
-        onStateChange={_onStateChange}
-        onError={_onError}
-      />
-    )
+    <YouTube
+      videoId={videoId}
+      opts={opts}
+      onReady={_onReady}
+      onStateChange={_onStateChange}
+      onError={_onError}
+    />
   )
 }
 
