@@ -25,6 +25,7 @@ const VideoDetails = ({data: {start, end, snippet, statistics}}) => {
           layout='responsive'
           width='300'
           height='200'
+          unoptimized
           className='video-thumbnail'
         />
         <p
