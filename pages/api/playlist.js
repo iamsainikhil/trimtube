@@ -1,5 +1,5 @@
 import axios from 'axios'
-import playlistData from '../../constants/PlaylistData'
+import playlistData from '../../constants/playlistData'
 
 const playlist = async (req, res) => {
   const {searchTerm} = req.query
