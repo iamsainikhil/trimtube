@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import SearchData from '../../constants/SearchData'
+// import searchData from '../../constants/SearchData'
 
 const search = async (req, res) => {
   const {searchTerm} = req.query
@@ -14,7 +14,7 @@ const search = async (req, res) => {
     }
     res.send(error)
   }
-  // res.status(200).json(SearchData)
+  // res.status(200).json(searchData)
 }
 
 export default search
