@@ -12,7 +12,7 @@ const Player = ({
 }) => {
   const getOptions = () => ({
     height: '360',
-    width: '680',
+    width: '640',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       start: Number(start) || 0,
