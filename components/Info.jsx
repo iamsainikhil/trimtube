@@ -1,12 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {jsx} from 'theme-ui'
 import he from 'he'
-import dayjs from 'dayjs'
-import {BiLike, BiDislike, BiShareAlt} from 'react-icons/bi'
+import {BiShareAlt} from 'react-icons/bi'
 import {MdPlaylistAdd} from 'react-icons/md'
-import formatNumber from '../utils/formatNumber'
 import PlaylistModal from './PlaylistModal'
 import ShareModal from './ShareModal'
 import {trackGAEvent} from '../utils/googleAnalytics'
@@ -51,15 +49,6 @@ const Info = ({data, start, end}) => {
             }}>
             {he.decode(data.snippet.title)}
           </h2>
-          <p
-            sx={{
-              mt: 0,
-              fontSize: [1],
-              color: 'gray',
-            }}>
-            {formatNumber(data.statistics.viewCount)} views |{' '}
-            {dayjs(data.snippet.publishedAt).format('MMM D, YYYY')}
-          </p>
         </div>
         <div
           sx={{
@@ -68,28 +57,6 @@ const Info = ({data, start, end}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          {/* <p sx={{mx: 2}}>
-                  <BiLike
-                    sx={{fontSize: [2], mb: '-0.2rem'}}
-                    title='Likes'
-                    aria-label='Likes'
-                  />
-                  &nbsp;
-                  <span sx={{fontSize: [1]}}>
-                    {formatNumber(data.statistics.likeCount)}
-                  </span>
-                </p> */}
-          {/* <p sx={{mx: 2}}>
-                  <BiDislike
-                    sx={{fontSize: [2], mb: '-0.2rem'}}
-                    title='Dislikes'
-                    aria-label='Dislikes'
-                  />
-                  &nbsp;
-                  <span sx={{fontSize: [1]}}>
-                    {formatNumber(data.statistics.dislikeCount)}
-                  </span>
-                </p> */}
           <div
             sx={{
               display: 'flex',
@@ -155,16 +122,6 @@ const Info = ({data, start, end}) => {
             </p>
           </div>
         </div>
-        {/* <div
-              sx={{
-                display: 'flex',
-                flexFlow: 'row wrap',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-              }}>
-              
-              
-            </div> */}
       </div>
 
       <ShareModal

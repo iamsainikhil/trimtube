@@ -7,7 +7,12 @@ import Listing from './Listing'
 const Results = ({data, error}) => {
   return (
     <div>
-      {error && <Alert type='danger' message={error.message || error} />}
+      {error && (
+        <Alert
+          type='danger'
+          message={error?.response?.data?.error?.message || error}
+        />
+      )}
       {data && (
         <div>
           {data.items && data.items.length ? (

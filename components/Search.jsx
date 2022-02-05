@@ -3,7 +3,7 @@
 import {jsx} from 'theme-ui'
 import {DebounceInput} from 'react-debounce-input'
 
-const Search = ({searchTerm, updateSearch}) => {
+const Search = ({searchTerm, placeholder, updateSearch}) => {
   return (
     <div
       sx={{
@@ -30,7 +30,7 @@ const Search = ({searchTerm, updateSearch}) => {
         }}
         minLength={1}
         debounceTimeout={300}
-        placeholder='Type something or paste a youtube video link'
+        placeholder={placeholder}
         value={searchTerm}
         onChange={updateSearch}
       />

@@ -22,8 +22,8 @@ const Button = ({primary, hover, text, action, children, disabled = false}) => {
         borderRadius: '2rem',
         cursor: disabled ? 'not-allowed !important' : 'pointer',
         '&:hover': {
-          bg: `${hover.bg}`,
-          color: `${hover.color}`,
+          bg: hover ? `${hover.bg}` : '',
+          color: hover ? `${hover.color}` : '',
         },
         '&:focus': {
           outline: 'none',

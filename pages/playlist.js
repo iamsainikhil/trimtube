@@ -7,7 +7,14 @@ import Layout from '../components/Layout'
 import Alert from '../components/Alert'
 import dayjs from 'dayjs'
 import VideoListing from '../components/VideoListing'
-import {BiSave, BiShareAlt, BiTrash} from 'react-icons/bi'
+import {
+  BiPencil,
+  BiCheck,
+  BiX,
+  BiSave,
+  BiShareAlt,
+  BiTrash,
+} from 'react-icons/bi'
 import Loader from '../components/Loader'
 import axios from 'axios'
 import siteUrl from './../utils/siteUrl'
@@ -21,6 +28,9 @@ export default function Playlist({name, info, image, fetchData}) {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [details, setDetails] = useState(undefined)
+  const [error, setError] = useState(undefined)
+  const [playlistName, setPlaylistName] = useState(name)
+  const [showPlaylistInput, setShowPlaylistInput] = useState(false)
   const [showSave, setShowSave] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -140,6 +150,36 @@ export default function Playlist({name, info, image, fetchData}) {
     })
   }
 
+  const editPlaylist = () => {
+    const playlists = JSON.parse(localStorage.getItem('playlists'))
+    if (playlists[playlistName]) {
+      setError(
+        `Playlist with name '${playlistName}' already exist. Try a different name!`
+      )
+    } else {
+      setError(undefined)
+      playlists[playlistName] = {
+        ...playlists[name],
+        name: playlistName,
+      }
+      delete playlists[name]
+      localStorage.setItem('playlists', JSON.stringify(playlists))
+      setShowPlaylistInput(false)
+      router.push({
+        pathname: '/playlist',
+        query: {
+          id: playlistName,
+        },
+      })
+    }
+  }
+
+  const cancelEditPlaylist = () => {
+    setPlaylistName(name)
+    setShowPlaylistInput(false)
+    setError(undefined)
+  }
+
   const deleteVideo = (v) => {
     const playlists = JSON.parse(localStorage.getItem('playlists'))
     let deleteIndex = null
@@ -214,46 +254,140 @@ export default function Playlist({name, info, image, fetchData}) {
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  textAlign: 'center',
                   mt: 0,
                 }}>
-                <h2 sx={{mb: 0}}>{details.name}</h2>
-                <p>
-                  <span>{dayjs(details.created).format('MMM D, YYYY')}</span>
-                  <span style={{margin: 'auto 1rem'}}>|</span>
-                  <span>
-                    {details.videos
-                      ? `${details.videos.length} ${pluralizeText(
-                          details.videos.length,
-                          'video'
-                        )}`
-                      : '0 videos'}
-                  </span>
-                </p>
-                <p sx={{mt: 0, position: 'relative'}}>
-                  {showSave && (
-                    <BiSave
+                <div
+                  sx={{
+                    px: 4,
+                    py: 2,
+                    border: '1px solid gray',
+                    borderRadius: '25px',
+                  }}>
+                  {showPlaylistInput ? (
+                    <Fragment>
+                      <input
+                        type='text'
+                        placeholder='Playlist Name'
+                        sx={{
+                          bg: 'search',
+                          color: 'text',
+                          borderWidth: '1px',
+                          borderStyle: 'solid',
+                          borderColor: 'search',
+                          borderRadius: '2rem',
+                          width: '75%',
+                          mt: 2,
+                          py: 2,
+                          px: 4,
+                          fontFamily: 'light',
+                          fontSize: [2],
+                          outline: 'none',
+                        }}
+                        value={playlistName}
+                        onChange={(e) => {
+                          setPlaylistName(e.target.value)
+                        }}
+                      />
+                      <span sx={{mx: 1}}>
+                        <BiCheck
+                          sx={{
+                            ...iconStyle,
+                            p: 2,
+                            fontSize: '36px',
+                            mx: 0,
+                            mb: -2,
+                          }}
+                          title='Edit playlist'
+                          aria-label='Edit'
+                          onClick={editPlaylist}
+                        />
+                      </span>
+                      <span>
+                        <BiX
+                          sx={{
+                            ...iconStyle,
+                            p: 2,
+                            fontSize: '36px',
+                            mx: 0,
+                            mb: -2,
+                          }}
+                          title='Cancel Edit'
+                          aria-label='Cancel Edit'
+                          onClick={cancelEditPlaylist}
+                        />
+                      </span>
+                      {error && (
+                        <p
+                          sx={{
+                            mt: 1,
+                            mx: 'auto',
+                            width: '70%',
+                            color: 'dangerBorder',
+                            fontSize: 0,
+                            lineHeight: 1,
+                          }}>
+                          {error}
+                        </p>
+                      )}
+                    </Fragment>
+                  ) : (
+                    <h2 sx={{mb: 0}}>
+                      {playlistName}
+                      <span sx={{ml: 1}}>
+                        <BiPencil
+                          sx={{
+                            ...iconStyle,
+                            p: 2,
+                            fontSize: 5,
+                            mx: 0,
+                            mb: -2,
+                          }}
+                          title='Edit playlist'
+                          aria-label='Edit'
+                          onClick={() => setShowPlaylistInput(true)}
+                        />
+                      </span>
+                    </h2>
+                  )}
+                  <p>
+                    <span>{dayjs(details.created).format('MMM D, YYYY')}</span>
+                    <span style={{margin: 'auto 1rem'}}>|</span>
+                    <span>
+                      {details.videos
+                        ? `${details.videos.length} ${pluralizeText(
+                            details.videos.length,
+                            'video'
+                          )}`
+                        : '0 videos'}
+                    </span>
+                  </p>
+                  <p sx={{mt: 0, position: 'relative'}}>
+                    {showSave && (
+                      <BiSave
+                        sx={iconStyle}
+                        title='Save playlist'
+                        aria-label='Share'
+                        onClick={savePlaylist}
+                      />
+                    )}
+                    <BiShareAlt
                       sx={iconStyle}
-                      title='Save playlist'
+                      title='Share playlist on'
                       aria-label='Share'
-                      onClick={savePlaylist}
+                      onClick={() => setShowShareModal(true)}
                     />
-                  )}
-                  <BiShareAlt
-                    sx={iconStyle}
-                    title='Share playlist on'
-                    aria-label='Share'
-                    onClick={() => setShowShareModal(true)}
-                  />
-                  {!showSave && (
-                    <BiTrash
-                      sx={iconStyle}
-                      title='Delete playlist'
-                      onClick={() =>
-                        openModal('playlist', name, null, deletePlaylist)
-                      }
-                    />
-                  )}
-                </p>
+                    {!showSave && (
+                      <BiTrash
+                        sx={iconStyle}
+                        title='Delete playlist'
+                        onClick={() =>
+                          openModal('playlist', name, null, deletePlaylist)
+                        }
+                      />
+                    )}
+                  </p>
+                </div>
               </div>
               {details.videos && (
                 <div sx={{mt: 4, mb: 3}}>
