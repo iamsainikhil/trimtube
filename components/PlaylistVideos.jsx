@@ -96,7 +96,7 @@ const Playlistvideos = ({
           alignItems: 'center',
           ml: 3,
           p: 0,
-          width: '400px',
+          width: '380px',
           border: '1px solid gray',
           borderRadius: '15px',
           '@media (max-width: 63rem)': {
@@ -221,8 +221,8 @@ const Playlistvideos = ({
               {expand ? (
                 <BiChevronUp
                   sx={{
-                    fontSize: 5,
-                    mt: 2,
+                    fontSize: '36px',
+                    mt: 1,
                     cursor: 'pointer',
                     '&:hover': {
                       borderRadius: '50%',
@@ -236,8 +236,8 @@ const Playlistvideos = ({
               ) : (
                 <BiChevronDown
                   sx={{
-                    fontSize: 5,
-                    mt: 2,
+                    fontSize: '36px',
+                    mt: 1,
                     cursor: 'pointer',
                     '&:hover': {
                       borderRadius: '50%',
@@ -256,8 +256,10 @@ const Playlistvideos = ({
           <div
             sx={{
               my: 2,
+              width: '100%',
               height: '100%',
               maxHeight: '600px',
+              overflowX: 'hidden',
               overflowY: 'auto',
             }}>
             {playlistVideos.map((video, index) => {
@@ -312,12 +314,10 @@ const Playlistvideos = ({
                     <p
                       sx={{
                         variant: 'medium',
-                        '@media (min-width: 64rem)': {
-                          width: '200px',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                        },
+                        width: '150px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
                       }}>
                       {snippet.title}
                     </p>
@@ -327,7 +327,7 @@ const Playlistvideos = ({
                       <span sx={{color: 'accent'}}>
                         {formatTime(start, 'Both')}
                       </span>
-                      &nbsp;&nbsp; End:{' '}
+                      &nbsp;&nbsp; End:&nbsp;
                       <span sx={{color: 'accent'}}>
                         {formatTime(end, 'Both')}
                       </span>
