@@ -1,24 +1,41 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {useState, useEffect} from 'react'
+import {Fragment, useState, useEffect} from 'react'
+import router from 'next/router'
 import axios from 'axios'
 import Search from '../components/Search'
 import Results from '../components/Results'
 import Loader from '../components/Loader'
 import Layout from '../components/Layout'
 import {trackGAEvent} from '../utils/googleAnalytics'
+import Button from '../components/Button'
+import {dateNow} from '../utils/date'
+
+const SEARCH_TYPES = {
+  video: 'video',
+  playlist: 'playlist',
+}
 
 const Input = () => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [searchType, setSearchType] = useState(SEARCH_TYPES.video)
   const [data, setData] = useState(undefined)
   const [error, setError] = useState(undefined)
   const [loading, setLoading] = useState(false)
 
+  const getPlaceholder = () => {
+    return searchType === SEARCH_TYPES.video
+      ? 'Type something or paste a youtube video link'
+      : 'Paste a youtube playlist ID'
+  }
+
   const fetchResults = () => {
     setLoading(true)
+    const URL =
+      searchType === SEARCH_TYPES.video ? '/api/search' : '/api/playlist'
     axios
-      .get('/api/search', {params: {searchTerm}})
+      .get(URL, {params: {searchTerm}})
       .then((res) => {
         updateDataError(res.data, undefined)
       })
@@ -37,6 +54,42 @@ const Input = () => {
     setSearchTerm(event.target.value)
   }
 
+  /**
+   * create a playlist with name 'Untitled' or 'Untitled-copy' or 'Untitled-copy-copy-..'
+   * @param {String} name
+   * @param {Object} playlists
+   * @returns {String}
+   */
+  const createPlaylistName = (name, playlists) => {
+    if (!playlists[name]) {
+      return name
+    } else {
+      return createPlaylistName(`${name}-copy`, playlists)
+    }
+  }
+
+  const createPlaylist = () => {
+    const playlists = JSON.parse(localStorage.getItem('playlists'))
+    const name = createPlaylistName('Untitled', playlists)
+    const videos = data?.items.map((video) => ({
+      ...video,
+      start: 0,
+      end: 0,
+      id: video?.snippet?.resourceId?.videoId || video.id,
+    }))
+    let playlist = {
+      name,
+      created: dateNow(),
+      videos,
+    }
+    playlists[name] = playlist
+    localStorage.setItem('playlists', JSON.stringify(playlists))
+    router.push({
+      pathname: '/playlist',
+      query: {id: name},
+    })
+  }
+
   useEffect(() => {
     if (searchTerm.trim()) {
       trackGAEvent('search', `search for ${searchTerm}`, 'search input')
@@ -45,20 +98,74 @@ const Input = () => {
     return () => {}
   }, [searchTerm])
 
+  useEffect(() => {
+    setData(undefined)
+    setSearchTerm('')
+    return () => {}
+  }, [searchType])
+
   return (
     <Layout title='Search'>
       <div sx={{bg: 'background'}}>
-        <h2
+        <div
           sx={{
-            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
             mt: 0,
-            mb: 4,
             fontSize: [3, 4, 5],
           }}>
-          Search
-        </h2>
-        <Search searchTerm={searchTerm} updateSearch={handleSearch} />
-        {loading ? <Loader /> : <Results data={data} error={error} />}
+          <h2>
+            <Button
+              primary={{
+                bg: searchType === SEARCH_TYPES.video ? 'shade1' : 'background',
+                color: 'text',
+              }}
+              action={() => setSearchType(SEARCH_TYPES.video)}>
+              Video
+            </Button>
+          </h2>
+          <h2>
+            <Button
+              primary={{
+                bg:
+                  searchType === SEARCH_TYPES.playlist
+                    ? 'shade1'
+                    : 'background',
+                color: 'text',
+              }}
+              action={() => setSearchType(SEARCH_TYPES.playlist)}>
+              Playlist
+            </Button>
+          </h2>
+        </div>
+        <Search
+          searchTerm={searchTerm}
+          placeholder={getPlaceholder()}
+          updateSearch={handleSearch}
+        />
+        {loading ? (
+          <Loader />
+        ) : (
+          <Fragment>
+            {data?.items?.length && searchType === SEARCH_TYPES.playlist && (
+              <div
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  mt: 5,
+                  mb: -4,
+                }}>
+                <Button
+                  primary={{bg: 'shade2', color: 'text'}}
+                  hover={{bg: 'shade1', color: 'accent'}}
+                  action={createPlaylist}>
+                  Create a playlist
+                </Button>
+              </div>
+            )}
+            <Results data={data} error={error} />
+          </Fragment>
+        )}
       </div>
     </Layout>
   )
