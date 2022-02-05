@@ -35,7 +35,7 @@ const Listing = ({data}) => {
           href={{
             pathname: '/video',
             // search data yields video with id has an object with a videoId key
-            // videos data yeilds video with simple id as a key
+            // videos data yields video with simple id as a key
             query: {id: item.id.videoId || item.id},
           }}
           passHref
