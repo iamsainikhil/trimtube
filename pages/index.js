@@ -27,15 +27,27 @@ const Input = () => {
   const getPlaceholder = () => {
     return searchType === SEARCH_TYPES.video
       ? 'Type something or paste a youtube video link'
-      : 'Paste a youtube playlist ID'
+      : 'Paste a youtube playlist link or ID'
+  }
+
+  // grab the ID of the playlist in a YT URL
+  const getPlaylistID = () => {
+    const regex = /(?:\&list=|\?list=|be\/)(\w*)/
+    if (searchTerm.includes('.')) {
+      const [, id] = searchTerm.match(regex)
+      return id
+    }
+    return searchTerm
   }
 
   const fetchResults = () => {
     setLoading(true)
     const URL =
       searchType === SEARCH_TYPES.video ? '/api/search' : '/api/playlist'
+    const search =
+      searchType === SEARCH_TYPES.video ? searchTerm : getPlaylistID()
     axios
-      .get(URL, {params: {searchTerm}})
+      .get(URL, {params: {searchTerm: search}})
       .then((res) => {
         updateDataError(res.data, undefined)
       })
