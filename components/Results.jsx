@@ -15,16 +15,8 @@ const Results = ({data, error}) => {
       )}
       {data && (
         <div>
-          {data.items && data.items.length ? (
-            <div>
-              <h3
-                sx={{
-                  textAlign: 'center',
-                  my: 5,
-                  fontSize: [3, 4, 5],
-                }}>
-                Videos
-              </h3>
+          {data?.items?.length ? (
+            <div sx={{my: 5}}>
               <Listing data={data} />
             </div>
           ) : (
