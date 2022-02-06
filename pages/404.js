@@ -21,19 +21,7 @@ export default function Custom404() {
 
   return (
     <Layout title='Page Not Found' page='404'>
-      <div
-        sx={{
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          marginTop: '-2rem',
-          height: '100%',
-          zIndex: 10,
-        }}>
-        <Lottie options={defaultOptions} />
-      </div>
+      <Lottie options={defaultOptions} />
     </Layout>
   )
 }
