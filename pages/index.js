@@ -53,6 +53,14 @@ const Input = () => {
   }
 
   let playlistData
+  // ex - https://www.youtube.com/watch?v=aquTeAH_C4I&list=RDaquTeAH_C4I&start_radio=1 result in a endless loop of nextPlayTokens [EAAaFVBUOkVndEJWRFJWU0RGUGEzZERhdw, EAAaFVBUOkVndGFNVzlDTWtWRWRUVllRUQ]
+  // important to stop fetching playlist videos when
+  // 1. totalResults <= 50
+  // 2. when there is no nextPageToken
+  // 3. a nextPageToken was already used
+  // 4. when count is 6 i.e. 300 videos
+  let nextPageTokens = {}
+  let count = 0
 
   const recursiveUpdateData = (d) => {
     if (!playlistData) {
@@ -63,12 +71,30 @@ const Input = () => {
         items: playlistData.items.concat(d.items),
       }
     }
-    if (!d?.nextPageToken) {
+    const updateAndBreak = () => {
       updateDataError(playlistData, undefined)
       playlistData = undefined
+      nextPageTokens = {}
+      count = 0
       return
     }
-    fetchResults(d.nextPageToken)
+
+    if (d?.pageInfo?.totalResults > 50) {
+      // break case
+      if (
+        !d?.nextPageToken ||
+        nextPageTokens[d?.nextPageToken] ||
+        count === 6
+      ) {
+        updateAndBreak()
+      }
+      // recursion
+      nextPageTokens[d.nextPageToken] = d.nextPageToken
+      count++
+      fetchResults(d.nextPageToken)
+    } else {
+      updateAndBreak()
+    }
   }
 
   const fetchResults = (token = '') => {
