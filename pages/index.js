@@ -9,9 +9,10 @@ import Results from '../components/Results'
 import Loader from '../components/Loader'
 import Layout from '../components/Layout'
 import Tab from '../components/Tab'
-import {trackGAEvent} from '../utils/googleAnalytics'
 import Button from '../components/Button'
+import {trackGAEvent} from '../utils/googleAnalytics'
 import {dateNow} from '../utils/date'
+import recursivePlaylistData from '../utils/recursivePlaylistData'
 
 const TABS = {
   video: 'video',
@@ -52,51 +53,6 @@ const Input = () => {
     return searchTerm
   }
 
-  let playlistData
-  // ex - https://www.youtube.com/watch?v=aquTeAH_C4I&list=RDaquTeAH_C4I&start_radio=1 result in a endless loop of nextPlayTokens [EAAaFVBUOkVndEJWRFJWU0RGUGEzZERhdw, EAAaFVBUOkVndGFNVzlDTWtWRWRUVllRUQ]
-  // important to stop fetching playlist videos when
-  // 1. totalResults <= 50
-  // 2. when there is no nextPageToken
-  // 3. a nextPageToken was already used
-  // 4. when count is 6 i.e. 300 videos
-  let nextPageTokens = {}
-  let count = 0
-
-  const recursiveUpdateData = (d) => {
-    if (!playlistData) {
-      playlistData = d
-    } else {
-      playlistData = {
-        ...playlistData,
-        items: playlistData.items.concat(d.items),
-      }
-    }
-    const updateAndBreak = () => {
-      updateDataError(playlistData, undefined)
-      playlistData = undefined
-      nextPageTokens = {}
-      count = 0
-      return
-    }
-
-    if (d?.pageInfo?.totalResults > 50) {
-      // break case
-      if (
-        !d?.nextPageToken ||
-        nextPageTokens[d?.nextPageToken] ||
-        count === 6
-      ) {
-        updateAndBreak()
-      }
-      // recursion
-      nextPageTokens[d.nextPageToken] = d.nextPageToken
-      count++
-      fetchResults(d.nextPageToken)
-    } else {
-      updateAndBreak()
-    }
-  }
-
   const fetchResults = (token = '') => {
     setLoading(true)
     const URL = activeTab === TABS.video ? '/api/video' : '/api/playlist'
@@ -106,7 +62,8 @@ const Input = () => {
         if (activeTab === TABS.video) {
           updateDataError(res.data, undefined)
         } else {
-          recursiveUpdateData(res.data)
+          const playlistData = recursivePlaylistData(res.data, fetchResults)
+          updateDataError(playlistData, undefined)
         }
       })
       .catch((error) => {
@@ -140,9 +97,10 @@ const Input = () => {
       ...video,
       start: 0,
       end: 0,
-      id: video?.snippet?.resourceId?.videoId || video.id,
+      id: video?.contentDetails?.videoId || video.id,
     }))
     let playlist = {
+      id: getID(), // this is used later in the video page to sync the playlist with YT
       name,
       created: dateNow(),
       videos,
