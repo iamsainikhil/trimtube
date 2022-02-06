@@ -8,32 +8,38 @@ import Search from '../components/Search'
 import Results from '../components/Results'
 import Loader from '../components/Loader'
 import Layout from '../components/Layout'
+import Tab from '../components/Tab'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import Button from '../components/Button'
 import {dateNow} from '../utils/date'
 
-const SEARCH_TYPES = {
+const TABS = {
   video: 'video',
   playlist: 'playlist',
 }
 
 const Input = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchType, setSearchType] = useState(SEARCH_TYPES.video)
+  const [activeTab, setActiveTab] = useState(TABS.video)
   const [data, setData] = useState(undefined)
   const [error, setError] = useState(undefined)
   const [loading, setLoading] = useState(false)
 
   const getPlaceholder = () => {
-    return searchType === SEARCH_TYPES.video
+    return activeTab === TABS.video
       ? 'Paste a YouTube video link or ID'
       : 'Paste a YouTube playlist link or ID'
+  }
+
+  const updateDataError = (data, error) => {
+    setData(data)
+    setError(error)
   }
 
   // grab the ID of the video or playlist in a YT URL
   const getID = () => {
     const regex =
-      searchType === SEARCH_TYPES.video
+      activeTab === TABS.video
         ? /(?:\&v=|\?v=|be\/)([\w\d-]+)/
         : /(?:\&list=|\?list=|be\/)([\w\d-]+)/
     if (searchTerm.includes('.')) {
@@ -44,19 +50,6 @@ const Input = () => {
       }
     }
     return searchTerm
-  }
-
-  const fetchVideo = () => {
-    setLoading(true)
-    axios
-      .get('/api/video', {params: {id: getID()}})
-      .then((res) => {
-        updateDataError(res.data, undefined)
-      })
-      .catch((error) => {
-        updateDataError(undefined, error)
-      })
-      .finally(() => setLoading(false))
   }
 
   let playlistData
@@ -75,25 +68,25 @@ const Input = () => {
       playlistData = undefined
       return
     }
-    fetchPlaylist(d.nextPageToken)
+    fetchResults(d.nextPageToken)
   }
 
-  const fetchPlaylist = (token = '') => {
+  const fetchResults = (token = '') => {
     setLoading(true)
+    const URL = activeTab === TABS.video ? '/api/video' : '/api/playlist'
     axios
-      .get('/api/playlist', {params: {id: getID(), token}})
+      .get(URL, {params: {id: getID(), token}})
       .then((res) => {
-        recursiveUpdateData(res.data)
+        if (activeTab === TABS.video) {
+          updateDataError(res.data, undefined)
+        } else {
+          recursiveUpdateData(res.data)
+        }
       })
       .catch((error) => {
         updateDataError(undefined, error)
       })
       .finally(() => setLoading(false))
-  }
-
-  const updateDataError = (data, error) => {
-    setData(data)
-    setError(error)
   }
 
   const handleSearch = (event) => {
@@ -141,9 +134,9 @@ const Input = () => {
       trackGAEvent(
         'search',
         `search for ${searchTerm}`,
-        `${searchType} search input`
+        `${activeTab} search input`
       )
-      searchType === SEARCH_TYPES.video ? fetchVideo() : fetchPlaylist()
+      fetchResults()
     }
     return () => {}
   }, [searchTerm])
@@ -152,7 +145,7 @@ const Input = () => {
     updateDataError(undefined, undefined)
     setSearchTerm('')
     return () => {}
-  }, [searchType])
+  }, [activeTab])
 
   return (
     <Layout title='Search'>
@@ -164,29 +157,16 @@ const Input = () => {
             mt: 0,
             fontSize: [3, 4, 5],
           }}>
-          <h2>
-            <Button
-              primary={{
-                bg: searchType === SEARCH_TYPES.video ? 'background' : 'shade1',
-                color: 'text',
-              }}
-              action={() => setSearchType(SEARCH_TYPES.video)}>
-              Video
-            </Button>
-          </h2>
-          <h2>
-            <Button
-              primary={{
-                bg:
-                  searchType === SEARCH_TYPES.playlist
-                    ? 'background'
-                    : 'shade1',
-                color: 'text',
-              }}
-              action={() => setSearchType(SEARCH_TYPES.playlist)}>
-              Playlist
-            </Button>
-          </h2>
+          <Tab
+            label={TABS.video}
+            activeTab={activeTab}
+            action={() => setActiveTab(TABS.video)}
+          />
+          <Tab
+            label={TABS.playlist}
+            activeTab={activeTab}
+            action={() => setActiveTab(TABS.playlist)}
+          />
         </div>
         <Search
           searchTerm={searchTerm}
@@ -197,7 +177,7 @@ const Input = () => {
           <Loader />
         ) : (
           <Fragment>
-            {searchType === SEARCH_TYPES.playlist && data?.items?.length && (
+            {activeTab === TABS.playlist && data?.items?.length && (
               <div
                 sx={{
                   display: 'flex',
