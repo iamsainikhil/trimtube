@@ -26,16 +26,22 @@ const Input = () => {
 
   const getPlaceholder = () => {
     return searchType === SEARCH_TYPES.video
-      ? 'Type something or paste a youtube video link'
-      : 'Paste a youtube playlist link or ID'
+      ? 'Paste a YouTube video link or ID'
+      : 'Paste a YouTube playlist link or ID'
   }
 
-  // grab the ID of the playlist in a YT URL
-  const getPlaylistID = () => {
-    const regex = /(?:\&list=|\?list=|be\/)(\w*)/
+  // grab the ID of the video or playlist in a YT URL
+  const getID = () => {
+    const regex =
+      searchType === SEARCH_TYPES.video
+        ? /(?:\&v=|\?v=|be\/)(\w*)/
+        : /(?:\&list=|\?list=|be\/)(\w*)/
     if (searchTerm.includes('.')) {
-      const [, id] = searchTerm.match(regex)
-      return id
+      const match = searchTerm.match(regex)
+      if (match) {
+        const [, id] = match
+        return id
+      }
     }
     return searchTerm
   }
@@ -43,11 +49,9 @@ const Input = () => {
   const fetchResults = () => {
     setLoading(true)
     const URL =
-      searchType === SEARCH_TYPES.video ? '/api/search' : '/api/playlist'
-    const search =
-      searchType === SEARCH_TYPES.video ? searchTerm : getPlaylistID()
+      searchType === SEARCH_TYPES.video ? '/api/video' : '/api/playlist'
     axios
-      .get(URL, {params: {searchTerm: search}})
+      .get(URL, {params: {id: getID()}})
       .then((res) => {
         updateDataError(res.data, undefined)
       })
@@ -104,7 +108,11 @@ const Input = () => {
 
   useEffect(() => {
     if (searchTerm.trim()) {
-      trackGAEvent('search', `search for ${searchTerm}`, 'search input')
+      trackGAEvent(
+        'search',
+        `search for ${searchTerm}`,
+        `${searchType} search input`
+      )
       fetchResults()
     }
     return () => {}
@@ -129,7 +137,7 @@ const Input = () => {
           <h2>
             <Button
               primary={{
-                bg: searchType === SEARCH_TYPES.video ? 'shade1' : 'background',
+                bg: searchType === SEARCH_TYPES.video ? 'background' : 'shade1',
                 color: 'text',
               }}
               action={() => setSearchType(SEARCH_TYPES.video)}>
@@ -141,8 +149,8 @@ const Input = () => {
               primary={{
                 bg:
                   searchType === SEARCH_TYPES.playlist
-                    ? 'shade1'
-                    : 'background',
+                    ? 'background'
+                    : 'shade1',
                 color: 'text',
               }}
               action={() => setSearchType(SEARCH_TYPES.playlist)}>
@@ -159,7 +167,7 @@ const Input = () => {
           <Loader />
         ) : (
           <Fragment>
-            {data?.items?.length && searchType === SEARCH_TYPES.playlist && (
+            {searchType === SEARCH_TYPES.playlist && data?.items?.length && (
               <div
                 sx={{
                   display: 'flex',
