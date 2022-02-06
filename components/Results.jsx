@@ -4,14 +4,22 @@ import {jsx} from 'theme-ui'
 import Alert from './Alert'
 import Listing from './Listing'
 
+const Error = ({message}) => (
+  <div
+    sx={{
+      width: '75%',
+      maxWidth: '1280px',
+      mx: 'auto',
+    }}>
+    <Alert type='danger' message={message} />
+  </div>
+)
+
 const Results = ({data, error}) => {
   return (
     <div>
       {error && (
-        <Alert
-          type='danger'
-          message={error?.response?.data?.error?.message || error}
-        />
+        <Error message={error?.response?.data?.error?.message || error} />
       )}
       {data && (
         <div>
@@ -20,7 +28,7 @@ const Results = ({data, error}) => {
               <Listing data={data} />
             </div>
           ) : (
-            <Alert type='danger' message='No video found!' />
+            <Error message='No video found!' />
           )}
         </div>
       )}
