@@ -15,7 +15,7 @@ const Button = ({primary, hover, text, action, children, disabled = false}) => {
         bg: `${primary.bg}`,
         color: `${primary.color}`,
         fontFamily: 'light',
-        fontSize: [1, 2],
+        fontSize: [2],
         textTransform: 'uppercase',
         letterSpacing: '2px',
         border: 'none',
