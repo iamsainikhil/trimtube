@@ -115,12 +115,16 @@ const Playlistvideos = ({
         playlist.videos.push(...remotePlaylistVideos)
         localStorage.setItem('playlists', JSON.stringify(playlists))
         updatePlaylistVideos(playlist.videos)
+        showToast(
+          'Successfully merged remote YouTube playlist with this playlist.'
+        )
       }
     } catch (error) {
-      showToast('Failed to sync playlist')
+      showToast(
+        'Failed to sync playlist. Remote YouTube playlist might have been deleted or made private!'
+      )
     } finally {
       setLoading(false)
-      showToast('Successfully synced playlist')
     }
   }
 
