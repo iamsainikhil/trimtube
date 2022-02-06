@@ -15,8 +15,11 @@ const Head = ({
   const metaDescription =
     description ||
     'TrimTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.'
-  // LogRocket setup
   const isProd = process.env.NODE_ENV === 'production'
+  // Hotjar variables
+  const hjid = process.env.NEXT_PUBLIC_HOTJAR_ID
+  const hjsv = process.env.NEXT_PUBLIC_HOTJAR_VERSION
+  // LogRocket setup
   if (isProd && pathUrl && !pathUrl.includes('notrack')) {
     LogRocket.init(`${process.env.NEXT_PUBLIC_LOGROCKET_ID}`)
   }
@@ -357,6 +360,23 @@ const Head = ({
                 gtag('config', ${process.env.NEXT_PUBLIC_GA_ID});`,
           }}
         />
+        {/* Hotjar Tracking Code */}
+        {isProd ? (
+          <script
+            async
+            defer
+            dangerouslySetInnerHTML={{
+              __html: `(function(h,o,t,j,a,r){
+                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                h._hjSettings={hjid:${hjid},hjsv:${hjsv}};
+                a=o.getElementsByTagName('head')[0];
+                r=o.createElement('script');r.async=1;
+                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                a.appendChild(r);
+            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
+            }}
+          />
+        ) : null}
         {children}
       </NextHead>
     </>
