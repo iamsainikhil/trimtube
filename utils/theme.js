@@ -1,35 +1,39 @@
-export default {
-  useBodyStyles: true,
-  useCustomProperties: true,
-  initialColorMode: 'dark',
-  useColorSchemeMediaQuery: true,
-  useLocalStorage: true,
-  breakpoints: ['30em', '47em', '64em', '100em'],
+import {extendTheme} from '@chakra-ui/react'
+
+const theme = extendTheme({
+  config: {
+    cssVarPrefix: 'ck',
+    initialColorMode: 'dark',
+    useSystemColorMode: 'system',
+  },
+  breakpoints: ['0em', '30em', '47em', '64em', '100em'],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   borders: [0],
   colors: {
-    text: '#000',
-    background: '#ffffff',
-    primary: '#333',
-    secondary: '#5b5b5b',
-    muted: '#f6f6f6',
-    highlight: '#9f9f9f',
-    gray: '#6c6c6c',
-    accent: '#3f3f3f',
-    brand: '#e40000',
-    search: '#eaeaea',
-    shade1: '#d2d2d2',
-    shade2: '#e0e0e0',
-    /* alert colors */
-    info: '#BFDBFE',
-    success: '#A7F3D0',
-    warning: '#FDE68A',
-    danger: '#FECACA',
-    infoBorder: '#60A5FA',
-    successBorder: '#34D399',
-    warningBorder: '#FBBF24',
-    dangerBorder: '#F87171',
     modes: {
+      light: {
+        text: '#000',
+        background: '#ffffff',
+        primary: '#333',
+        secondary: '#5b5b5b',
+        muted: '#f6f6f6',
+        highlight: '#9f9f9f',
+        gray: '#6c6c6c',
+        accent: '#3f3f3f',
+        brand: '#e40000',
+        search: '#eaeaea',
+        shade1: '#d2d2d2',
+        shade2: '#e0e0e0',
+        /* alert colors */
+        info: '#BFDBFE',
+        success: '#A7F3D0',
+        warning: '#FDE68A',
+        danger: '#FECACA',
+        infoBorder: '#60A5FA',
+        successBorder: '#34D399',
+        warningBorder: '#FBBF24',
+        dangerBorder: '#F87171',
+      },
       dark: {
         text: '#c1bdb8',
         background: '#161819',
@@ -233,4 +237,6 @@ export default {
       },
     },
   },
-}
+})
+
+export default theme
