@@ -34,8 +34,8 @@ const Input = () => {
   const getID = () => {
     const regex =
       searchType === SEARCH_TYPES.video
-        ? /(?:\&v=|\?v=|be\/)(\w*)/
-        : /(?:\&list=|\?list=|be\/)(\w*)/
+        ? /(?:\&v=|\?v=|be\/)([\w\d-]+)/
+        : /(?:\&list=|\?list=|be\/)([\w\d-]+)/
     if (searchTerm.includes('.')) {
       const match = searchTerm.match(regex)
       if (match) {
@@ -46,14 +46,44 @@ const Input = () => {
     return searchTerm
   }
 
-  const fetchResults = () => {
+  const fetchVideo = () => {
     setLoading(true)
-    const URL =
-      searchType === SEARCH_TYPES.video ? '/api/video' : '/api/playlist'
     axios
-      .get(URL, {params: {id: getID()}})
+      .get('/api/video', {params: {id: getID()}})
       .then((res) => {
         updateDataError(res.data, undefined)
+      })
+      .catch((error) => {
+        updateDataError(undefined, error)
+      })
+      .finally(() => setLoading(false))
+  }
+
+  let playlistData
+
+  const recursiveUpdateData = (d) => {
+    if (!playlistData) {
+      playlistData = d
+    } else {
+      playlistData = {
+        ...playlistData,
+        items: playlistData.items.concat(d.items),
+      }
+    }
+    if (!d?.nextPageToken) {
+      updateDataError(playlistData, undefined)
+      playlistData = undefined
+      return
+    }
+    fetchPlaylist(d.nextPageToken)
+  }
+
+  const fetchPlaylist = (token = '') => {
+    setLoading(true)
+    axios
+      .get('/api/playlist', {params: {id: getID(), token}})
+      .then((res) => {
+        recursiveUpdateData(res.data)
       })
       .catch((error) => {
         updateDataError(undefined, error)
@@ -113,13 +143,13 @@ const Input = () => {
         `search for ${searchTerm}`,
         `${searchType} search input`
       )
-      fetchResults()
+      searchType === SEARCH_TYPES.video ? fetchVideo() : fetchPlaylist()
     }
     return () => {}
   }, [searchTerm])
 
   useEffect(() => {
-    setData(undefined)
+    updateDataError(undefined, undefined)
     setSearchTerm('')
     return () => {}
   }, [searchType])
