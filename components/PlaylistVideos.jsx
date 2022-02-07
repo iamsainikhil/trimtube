@@ -36,8 +36,8 @@ const LOOP_STATUS_MAPPERS = {
 export const SORT_MAP = {
   TITLE_ASC: 'Title A-Z',
   TITLE_DESC: 'Title Z-A',
-  DATE_ASC: 'Date Old',
-  DATE_DESC: 'Date New',
+  DATE_ASC: 'Newest First',
+  DATE_DESC: 'Oldest First',
 }
 
 const loopShuffleIconStyles = {
@@ -227,19 +227,19 @@ const Playlistvideos = ({
         setSortBy(SORT_MAP.DATE_ASC)
         videos = playlistVideos.sort(
           (a, b) =>
-            new Date(a.snippet.publishedAt).getTime() -
-            new Date(b.snippet.publishedAt).getTime()
+            new Date(b.snippet.publishedAt).getTime() -
+            new Date(a.snippet.publishedAt).getTime()
         )
-        showToast('Playlist sorted by Date with old videos first..')
+        showToast('Playlist sorted by Date with new videos first..')
         break
       case SORT_MAP.DATE_DESC:
         setSortBy(SORT_MAP.DATE_DESC)
         videos = playlistVideos.sort(
           (a, b) =>
-            new Date(b.snippet.publishedAt).getTime() -
-            new Date(a.snippet.publishedAt).getTime()
+            new Date(a.snippet.publishedAt).getTime() -
+            new Date(b.snippet.publishedAt).getTime()
         )
-        showToast('Playlist sorted by Date with new videos first.')
+        showToast('Playlist sorted by Date with old videos first.')
         break
     }
     playlist.videos = videos

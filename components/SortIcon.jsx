@@ -18,9 +18,9 @@ const SortIcon = ({sortBy, styles, title, ariaLabel, iconClick}) => {
       case SORT_MAP.TITLE_DESC:
         return <BsSortAlphaDownAlt sx={styles} />
       case SORT_MAP.DATE_ASC:
-        return <BsSortNumericDownAlt sx={styles} />
-      case SORT_MAP.DATE_DESC:
         return <BsSortNumericDown sx={styles} />
+      case SORT_MAP.DATE_DESC:
+        return <BsSortNumericDownAlt sx={styles} />
       default:
         return <BiSort sx={styles} />
     }
