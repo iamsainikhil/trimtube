@@ -1,7 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {Fragment, useState, useContext, useEffect, createRef} from 'react'
+import {
+  Fragment,
+  useState,
+  useContext,
+  useEffect,
+  createRef,
+  useRef,
+} from 'react'
 import axios from 'axios'
 import {
   BiShuffle,
@@ -18,11 +25,35 @@ import formatTime from './../utils/formatTime'
 import {dateNow} from './../utils/date'
 import recursivePlaylistData from '../utils/recursivePlaylistData'
 import Loader from './Loader'
+import SortIcon from './SortIcon'
 
 const LOOP_STATUS_MAPPERS = {
   LOOP_VIDEO: 'video',
   LOOP_PLAYLIST: 'playlist',
   PLAY_PLAYLIST: 'off',
+}
+
+export const SORT_MAP = {
+  TITLE_ASC: 'Title A-Z',
+  TITLE_DESC: 'Title Z-A',
+  DATE_ASC: 'Date Old',
+  DATE_DESC: 'Date New',
+}
+
+const loopShuffleIconStyles = {
+  p: 1,
+  fontSize: '36px',
+  cursor: 'pointer',
+  '&:hover': {
+    borderRadius: '50%',
+    bg: 'shade2',
+  },
+}
+
+const sortIconStyles = {
+  ...loopShuffleIconStyles,
+  ml: 3,
+  fontSize: 5,
 }
 
 const Playlistvideos = ({
@@ -43,7 +74,11 @@ const Playlistvideos = ({
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
   const [video, setVideo] = useState(null)
   const [hoveredVideoIndex, setHoveredVideoIndex] = useState(null)
+  const [sortBy, setSortBy] = useState(null)
+  const [showSortOptions, toggleSortOptions] = useState(false)
+  const sortRef = useRef(null)
   const {setShow, setMessage} = useContext(ToastContext)
+
   const dynamicBorderRadius = expand
     ? {
         borderTopLeftRadius: '15px',
@@ -52,15 +87,6 @@ const Playlistvideos = ({
     : {
         borderRadius: '15px',
       }
-  const loopShuffleIconStyles = {
-    p: 1,
-    fontSize: '36px',
-    cursor: 'pointer',
-    '&:hover': {
-      borderRadius: '50%',
-      bg: 'shade2',
-    },
-  }
   const refs = playlistVideos.reduce((acc, curr, index) => {
     acc[index] = createRef()
     return acc
@@ -68,6 +94,42 @@ const Playlistvideos = ({
 
   const playlists = JSON.parse(localStorage.getItem('playlists'))
   const playlist = playlists[playlistName]
+
+  const SortOptions = () => (
+    <div
+      sx={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        mt: '24px',
+        mr: -5,
+        zIndex: 10,
+        bg: 'highlight',
+        p: 0,
+        width: '150px',
+        textAlign: 'center',
+      }}>
+      {Object.keys(SORT_MAP).map((key) => (
+        <p
+          sx={{
+            m: 0,
+            py: 2,
+            bg: sortBy === SORT_MAP[key] ? 'muted' : 'transparent',
+            '&:hover': {
+              bg: 'muted',
+              cursor: 'pointer',
+            },
+          }}
+          key={key}
+          onClick={() => {
+            setSortBy(SORT_MAP[key])
+            toggleSortOptions(!showSortOptions)
+          }}>
+          {SORT_MAP[key]}
+        </p>
+      ))}
+    </div>
+  )
 
   const showToast = (message) => {
     setMessage(message)
@@ -112,7 +174,7 @@ const Playlistvideos = ({
             start: 0,
             end: 0,
           }))
-        playlist.videos.push(...remotePlaylistVideos)
+        playlist.videos.concat(remotePlaylistVideos)
         localStorage.setItem('playlists', JSON.stringify(playlists))
         updatePlaylistVideos(playlist.videos)
         showToast(
@@ -127,6 +189,83 @@ const Playlistvideos = ({
       setLoading(false)
     }
   }
+
+  const sortPlaylist = () => {
+    let videos
+    switch (sortBy) {
+      case SORT_MAP.TITLE_ASC:
+        setSortBy(SORT_MAP.TITLE_ASC)
+        videos = playlist.videos.sort((a, b) => {
+          const titleA = a.snippet.title.toLowerCase()
+          const titleB = b.snippet.title.toLowerCase()
+          if (titleA < titleB) {
+            return -1
+          }
+          if (titleA > titleB) {
+            return 1
+          }
+          return 0
+        })
+        showToast('Playlist sorted by Title in Ascending order.')
+        break
+      case SORT_MAP.TITLE_DESC:
+        setSortBy(SORT_MAP.TITLE_DESC)
+        videos = playlist.videos.sort((a, b) => {
+          const titleA = a.snippet.title.toLowerCase()
+          const titleB = b.snippet.title.toLowerCase()
+          if (titleA < titleB) {
+            return 1
+          }
+          if (titleA > titleB) {
+            return -1
+          }
+          return 0
+        })
+        showToast('Playlist sorted by Title in Descending order.')
+        break
+      case SORT_MAP.DATE_ASC:
+        setSortBy(SORT_MAP.DATE_ASC)
+        videos = playlistVideos.sort(
+          (a, b) =>
+            new Date(a.snippet.publishedAt).getTime() -
+            new Date(b.snippet.publishedAt).getTime()
+        )
+        showToast('Playlist sorted by Date with old videos first..')
+        break
+      case SORT_MAP.DATE_DESC:
+        setSortBy(SORT_MAP.DATE_DESC)
+        videos = playlistVideos.sort(
+          (a, b) =>
+            new Date(b.snippet.publishedAt).getTime() -
+            new Date(a.snippet.publishedAt).getTime()
+        )
+        showToast('Playlist sorted by Date with new videos first.')
+        break
+    }
+    playlist.videos = videos
+    localStorage.setItem('playlists', JSON.stringify(playlists))
+    updatePlaylistVideos(playlist.videos)
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // close sortOptions popup when clicked outside of it
+      if (sortRef.current && !sortRef.current.contains(e.target)) {
+        toggleSortOptions(false)
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [sortRef])
+
+  useEffect(() => {
+    if (sortBy) {
+      sortPlaylist()
+    }
+    return () => {}
+  }, [sortBy])
 
   useEffect(() => {
     if (refs[videoNumber - 1] && refs[videoNumber - 1].current) {
@@ -165,7 +304,7 @@ const Playlistvideos = ({
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            px: 5,
+            px: 4,
             py: 0,
             ...dynamicBorderRadius,
           }}>
@@ -174,6 +313,7 @@ const Playlistvideos = ({
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
+              px: 1,
             }}>
             <h3
               sx={{
@@ -282,6 +422,20 @@ const Playlistvideos = ({
                   }}
                 />
               )}
+              <span
+                ref={sortRef}
+                sx={{
+                  position: 'relative',
+                }}>
+                <SortIcon
+                  sortBy={sortBy}
+                  styles={sortIconStyles}
+                  title='Sort Playlist'
+                  ariaLabel='Sort Playlist'
+                  iconClick={() => toggleSortOptions(!showSortOptions)}
+                />
+                {showSortOptions && <SortOptions />}
+              </span>
             </div>
             <div>
               {expand ? (
