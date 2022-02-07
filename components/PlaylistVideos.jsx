@@ -227,8 +227,8 @@ const Playlistvideos = ({
         setSortBy(SORT_MAP.DATE_ASC)
         videos = playlistVideos.sort(
           (a, b) =>
-            new Date(a.contentDetails.videoPublishedAt).getTime() -
-            new Date(b.contentDetails.videoPublishedAt).getTime()
+            new Date(a.snippet.publishedAt).getTime() -
+            new Date(b.snippet.publishedAt).getTime()
         )
         showToast('Playlist sorted by Date with old videos first..')
         break
@@ -236,8 +236,8 @@ const Playlistvideos = ({
         setSortBy(SORT_MAP.DATE_DESC)
         videos = playlistVideos.sort(
           (a, b) =>
-            new Date(b.contentDetails.videoPublishedAt).getTime() -
-            new Date(a.contentDetails.videoPublishedAt).getTime()
+            new Date(b.snippet.publishedAt).getTime() -
+            new Date(a.snippet.publishedAt).getTime()
         )
         showToast('Playlist sorted by Date with new videos first.')
         break
