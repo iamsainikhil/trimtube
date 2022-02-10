@@ -4,9 +4,9 @@ const manifest_json = {
   description:
     'TrimTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.',
   start_url: '/',
-  theme_color: '#000',
-  background_color: '#222',
-  display: 'minimal-ui',
+  theme_color: '#6f6363',
+  background_color: '#161819',
+  display: 'standalone',
   orientation: 'any',
   icons: [
     {
