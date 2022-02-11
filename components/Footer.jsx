@@ -1,8 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {SiNextdotjs} from 'react-icons/si'
-import {FaHeart} from 'react-icons/fa'
 import Icon from './Icon'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import footerStyles from '../styles/footer.module.scss'
@@ -14,73 +12,6 @@ const Footer = () => {
         bg: 'muted',
       }}>
       <div className={footerStyles.footer}>
-        {/* <div className={footerStyles.linksRow}>
-          <div>
-            <a
-              href="https://github.com/iamsainikhil/nextjs-prismic-blog-starter"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="special-link"
-              aria-label="GitHub"
-              title="GitHub"
-              sx={{ color: 'primary' }}
-              onClick={() =>
-                trackGAEvent(
-                  'footer links',
-                  `clicked on GitHub link in Footer`,
-                  'link click'
-                )
-              }
-            >
-              GitHub
-            </a>
-          </div>
-          <div>
-            <a
-              href="https://iamsainikhil.com/privacy-policy"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="special-link"
-              aria-label="Privacy Policy"
-              title="Privacy Policy"
-              sx={{ color: 'primary' }}
-              onClick={() =>
-                trackGAEvent(
-                  'footer links',
-                  `clicked on Privacy Policy link in Footer`,
-                  'link click'
-                )
-              }
-            >
-              Privacy Policy
-            </a>
-          </div>
-        </div> */}
-
-        <div
-          style={{
-            textAlign: 'center',
-            margin: '0.25rem auto',
-            wordSpacing: '0.2rem',
-          }}>
-          Made with{' '}
-          <FaHeart
-            style={{color: '#CC3D5C', marginBottom: '-0.25rem'}}
-            aria-label='Love'
-            title='Love'
-          />{' '}
-          using{' '}
-          <SiNextdotjs
-            sx={{
-              color: 'text',
-              marginBottom: '-0.25rem',
-              cursor: 'help',
-            }}
-            aria-label='NextJS'
-            title='NextJS'
-          />
-        </div>
-
         <div className={footerStyles.socialRow}>
           <Icon
             name='Twitter'
