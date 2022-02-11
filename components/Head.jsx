@@ -79,9 +79,9 @@ const Head = ({
         <meta name='apple-mobile-web-app-capable' content='yes' />
         {/* dynamic update of start_url in manifest json */}
         <link rel='manifest' href={`/api/manifest?url=${pathUrl}`} />
-        <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#6f6363' />
-        <meta name='msapplication-TileColor' content='#6f6363' />
-        <meta name='theme-color' content='#6f6363' />
+        <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#333' />
+        <meta name='msapplication-TileColor' content='#333' />
+        <meta name='theme-color' content='#333' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <link
           rel='apple-touch-startup-image'
