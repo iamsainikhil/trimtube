@@ -10,7 +10,7 @@ import TrimControls from '../components/TrimControls'
 import Alert from '../components/Alert'
 import Layout from '../components/Layout'
 import Button from './../components/Button'
-import Playlistvideos from '../components/PlaylistVideos'
+import PlaylistVideos from '../components/PlaylistVideos'
 import siteUrl from './../utils/siteUrl'
 import {shuffle as shuffleVideos} from './../utils/shuffle'
 
@@ -25,22 +25,18 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
   const [showControls, setShowControls] = useState(false)
   const [loopStatus, setLoopStatus] = useState('LOOP_VIDEO')
   const [shuffle, setShuffle] = useState(false)
-  const [playlistVideos, setPlaylistVideos] = useState([])
+  const [playlist, setPlaylist] = useState(undefined)
   const videoId = query.id
 
   const toggleControls = () => {
     setShowControls(!showControls)
   }
 
-  const getPlaylists = () => {
+  const getPlaylist = () => {
     if (query.playlist && localStorage.getItem('playlists')) {
       const playlists = JSON.parse(localStorage.getItem('playlists'))
-      if (playlists[query.playlist]) {
-        const {videos} = playlists[query.playlist]
-        return videos
-      }
+      return playlists[query.playlist]
     }
-    return []
   }
 
   const updateRouter = ({
@@ -66,8 +62,8 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
 
   const getVideoNumber = () => {
     let videoNumber = 1
-    for (let i = 0; i < playlistVideos.length; i++) {
-      const {id, start: startTime, end: endTime} = playlistVideos[i]
+    for (let i = 0; i < playlist?.videos.length; i++) {
+      const {id, start: startTime, end: endTime} = playlist?.videos[i]
       if (
         id === videoId &&
         Number(startTime) === start &&
@@ -91,16 +87,16 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
 
   const updateVideo = (newVideoNumber) => {
     if (loopStatus === 'LOOP_PLAYLIST') {
-      if (newVideoNumber >= playlistVideos.length) {
-        const {id, start, end} = playlistVideos[0]
+      if (newVideoNumber >= playlist?.videos.length) {
+        const {id, start, end} = playlist?.videos[0]
         updateRouter({id, start, end, loopValue: 'playlist'})
       } else {
-        const {id, start, end} = playlistVideos[newVideoNumber]
+        const {id, start, end} = playlist?.videos[newVideoNumber]
         updateRouter({id, start, end, loopValue: 'playlist'})
       }
     } else {
-      if (playlistVideos[newVideoNumber]) {
-        const {id, start, end} = playlistVideos[newVideoNumber]
+      if (playlist?.videos[newVideoNumber]) {
+        const {id, start, end} = playlist?.videos[newVideoNumber]
         updateRouter({id, start, end, loopValue: 'off'})
       }
     }
@@ -114,10 +110,15 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
   const shufflePlaylist = (status) => {
     setShuffle(status)
     if (status) {
-      setPlaylistVideos(shuffleVideos(playlistVideos))
+      const videos = shuffleVideos(playlist?.videos || [])
+      const shuffledPlaylist = {
+        ...playlist,
+        videos,
+      }
+      setPlaylist(shuffledPlaylist)
     } else {
-      // reset playlist videos
-      setPlaylistVideos(getPlaylists())
+      // reset playlist data
+      setPlaylist(getPlaylist())
     }
     const shuffleStatus = status ? 'on' : 'off'
     updateRouter({id: videoId, start, end, shuffleValue: shuffleStatus})
@@ -151,14 +152,16 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
 
   useEffect(() => {
     let videos = []
-    if (playlistVideos.length === 0 || !shuffle) {
-      videos = getPlaylists()
+    if ((playlist && playlist?.videos.length === 0) || !shuffle) {
+      // get the updated playlist from localStorage
+      const playlist = getPlaylist()
+      setPlaylist(playlist)
+      videos = playlist.videos
     } else {
-      // use the already existing videos
+      // use the already existing videos from the prop playlist
       // which might be needed if the playlist was shuffled before
-      videos = playlistVideos
+      videos = playlist.videos
     }
-    setPlaylistVideos(videos)
     const [video] = videos.filter(({id}) => id === videoId)
     if (video) {
       updateVideoProps(video)
@@ -237,17 +240,16 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
             )}
           </Fragment>
         </div>
-        {playlistVideos.length > 0 && (
-          <Playlistvideos
+        {playlist?.videos.length > 0 && (
+          <PlaylistVideos
             videoNumber={getVideoNumber()}
-            playlistName={query.playlist}
-            playlistVideos={playlistVideos}
+            playlist={playlist}
             loopStatus={loopStatus}
             shuffle={shuffle}
             onVideoClick={updateRouter}
             onLoopClick={updateLoopStatus}
             onShuffleClick={shufflePlaylist}
-            updatePlaylistVideos={setPlaylistVideos}
+            updatePlaylist={setPlaylist}
           />
         )}
       </div>

@@ -56,16 +56,15 @@ const sortIconStyles = {
   fontSize: 5,
 }
 
-const Playlistvideos = ({
+const PlaylistVideos = ({
   videoNumber,
-  playlistName,
-  playlistVideos,
+  playlist,
   loopStatus,
   shuffle,
   onVideoClick,
   onLoopClick,
   onShuffleClick,
-  updatePlaylistVideos,
+  updatePlaylist,
 }) => {
   const [loading, setLoading] = useState(false)
   const [expand, setExpand] = useState(true)
@@ -74,7 +73,7 @@ const Playlistvideos = ({
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
   const [video, setVideo] = useState(null)
   const [hoveredVideoIndex, setHoveredVideoIndex] = useState(null)
-  const [sortBy, setSortBy] = useState(null)
+  const [sortBy, setSortBy] = useState(playlist?.sortBy)
   const [showSortOptions, toggleSortOptions] = useState(false)
   const sortRef = useRef(null)
   const {setShow, setMessage} = useContext(ToastContext)
@@ -87,13 +86,13 @@ const Playlistvideos = ({
     : {
         borderRadius: '15px',
       }
-  const refs = playlistVideos.reduce((acc, curr, index) => {
+  const refs = playlist?.videos.reduce((acc, curr, index) => {
     acc[index] = createRef()
     return acc
   }, {})
 
   const playlists = JSON.parse(localStorage.getItem('playlists'))
-  const playlist = playlists[playlistName]
+  const localPlaylist = playlists[playlist.name]
 
   const SortOptions = () => (
     <div
@@ -143,11 +142,11 @@ const Playlistvideos = ({
   }
 
   const getShareURL = () => {
-    const videoIds = playlistVideos.map((v) => v.id).join('***')
-    const startTimes = playlistVideos.map((v) => v.start || 0).join('-')
-    const endTimes = playlistVideos.map((v) => v.end || 0).join('-')
+    const videoIds = playlist?.videos.map((v) => v.id).join('***')
+    const startTimes = playlist?.videos.map((v) => v.start || 0).join('-')
+    const endTimes = playlist?.videos.map((v) => v.end || 0).join('-')
     const created = playlist?.created || dateNow()
-    return `/playlist?id=${playlistName}&v=${videoIds}&s=${startTimes}&e=${endTimes}&dt=${created}`
+    return `/playlist?id=${playlist?.name}&v=${videoIds}&s=${startTimes}&e=${endTimes}&dt=${created}`
   }
 
   // sync the playlist with the remote YT playlist
@@ -156,12 +155,12 @@ const Playlistvideos = ({
     try {
       setLoading(true)
       const res = await axios.get('/api/playlist', {
-        params: {id: playlist.id, token},
+        params: {id: localPlaylist.id, token},
       })
       const remotePlaylistData = recursivePlaylistData(res.data, syncPlaylist)
       // create a map of video Ids in the playlist stored locally
       const videoIdMap = {}
-      playlist.videos.forEach((v) => {
+      localPlaylist.videos.forEach((v) => {
         videoIdMap[v.id] = v
       })
       // loop through the remote playlist items and filter out items with ids already in videoIdMap
@@ -174,9 +173,9 @@ const Playlistvideos = ({
             start: 0,
             end: 0,
           }))
-        playlist.videos.concat(remotePlaylistVideos)
+        localPlaylist.videos.concat(remotePlaylistVideos)
         localStorage.setItem('playlists', JSON.stringify(playlists))
-        updatePlaylistVideos(playlist.videos)
+        updatePlaylist(localPlaylist)
         showToast(
           'Successfully merged remote YouTube playlist with this playlist.'
         )
@@ -195,7 +194,7 @@ const Playlistvideos = ({
     switch (sortBy) {
       case SORT_MAP.TITLE_ASC:
         setSortBy(SORT_MAP.TITLE_ASC)
-        videos = playlist.videos.sort((a, b) => {
+        videos = localPlaylist.videos.sort((a, b) => {
           const titleA = a.snippet.title.toLowerCase()
           const titleB = b.snippet.title.toLowerCase()
           if (titleA < titleB) {
@@ -210,7 +209,7 @@ const Playlistvideos = ({
         break
       case SORT_MAP.TITLE_DESC:
         setSortBy(SORT_MAP.TITLE_DESC)
-        videos = playlist.videos.sort((a, b) => {
+        videos = localPlaylist.videos.sort((a, b) => {
           const titleA = a.snippet.title.toLowerCase()
           const titleB = b.snippet.title.toLowerCase()
           if (titleA < titleB) {
@@ -225,7 +224,7 @@ const Playlistvideos = ({
         break
       case SORT_MAP.DATE_ASC:
         setSortBy(SORT_MAP.DATE_ASC)
-        videos = playlistVideos.sort(
+        videos = localPlaylist.videos.sort(
           (a, b) =>
             new Date(b.snippet.publishedAt).getTime() -
             new Date(a.snippet.publishedAt).getTime()
@@ -234,7 +233,7 @@ const Playlistvideos = ({
         break
       case SORT_MAP.DATE_DESC:
         setSortBy(SORT_MAP.DATE_DESC)
-        videos = playlistVideos.sort(
+        videos = localPlaylist.videos.sort(
           (a, b) =>
             new Date(a.snippet.publishedAt).getTime() -
             new Date(b.snippet.publishedAt).getTime()
@@ -242,9 +241,10 @@ const Playlistvideos = ({
         showToast('Playlist sorted by Date with old videos first.')
         break
     }
-    playlist.videos = videos
+    localPlaylist.videos = videos
+    localPlaylist.sortBy = sortBy
     localStorage.setItem('playlists', JSON.stringify(playlists))
-    updatePlaylistVideos(playlist.videos)
+    updatePlaylist(localPlaylist)
   }
 
   useEffect(() => {
@@ -320,10 +320,10 @@ const Playlistvideos = ({
                 variant: 'heading',
                 lineHeight: 1,
               }}>
-              {playlistName}
+              {playlist.name}
             </h3>
             <p>
-              {videoNumber}&nbsp;/&nbsp;{playlistVideos.length}
+              {videoNumber}&nbsp;/&nbsp;{playlist?.videos.length}
             </p>
           </div>
           <div
@@ -408,7 +408,7 @@ const Playlistvideos = ({
                   setShowShareModal(true)
                 }}
               />
-              {playlist.id && (
+              {playlist?.id && (
                 <BiCloudDownload
                   sx={{
                     ...loopShuffleIconStyles,
@@ -486,7 +486,7 @@ const Playlistvideos = ({
               <Loader />
             ) : (
               <Fragment>
-                {playlistVideos.map((video, index) => {
+                {playlist?.videos.map((video, index) => {
                   const {id, snippet, start, end} = video
                   return (
                     <div
@@ -605,10 +605,10 @@ const Playlistvideos = ({
         open={showShareModal}
         close={() => setShowShareModal(false)}
         url={getShareURL()}
-        name={playlistName}
+        name={playlist?.name}
       />
     </Fragment>
   )
 }
 
-export default Playlistvideos
+export default PlaylistVideos
