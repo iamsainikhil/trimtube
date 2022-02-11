@@ -52,7 +52,13 @@ const Head = ({
           content={metaDescription}
           key='ogdesc'
         />
+        <meta name='msapplication-TileColor' content='#333' />
+        <meta name='theme-color' content='#333' />
+        <meta name='apple-mobile-web-app-capable' content='yes' />
+        {/* dynamic update of start_url in manifest json */}
+        <link rel='manifest' href={`/api/manifest?url=${pathUrl}`} />
         {/* favicons */}
+        <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#333' />
         <link
           rel='apple-touch-icon'
           sizes='180x180'
@@ -76,13 +82,6 @@ const Head = ({
           sizes='196x196'
           href='/android-chrome-192x192.png'
         />
-        <meta name='apple-mobile-web-app-capable' content='yes' />
-        {/* dynamic update of start_url in manifest json */}
-        <link rel='manifest' href={`/api/manifest?url=${pathUrl}`} />
-        <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#333' />
-        <meta name='msapplication-TileColor' content='#333' />
-        <meta name='theme-color' content='#333' />
-        <meta name='apple-mobile-web-app-capable' content='yes' />
         <link
           rel='apple-touch-startup-image'
           href='light/apple-splash-2048-2732.jpg'
