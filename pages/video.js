@@ -221,9 +221,9 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
                 <Button
                   primary={{bg: 'muted', color: 'text'}}
                   hover={{bg: 'shade1', color: 'accent'}}
-                  action={toggleControls}>
-                  {showControls ? 'Hide Trim Controls' : 'Trim Video'}
-                </Button>
+                  text={showControls ? 'Hide Trim Controls' : 'Trim Video'}
+                  action={toggleControls}
+                />
               </p>
             )}
             {showControls && (

@@ -28,15 +28,6 @@ const Button = ({primary, hover, text, action, children, disabled = false}) => {
         '&:focus': {
           outline: 'none',
         },
-        '@media (max-width: 40rem)': children
-          ? {
-              py: 1,
-            }
-          : {
-              px: 2,
-              fontSize: 0,
-              letterSpacing: '0.02',
-            },
       }}
       onClick={action}>
       {children ? <Fragment>{children}</Fragment> : text}

@@ -172,9 +172,9 @@ const Input = () => {
                 <Button
                   primary={{bg: 'shade2', color: 'text'}}
                   hover={{bg: 'shade1', color: 'accent'}}
-                  action={createPlaylist}>
-                  Create a playlist
-                </Button>
+                  text='Create a playlist'
+                  action={createPlaylist}
+                />
               </div>
             )}
             <Results data={data} error={error} />

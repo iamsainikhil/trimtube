@@ -9,9 +9,9 @@ const Tab = ({label, activeTab, action}) => {
           bg: label === activeTab ? 'shade1' : 'background',
           color: 'text',
         }}
-        action={action}>
-        {label}
-      </Button>
+        text={label}
+        action={action}
+      />
     </h2>
   )
 }
