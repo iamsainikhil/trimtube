@@ -101,7 +101,7 @@ TrimTube provides multiple features like:
 
    Create an `.env` file in the root directory of the project. Add the following properties in it:
 
-   ```json
+   ```sh
    YOUTUBE_API_V3=<your YouTube API key> (Required)
 
    NEXT_PUBLIC_GA_ID=<your Google Analytics tracking ID> (Optional)
@@ -117,7 +117,7 @@ TrimTube provides multiple features like:
 
    Navigate into your new site’s directory and start it up.
 
-   ```bash
+   ```sh
    # Go to project directory
    cd <project-name>
 
