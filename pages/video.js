@@ -152,11 +152,11 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
 
   useEffect(() => {
     let videos = []
-    if ((playlist && playlist?.videos.length === 0) || !shuffle) {
+    if (playlist?.videos.length === 0 || !shuffle) {
       // get the updated playlist from localStorage
       const playlist = getPlaylist()
       setPlaylist(playlist)
-      videos = playlist.videos
+      videos = playlist?.videos || []
     } else {
       // use the already existing videos from the prop playlist
       // which might be needed if the playlist was shuffled before
