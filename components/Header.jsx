@@ -2,13 +2,12 @@
 /** @jsx jsx */
 import {jsx, useThemeUI} from 'theme-ui'
 import {default as NextLink} from 'next/link'
+import {useRouter} from 'next/router'
 import Headroom from 'react-headroom'
 import {GoSearch} from 'react-icons/go'
 import {FiHelpCircle, FiSun, FiMoon} from 'react-icons/fi'
 import {RiPlayListFill} from 'react-icons/ri'
-// import {MdPlaylistPlay} from 'react-icons/md'
 import {trackGAEvent} from '../utils/googleAnalytics'
-import {useRouter} from 'next/router'
 
 const Header = () => {
   const {colorMode, setColorMode} = useThemeUI()
@@ -33,7 +32,7 @@ const Header = () => {
             sx={{
               m: 0,
               variant: 'textStyles.title',
-              fontSize: ['2rem', 5, 6],
+              fontSize: ['2rem', 6],
             }}>
             <NextLink href='/' passHref>
               <a
@@ -47,7 +46,25 @@ const Header = () => {
                   trackGAEvent('logo', `clicked on site logo`, 'link click')
                 }
                 rel='noreferrer noopener'>
-                TrimTube
+                <img
+                  src='/logo.png'
+                  alt='TrimTube Logo'
+                  sx={{
+                    mb: '-10px',
+                    width: 50,
+                    height: 50,
+                  }}
+                />
+                <span
+                  sx={{
+                    mx: 2,
+                    display: 'none',
+                    '@media (min-width: 40rem)': {
+                      display: 'inline-block',
+                    },
+                  }}>
+                  TrimTube
+                </span>
               </a>
             </NextLink>
           </div>
