@@ -35,12 +35,14 @@ export default function manifest(req, res) {
   let questionExist = url.includes('?')
   let startUrl = url
   Object.keys(params).forEach((param) => {
-    const slug = `${param}=${params[param]}`
-    if (questionExist) {
-      startUrl += `&${slug}`
-    } else {
-      startUrl += `?${slug}`
-      questionExist = true
+    if (param !== 'playlist') {
+      const slug = `${param}=${params[param]}`
+      if (questionExist) {
+        startUrl += `&${slug}`
+      } else {
+        startUrl += `?${slug}`
+        questionExist = true
+      }
     }
   })
   manifest_json.start_url = startUrl.includes('?')
