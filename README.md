@@ -16,7 +16,7 @@
 </a>
 </p>
 
-TrimTube is a web application which allows user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.
+TrimTube is a web application which allows user to fetch video or a playlist using a YouTube video or playlist link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist(s).
 
 # 👀 **Demo**
 
