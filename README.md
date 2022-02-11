@@ -26,19 +26,16 @@ TrimTube is a web application which allows user to fetch video or a playlist usi
 
 TrimTube provides multiple features like:
 
-- **Search**: Search for YouTube videos by entering the keyword or pasting the entire youtube video link or just pasting the video id.
+- **Search**: Search for a YouTube video or playlist by pasting the entire youtube video or playlist link or just the ID.
 - **Video**: Trim and loop a YouTube video with ability to share the URL as well as adding to playlist(s).
 - **Playlist**: View videos added to a playlist all at one place. Ability to save, share, and delete a playlist. Option to individually remove a video from the playlist.
+- **Sync**: Ability to sync a playlist with that of the YouTube playlist if the playlist was created locally in the app using the Search with playlist feature.
+- **Sort**: Sort a playlist created in the app based on the `title` or `publishedDate` of the videos.
+- **Repeat**: Repeat a single video or the entire playlist or just play through all the videos in the playlist once.
 
 # 🗍 **Pages**
 
 ## Search
-
-- Search by `Typing Something` to find the relevant YouTube videos.
-
-![Type Something](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Search_Type_Something_Demo.gif)
-
-<a href="https://fluvid.com/videos/detail/698A4IAOD7Fe5wdKG" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
 - Search with pasted `YouTube Video Link` to find the relevant YouTube videos.
 
