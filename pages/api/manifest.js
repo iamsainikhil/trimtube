@@ -31,9 +31,20 @@ const manifest_json = {
 }
 
 export default function manifest(req, res) {
-  const {url} = req.query
-  manifest_json.start_url = url.includes('?')
-    ? `${url}&feature=pwa`
-    : `${url}?feature=pwa`
+  const {url, ...params} = req.query
+  let questionExist = url.includes('?')
+  let startUrl = url
+  Object.keys(params).forEach((param) => {
+    const slug = `${param}=${params[param]}`
+    if (questionExist) {
+      startUrl += `&${slug}`
+    } else {
+      startUrl += `?${slug}`
+      questionExist = true
+    }
+  })
+  manifest_json.start_url = startUrl.includes('?')
+    ? `${startUrl}&feature=pwa`
+    : `${startUrl}?feature=pwa`
   res.status(200).json(manifest_json)
 }
