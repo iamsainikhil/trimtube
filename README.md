@@ -172,10 +172,3 @@ Have a look at the **[license file](https://raw.githubusercontent.com/iamsainikh
 Whether you’d like to discuss about this starter template or simply say “hello”, I’d love to hear from you.
 
 Email: **[contact@iamsainikhil.com](mailto:contact@iamsainikhil.com)**
-
-# **🎓 Learning NextJS**
-
-Looking for more guidance? Full documentation for NextJS lives [on the website](https://nextjs.org/docs/getting-started). Here are some places to start:
-
-- **For most developers, I recommend starting with the [in-depth tutorial for creating a site with NextJS](https://nextjs.org/learn/basics/create-nextjs-app).** It starts with zero assumptions about your level of ability and walks through every step of the process.
-- **To dive straight into code samples, head [to the documentation](https://nextjs.org/docs/getting-started).** In particular, check out the _Basic Features_, _API Reference_, and _Advanced Features_ sections in the sidebar.
