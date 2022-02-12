@@ -8,7 +8,7 @@ import {
   BsSortNumericDown,
   BsSortNumericDownAlt,
 } from 'react-icons/bs'
-import {BiSort} from 'react-icons/bi'
+import {CgSortAz} from 'react-icons/cg'
 
 const SortIcon = ({sortBy, styles, title, ariaLabel, iconClick}) => {
   const renderIcon = () => {
@@ -22,7 +22,14 @@ const SortIcon = ({sortBy, styles, title, ariaLabel, iconClick}) => {
       case SORT_MAP.DATE_DESC:
         return <BsSortNumericDownAlt sx={styles} />
       default:
-        return <BiSort sx={styles} />
+        return (
+          <CgSortAz
+            sx={{
+              ...styles,
+              fontSize: '35px',
+            }}
+          />
+        )
     }
   }
 
