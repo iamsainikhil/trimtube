@@ -37,25 +37,20 @@ TrimTube provides multiple features like:
 
 ## Search
 
-- Search with pasted `YouTube Video Link` to find the relevant YouTube videos.
+- Search with pasted `YouTube Video Link` or a `YouTube Video ID` to find the relevant YouTube video(s).
 
-![YouTube Video Link](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Search_Paste_YouTube_Link_Demo.gif)
+https://user-images.githubusercontent.com/21148072/153730123-2af678a8-75ca-4b42-b577-ea8f8c06d519.mp4
 
-<a href="https://fluvid.com/videos/detail/PgDo-uRn7Bsgj9XMx" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
+- Search with pasted `YouTube Playlist Link` or a `YouTube Playlist ID` to find the relevant YouTube video(s).
 
-- Search with pasted `YouTube Video ID` to find the relevant YouTube videos.
-
-![YouTube Video ID](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Search%20_YouTube_Video_ID_Demo.gif)
-
-<a href="https://fluvid.com/videos/detail/ZOmq-ID1wGI9PYq6k" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
+https://user-images.githubusercontent.com/21148072/153730146-a8d4e699-278e-4221-af08-f69242d73564.mp4
 
 ## Video
 
 - Watch the video in a YouTube media player with the ability to `trim` the video, `share` the URL, and `save` to playlist(s).
 
-![Video page](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Video_Demo.gif)
+https://user-images.githubusercontent.com/21148072/153730168-520fa6ba-c91e-475b-8ff2-0f3925570e57.mp4
 
-<a href="https://fluvid.com/videos/detail/wz_2XCokyjcn2YLG5" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
 ## Playlists
 
@@ -68,6 +63,11 @@ TrimTube provides multiple features like:
 <a href="https://fluvid.com/videos/detail/R68rdCaV2DFMAy3MR" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
 
 ## Playlist
+
+- Create a playlist in the app using the `YouTube Playlist Link or ID` with an ability to edit the name of the created playlist.
+
+
+https://user-images.githubusercontent.com/21148072/153730255-f6f17934-8de0-4c4b-af55-e8241e2dd7be.mp4
 
 - Watch all the videos added to a local playlist or from a shared playlist.
 
