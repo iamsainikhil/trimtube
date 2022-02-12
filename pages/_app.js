@@ -2,9 +2,10 @@ import '../styles/globals.scss'
 import '../styles/header.scss'
 import {ThemeProvider} from 'theme-ui'
 import theme from '../utils/theme'
+import {trackGAEvent} from '../utils/googleAnalytics'
 import {ToastContextProvider} from '../context/ToastContext'
 import Toast from './../components/Toast'
-import {trackGAEvent} from '../utils/googleAnalytics'
+import ErrorBoundary from '../components/ErrorBoundary'
 
 // for more info on measuring app performance
 // visit https://nextjs.org/docs/advanced-features/measuring-performance
@@ -22,10 +23,12 @@ export function reportWebVitals(metric) {
 export default function MyApp({Component, pageProps}) {
   return (
     <ThemeProvider theme={theme}>
-      <ToastContextProvider>
-        <Component {...pageProps} />
-        <Toast />
-      </ToastContextProvider>
+      <ErrorBoundary>
+        <ToastContextProvider>
+          <Component {...pageProps} />
+          <Toast />
+        </ToastContextProvider>
+      </ErrorBoundary>
     </ThemeProvider>
   )
 }
