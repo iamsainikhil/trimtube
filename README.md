@@ -157,6 +157,20 @@ In the project directory, you can run:
 
   Formats the app files like _js, jsx, json, and md_ using Prettier. You can learn more about the format **[here](https://prettier.io/docs/en/install.html)**.
 
+> Note: `pwa-asset-generator` tool is used to generate the below PWA assets. You can learn more about this tool **[here](https://github.com/onderceylan/pwa-asset-generator#features)**.
+
+- `npx pwa-asset-generator ./public/logo.png ./public --icon-only --favicon --opaque false --maskable false --type png`
+
+  Generates favicons and place them in the `public` directory.
+
+- `npx pwa-asset-generator ./public/logo.png ./public/light --splash-only --background lightgray --type jpeg --quality 80`
+
+  Generates splash images needed for apple devices with a light background and place them in the `public/light` directory.
+
+- `npx pwa-asset-generator ./public/logo.png ./public/dark --splash-only --background 'rgba(51,51,51, 1)' --type jpeg --quality 80`
+
+  Generates splash images needed for apple devices with a dark background and place them in the `public/dark` directory.
+
 # **🙌 Contribution**
 
 - Open pull request with improvements.
