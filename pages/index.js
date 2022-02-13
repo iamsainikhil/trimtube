@@ -13,8 +13,8 @@ import Button from '../components/Button'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import {dateNow} from '../utils/date'
 import recursivePlaylistData from '../utils/recursivePlaylistData'
-import stepsData from '../constants/stepsData'
-import Step from '../components/Home/Steps'
+// import stepsData from '../constants/stepsData'
+// import Step from '../components/Steps'
 
 const TABS = {
   video: 'video',
