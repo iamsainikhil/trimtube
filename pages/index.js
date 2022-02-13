@@ -13,6 +13,8 @@ import Button from '../components/Button'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import {dateNow} from '../utils/date'
 import recursivePlaylistData from '../utils/recursivePlaylistData'
+import stepsData from '../constants/stepsData'
+import Step from '../components/Home/Steps'
 
 const TABS = {
   video: 'video',
@@ -28,8 +30,8 @@ const Input = () => {
 
   const getPlaceholder = () => {
     return activeTab === TABS.video
-      ? 'Paste a YouTube video link or ID'
-      : 'Paste a YouTube playlist link or ID'
+      ? 'Paste a YouTube video URL or ID'
+      : 'Paste a YouTube playlist URL or ID'
   }
 
   const updateDataError = (data, error) => {
@@ -180,6 +182,13 @@ const Input = () => {
             <Results data={data} error={error} />
           </Fragment>
         )}
+
+        {/* <div sx={{mt: 5, mb: 3}}>
+          <h2 sx={{textAlign: 'center'}}>How to use TrimTube?</h2>
+          {stepsData.map((step, index) => (
+            <Step key={index} position={index} data={step} />
+          ))}
+        </div> */}
       </div>
     </Layout>
   )
