@@ -179,7 +179,7 @@ export default {
       bg: 'brand',
       px: 1,
     },
-    inlineCode: {
+    code: {
       fontFamily: 'code',
       color: 'secondary',
       bg: 'muted',
