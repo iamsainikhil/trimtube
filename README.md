@@ -66,7 +66,6 @@ https://user-images.githubusercontent.com/21148072/153730168-520fa6ba-c91e-475b-
 
 - Create a playlist in the app using the `YouTube Playlist Link or ID` with an ability to edit the name of the created playlist.
 
-
 https://user-images.githubusercontent.com/21148072/153730255-f6f17934-8de0-4c4b-af55-e8241e2dd7be.mp4
 
 - Watch all the videos added to a local playlist or from a shared playlist.
