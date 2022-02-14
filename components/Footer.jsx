@@ -24,7 +24,7 @@ const Footer = () => {
 
           <Icon
             name='GitHub'
-            url='https://github.com/iamsainikhil'
+            url='https://github.com/iamsainikhil/trimtube'
             style={{
               color: 'primary',
               fontSize: '1.5rem',
