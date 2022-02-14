@@ -21,16 +21,6 @@ const PlaylistListing = () => {
   useEffect(() => {
     if (localStorage.getItem('playlists')) {
       setPlaylists(JSON.parse(localStorage.getItem('playlists')))
-    } else {
-      // load the demo playlist
-      const playlists = {
-        Demo: {
-          ...demoPlaylist,
-          created: dateNow(),
-        },
-      }
-      localStorage.setItem('playlists', JSON.stringify(playlists))
-      setPlaylists(playlists)
     }
     return () => {}
   }, [])
