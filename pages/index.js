@@ -10,11 +10,10 @@ import Loader from '../components/Loader'
 import Layout from '../components/Layout'
 import Tab from '../components/Tab'
 import Button from '../components/Button'
+import Sections from './../components/Sections'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import {dateNow} from '../utils/date'
 import recursivePlaylistData from '../utils/recursivePlaylistData'
-import stepsData from '../constants/stepsData'
-import Step from '../components/Steps'
 
 const TABS = {
   video: 'video',
@@ -200,9 +199,7 @@ const Input = () => {
 
         <div sx={{mt: 6, mb: 3}}>
           <h1 sx={{textAlign: 'center', mb: 0}}>How to use TrimTube?</h1>
-          {stepsData.map((step, index) => (
-            <Step key={index} position={index} data={step} />
-          ))}
+          <Sections />
         </div>
       </div>
     </Layout>

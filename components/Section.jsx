@@ -1,11 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import Image from 'next/image'
 
 const isOddValue = (n) => n % 2 !== 0
 
-const Step = ({position, data}) => {
+const Section = ({position, data}) => {
   const {title, link, content} = data
   const isOdd = isOddValue(position)
   return (
@@ -42,14 +41,6 @@ const Step = ({position, data}) => {
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
           />
-          {/* <Image
-            unoptimized
-            src='https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Playlists_Demo.gif'
-            alt={`${title} Section Image`}
-            width='640'
-            height='360'
-            layout='fixed'
-          /> */}
         </div>
         <div
           sx={{
@@ -63,4 +54,4 @@ const Step = ({position, data}) => {
   )
 }
 
-export default Step
+export default Section

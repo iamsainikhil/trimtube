@@ -105,18 +105,17 @@ const Header = () => {
               </p>
             ) : null}
             <p>
-              <a
-                href='https://github.com/iamsainikhil/trimtube#--trimtube'
-                target='_blank'
-                rel='noopener noreferrer'>
-                <FiHelpCircle
-                  title='About'
-                  sx={{
-                    fontSize: '2rem',
-                    ...iconStyle,
-                  }}
-                />
-              </a>
+              <NextLink href={'/help'} passHref>
+                <a>
+                  <FiHelpCircle
+                    title='About'
+                    sx={{
+                      fontSize: '2rem',
+                      ...iconStyle,
+                    }}
+                  />
+                </a>
+              </NextLink>
             </p>
             <p>
               {colorMode !== 'dark' ? (
