@@ -33,56 +33,96 @@ TrimTube provides multiple features like:
 - **Sort**: Sort a playlist created in the app based on the `title` or `publishedDate` of the videos.
 - **Repeat**: Repeat a single video or the entire playlist or just play through all the videos in the playlist once.
 
-# 🗍 **Pages**
+# 🧐 **How to use TrimTube?**
 
-## Search
+## Search Video
 
-- Search with pasted `YouTube Video Link` or a `YouTube Video ID` to find the relevant YouTube video(s).
+<p>
+    There are multiple ways to search a video in the app.
+    <ul>
+        <li>
+        Search with pasted <code>YouTube Video URL</code> or a
+        <code>YouTube Video ID</code> to find the relevant YouTube
+        video(s).
+        </li>
+        <li>
+        Visit <code>https://trimtube.vercel.app/video?v=ID</code> page replacing <code>ID</code> with <code>YouTube Video ID</code> 
+        to find the relevant YouTube video(s).
+        ex - <code>https://trimtube.vercel.app/video?v=a6Ur326zJtM</code>
+        </li>
+    </ul>
+ </p>
 
-https://user-images.githubusercontent.com/21148072/153730123-2af678a8-75ca-4b42-b577-ea8f8c06d519.mp4
+[Watch Demo - Search Video](https://vimeo.com/676948611)
 
-- Search with pasted `YouTube Playlist Link` or a `YouTube Playlist ID` to find the relevant YouTube video(s).
+## Trim Video
 
-https://user-images.githubusercontent.com/21148072/153730146-a8d4e699-278e-4221-af08-f69242d73564.mp4
+<p>
+    Click on <code>Trim Video</code> button on <code>Video</code> page and use the trim controls to input the <code>Start</code> and <code>End</code> times in <code>Minutes</code> and <code>Seconds</code> to <code>Trim</code> the video which will loop the video between this interval indefinitely.
+</p>
 
-## Video
+[Watch Demo - Trim Video](https://vimeo.com/676948653)
 
-- Watch the video in a YouTube media player with the ability to `trim` the video, `share` the URL, and `save` to playlist(s).
+## Create Playlist
 
-https://user-images.githubusercontent.com/21148072/153730168-520fa6ba-c91e-475b-8ff2-0f3925570e57.mp4
+<p>
+    There are multiple ways to create a playlist in the app.
+    <ul>
+      <li>
+      <p>
+      Search with pasted <code>YouTube Playlist URL</code> or a
+      <code>YouTube Playlist ID</code> to find the relevant YouTube
+      video(s).
+      </p>
+      <p>
+      Create a playlist in the app using the <code>Create Playlist</code> button with an ability to edit the name of the created playlist later.
+      </p>
+      </li>
+      <li>
+        On <code>Video</code> page, create a playlist in the modal when saving a video to a playlist.
+      </li>
+    </ul>
+  </p>
 
+[Watch Demo - Create Playlist](https://vimeo.com/676948508)
 
-## Playlists
+## Playlist Controls
 
-- After adding the videos (trimmed or original) to playlist(s). You can see all the playlists at once in a single dashboard.
+<p>
+        <ul>
+          <li>
+            <strong>Repeat</strong> a video or the playlist.
+          </li>
+          <li>
+            <strong>Shuffle</strong> the playlist
+          </li>
+          <li>
+            <strong>Sort</strong> the playlist based on the <code>Title</code> or <code>Date</code>.
+          </li>
+          <li>
+            <strong>Fetch</strong> the remote YouTube playlist and merge any new videos with the local playlist.
+            <blockquote>Note: this option is available only on the playlists that were created using the YouTube playlist URL or ID</blockquote>
+          </li>
+        </ul>
+      </p>
 
-> Playlists are saved in user's browser localStorage
+[Watch Demo - Playlist Controls](https://vimeo.com/676948539)
 
-![Playlists page](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Playlists_Demo.gif)
+## Share
 
-<a href="https://fluvid.com/videos/detail/R68rdCaV2DFMAy3MR" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
+<p>
+  Share a trimmed <code>Video</code> or a created <code>Playlist</code>
+  in the app on multiple platforms like
+  <code>Facebook</code>, <code>Twitter</code>, <code>LinkedIn</code> and
+  <code>WhatsApp</code>.
+</p>
+<p style="text-align: center">OR</p>
+<p>
+  You can simply <code>Copy</code> the URL to share on other platforms
+  as well.
+</p>
 
-## Playlist
-
-- Create a playlist in the app using the `YouTube Playlist Link or ID` with an ability to edit the name of the created playlist.
-
-https://user-images.githubusercontent.com/21148072/153730255-f6f17934-8de0-4c4b-af55-e8241e2dd7be.mp4
-
-- Watch all the videos added to a local playlist or from a shared playlist.
-
-> Shared playlists can also be saved locally. Moreover, user will be given the option to merge the videos if there is a playlist that exist locally with the same name of a shared playlist.
-
-![Playlist page](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Playlist_Demo.gif)
-
-<a href="https://fluvid.com/videos/detail/y7X9zT37A_UYKgrAD" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
-
-## Themes
-
-- TrimTube offers user the option to switch between `light` and `dark` theme. By default, theme is set using the user's system preferences.
-
-![Themes Demo](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/README/Themes_Demo.gif)
-
-<a href="https://fluvid.com/videos/detail/7x8vGhXOKYidj71nE" target="_blank" rel="noreferrer noopener">Watch video</a><br/>
+[Watch Demo - Share](https://vimeo.com/676948628)
 
 # 💻 Quick start
 
