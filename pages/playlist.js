@@ -289,7 +289,7 @@ export default function Playlist({name, info, image, fetchData}) {
                           setPlaylistName(e.target.value)
                         }}
                       />
-                      <span sx={{mx: 1}}>
+                      <span>
                         <BiCheck
                           sx={{
                             ...iconStyle,
