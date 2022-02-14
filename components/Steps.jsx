@@ -11,7 +11,7 @@ const Step = ({position, data}) => {
   return (
     <div
       sx={{
-        bg: isOdd ? 'shade1' : 'background',
+        bg: isOdd ? 'muted' : 'background',
         py: 2,
       }}>
       <h2 sx={{textAlign: 'center', py: 3}}>{title}</h2>
