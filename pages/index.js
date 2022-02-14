@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import {jsx} from 'theme-ui'
+import {jsx, Spinner} from 'theme-ui'
 import {Fragment, useState, useEffect} from 'react'
 import router from 'next/router'
 import axios from 'axios'
@@ -13,8 +13,8 @@ import Button from '../components/Button'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import {dateNow} from '../utils/date'
 import recursivePlaylistData from '../utils/recursivePlaylistData'
-// import stepsData from '../constants/stepsData'
-// import Step from '../components/Steps'
+import stepsData from '../constants/stepsData'
+import Step from '../components/Steps'
 
 const TABS = {
   video: 'video',
@@ -117,8 +117,7 @@ const Input = () => {
         query: {id: name},
       })
     } catch (error) {
-      setError(error)
-    } finally {
+      console.error(error)
       setBtnLoading(false)
     }
   }
@@ -184,22 +183,27 @@ const Input = () => {
                 <Button
                   primary={{bg: 'shade2', color: 'text'}}
                   hover={{bg: 'shade1', color: 'accent'}}
-                  text='Create a playlist'
                   action={createPlaylist}
-                  disabled={btnLoading}
-                />
+                  disabled={btnLoading}>
+                  <span>Create a playlist</span>
+                  {btnLoading && (
+                    <span sx={{verticalAlign: 'middle', mx: 2}}>
+                      <Spinner size='18' />
+                    </span>
+                  )}
+                </Button>
               </div>
             )}
             <Results data={data} error={error} />
           </Fragment>
         )}
 
-        {/* <div sx={{mt: 5, mb: 3}}>
-          <h2 sx={{textAlign: 'center'}}>How to use TrimTube?</h2>
+        <div sx={{mt: 6, mb: 3}}>
+          <h1 sx={{textAlign: 'center', mb: 0}}>How to use TrimTube?</h1>
           {stepsData.map((step, index) => (
             <Step key={index} position={index} data={step} />
           ))}
-        </div> */}
+        </div>
       </div>
     </Layout>
   )
