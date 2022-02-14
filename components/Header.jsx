@@ -69,7 +69,7 @@ const Header = () => {
             </NextLink>
           </div>
           <div className='header-links'>
-            {routePath !== '/' ? (
+            {routePath !== '/' && (
               <p>
                 <GoSearch
                   title='Search'
@@ -88,8 +88,8 @@ const Header = () => {
                   }}
                 />
               </p>
-            ) : null}
-            {routePath !== '/playlists' ? (
+            )}
+            {routePath !== '/playlists' && (
               <p>
                 <NextLink href={'/playlists'} passHref>
                   <a>
@@ -103,20 +103,22 @@ const Header = () => {
                   </a>
                 </NextLink>
               </p>
-            ) : null}
-            <p>
-              <NextLink href={'/help'} passHref>
-                <a>
-                  <FiHelpCircle
-                    title='About'
-                    sx={{
-                      fontSize: '2rem',
-                      ...iconStyle,
-                    }}
-                  />
-                </a>
-              </NextLink>
-            </p>
+            )}
+            {routePath !== '/help' && (
+              <p>
+                <NextLink href={'/help'} passHref>
+                  <a>
+                    <FiHelpCircle
+                      title='About'
+                      sx={{
+                        fontSize: '2rem',
+                        ...iconStyle,
+                      }}
+                    />
+                  </a>
+                </NextLink>
+              </p>
+            )}
             <p>
               {colorMode !== 'dark' ? (
                 <span
