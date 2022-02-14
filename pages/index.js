@@ -27,6 +27,7 @@ const Input = () => {
   const [data, setData] = useState(undefined)
   const [error, setError] = useState(undefined)
   const [loading, setLoading] = useState(false)
+  const [btnLoading, setBtnLoading] = useState(false)
 
   const getPlaceholder = () => {
     return activeTab === TABS.video
@@ -85,37 +86,45 @@ const Input = () => {
    * @returns {String}
    */
   const createPlaylistName = (name, playlists) => {
-    if (!playlists[name]) {
-      return name
-    } else {
+    if (playlists[name]) {
       return createPlaylistName(`${name}-copy`, playlists)
+    } else {
+      return name
     }
   }
 
-  const createPlaylist = () => {
-    const playlists = JSON.parse(localStorage.getItem('playlists'))
-    const name = createPlaylistName('Untitled', playlists)
-    const videos = data?.items.map((video) => ({
-      ...video,
-      start: 0,
-      end: 0,
-      id: video?.contentDetails?.videoId || video.id,
-    }))
-    let playlist = {
-      id: getID(), // this is used later in the video page to sync the playlist with YT
-      name,
-      created: dateNow(),
-      videos,
+  const createPlaylist = async () => {
+    try {
+      setBtnLoading(true)
+      const playlists = JSON.parse(localStorage.getItem('playlists'))
+      const name = createPlaylistName('Untitled', playlists)
+      const videos = await data?.items.map((video) => ({
+        ...video,
+        start: 0,
+        end: 0,
+        id: video?.contentDetails?.videoId || video.id,
+      }))
+      let playlist = {
+        id: getID(), // this is used later in the video page to sync the playlist with YT
+        name,
+        created: dateNow(),
+        videos,
+      }
+      playlists[name] = playlist
+      localStorage.setItem('playlists', JSON.stringify(playlists))
+      router.push({
+        pathname: '/playlist',
+        query: {id: name},
+      })
+    } catch (error) {
+      setError(error)
+    } finally {
+      setBtnLoading(false)
     }
-    playlists[name] = playlist
-    localStorage.setItem('playlists', JSON.stringify(playlists))
-    router.push({
-      pathname: '/playlist',
-      query: {id: name},
-    })
   }
 
   useEffect(() => {
+    setBtnLoading(false)
     if (searchTerm.trim()) {
       trackGAEvent(
         'search',
@@ -130,6 +139,7 @@ const Input = () => {
   useEffect(() => {
     updateDataError(undefined, undefined)
     setSearchTerm('')
+    setBtnLoading(false)
     return () => {}
   }, [activeTab])
 
@@ -176,6 +186,7 @@ const Input = () => {
                   hover={{bg: 'shade1', color: 'accent'}}
                   text='Create a playlist'
                   action={createPlaylist}
+                  disabled={btnLoading}
                 />
               </div>
             )}
