@@ -222,6 +222,6 @@ Have a look at the **[license file](https://raw.githubusercontent.com/iamsainikh
 
 # **📧 Contact**
 
-Whether you’d like to discuss about this starter template or simply say “hello”, I’d love to hear from you.
+Whether you’d like to discuss about this application or simply say “hello”, I’d love to hear from you.
 
 Email: **[contact@iamsainikhil.com](mailto:contact@iamsainikhil.com)**
