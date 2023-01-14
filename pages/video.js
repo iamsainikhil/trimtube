@@ -196,7 +196,6 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
             flexDirection: 'column',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            // flex: '1 1 auto',
             mx: 2,
           }}>
           <Player

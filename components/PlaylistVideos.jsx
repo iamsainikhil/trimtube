@@ -271,7 +271,7 @@ const PlaylistVideos = ({
     if (refs[videoNumber - 1] && refs[videoNumber - 1].current) {
       refs[videoNumber - 1].current.scrollIntoView({
         behavior: 'smooth',
-        block: 'start',
+        block: 'end',
       })
     }
     return () => {}
