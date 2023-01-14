@@ -268,10 +268,15 @@ const PlaylistVideos = ({
   }, [sortBy])
 
   useEffect(() => {
-    if (refs[videoNumber - 1] && refs[videoNumber - 1].current) {
+    // don't autoscroll on devices like tablets or devices with height < 1000 (landscape)
+    if (
+      screen.height > 1000 &&
+      refs[videoNumber - 1] &&
+      refs[videoNumber - 1].current
+    ) {
       refs[videoNumber - 1].current.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest',
+        block: 'center',
       })
     }
     return () => {}
