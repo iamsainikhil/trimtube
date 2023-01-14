@@ -268,9 +268,9 @@ const PlaylistVideos = ({
   }, [sortBy])
 
   useEffect(() => {
-    // don't autoscroll on devices like tablets or devices with height < 1000 (landscape)
+    // don't autoscroll on devices like tablets or devices with height < 800 (landscape)
     if (
-      screen.height > 1000 &&
+      screen.height >= 800 &&
       refs[videoNumber - 1] &&
       refs[videoNumber - 1].current
     ) {
