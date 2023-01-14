@@ -270,9 +270,8 @@ const PlaylistVideos = ({
   useEffect(() => {
     if (refs[videoNumber - 1] && refs[videoNumber - 1].current) {
       refs[videoNumber - 1].current.scrollIntoView({
-        top: 100,
         behavior: 'smooth',
-        block: 'end',
+        block: 'nearest',
       })
     }
     return () => {}
