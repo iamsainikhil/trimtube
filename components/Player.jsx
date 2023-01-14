@@ -26,7 +26,7 @@ const Player = ({
       modestbranding: 1, // Hide the Youtube Logo
       rel: 0, // Show related videos only from the video owner
       loop: 1, // Run the video in a loop
-      fs: 0, // Hide the full screen button
+      fs: 1, // show the fullscreen icon
       cc_load_policy: 0, // Hide closed captions
       iv_load_policy: 3, // Hide the Video Annotations
       autohide: 1, // Hide video controls when playing
@@ -85,6 +85,19 @@ const Player = ({
     }
     return () => {}
   }, [start, end])
+
+  useEffect(() => {
+    const options = getOptions()
+    if (loopStatus === 'LOOP_VIDEO') {
+      options.playerVars.fs = 1
+      setOpts(options)
+    } else {
+      // Hide the full screen button on the video when looping a playlist
+      options.playerVars.fs = 0
+      setOpts(options)
+    }
+    return () => {}
+  }, [loopStatus])
 
   return (
     <YouTube
