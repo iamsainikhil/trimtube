@@ -86,19 +86,6 @@ const Player = ({
     return () => {}
   }, [start, end])
 
-  useEffect(() => {
-    const options = getOptions()
-    if (loopStatus === 'LOOP_VIDEO') {
-      options.playerVars.fs = 1
-      setOpts(options)
-    } else {
-      // Hide the full screen button on the video when looping a playlist
-      options.playerVars.fs = 0
-      setOpts(options)
-    }
-    return () => {}
-  }, [loopStatus])
-
   return (
     <YouTube
       videoId={videoId}
