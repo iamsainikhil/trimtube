@@ -54,7 +54,7 @@ const Head = ({
         />
         <meta name='msapplication-TileColor' content='#333' />
         <meta name='theme-color' content='#333' />
-        <meta name='apple-mobile-web-app-capable' content='yes' />
+        <meta name='mobile-web-app-capable' content='yes' />
         {/* dynamic update of start_url in manifest json */}
         <link rel='manifest' href={`/api/manifest?url=${pathUrl}`} />
         {/* favicons */}
