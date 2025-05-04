@@ -1,7 +1,7 @@
 import '../styles/globals.scss'
 import '../styles/header.scss'
 import {useEffect} from 'react'
-import {ThemeProvider} from 'theme-ui'
+import {ThemeUIProvider} from 'theme-ui'
 import theme from '../utils/theme'
 import {trackGAEvent} from '../utils/googleAnalytics'
 import {dateNow} from './../utils/date'
@@ -39,13 +39,13 @@ export default function MyApp({Component, pageProps}) {
   }, [])
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeUIProvider theme={theme}>
       <ErrorBoundary>
         <ToastContextProvider>
           <Component {...pageProps} />
           <Toast />
         </ToastContextProvider>
       </ErrorBoundary>
-    </ThemeProvider>
+    </ThemeUIProvider>
   )
 }
