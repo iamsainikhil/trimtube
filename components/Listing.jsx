@@ -39,6 +39,7 @@ const Listing = ({data}) => {
             query: {id: item.id.videoId || item.id},
           }}
           passHref
+          legacyBehavior
           key={index}>
           <a>
             <VideoCard>

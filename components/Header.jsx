@@ -34,7 +34,7 @@ const Header = () => {
               variant: 'textStyles.title',
               fontSize: ['2rem', 6],
             }}>
-            <NextLink href='/' passHref>
+            <NextLink href='/' passHref legacyBehavior>
               <a
                 sx={{
                   variant: 'styles.a',
@@ -91,7 +91,7 @@ const Header = () => {
             )}
             {routePath !== '/playlists' && (
               <p>
-                <NextLink href={'/playlists'} passHref>
+                <NextLink href={'/playlists'} passHref legacyBehavior>
                   <a>
                     <RiPlayListFill
                       title='Playlists'
@@ -106,7 +106,7 @@ const Header = () => {
             )}
             {routePath !== '/help' && (
               <p>
-                <NextLink href={'/help'} passHref>
+                <NextLink href={'/help'} passHref legacyBehavior>
                   <a>
                     <FiHelpCircle
                       title='About'

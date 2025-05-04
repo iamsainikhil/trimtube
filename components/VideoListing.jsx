@@ -43,6 +43,7 @@ const VideoListing = ({playlistName, videos, remove}) => {
             },
           }}
           passHref
+          legacyBehavior
           key={index}>
           <a sx={{position: 'relative'}}>
             <VideoCard>
