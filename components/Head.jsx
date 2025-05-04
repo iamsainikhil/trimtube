@@ -1,4 +1,5 @@
 import NextHead from 'next/head'
+import Script from 'next/script'
 import LogRocket from 'logrocket'
 
 const Head = ({
@@ -344,11 +345,11 @@ const Head = ({
         />
         <title>{pageTitle}</title>
         {/* Global site tag (gtag.js) - Google Analytics  */}
-        <script
+        <Script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         />
-        <script
+        <Script
           async
           defer
           dangerouslySetInnerHTML={{
@@ -361,7 +362,7 @@ const Head = ({
         />
         {/* Hotjar Tracking Code */}
         {isProd ? (
-          <script
+          <Script
             async
             defer
             dangerouslySetInnerHTML={{
