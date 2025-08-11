@@ -56,6 +56,9 @@ const Head = ({
         <meta name='msapplication-TileColor' content='#333' />
         <meta name='theme-color' content='#333' />
         <meta name='mobile-web-app-capable' content='yes' />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Damion&family=Fira+Code&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
         {/* dynamic update of start_url in manifest json */}
         <link rel='manifest' href={`/api/manifest?url=${pathUrl}`} />
         {/* favicons */}
