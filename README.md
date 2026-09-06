@@ -126,6 +126,8 @@ TrimTube provides multiple features like:
 
 # 💻 Quick start
 
+> **Prerequisite:** This project requires **Node.js 24** or later. Check with `node -v` (or use `nvm use` / `.nvmrc`).
+
 1. **Clone the repository**
 
    ```bash

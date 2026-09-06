@@ -1,7 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import {jsx} from 'theme-ui'
-import {DebounceInput} from 'react-debounce-input'
 
 const Search = ({searchTerm, placeholder, updateSearch}) => {
   return (
@@ -12,7 +11,9 @@ const Search = ({searchTerm, placeholder, updateSearch}) => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <DebounceInput
+      <input
+        type='text'
+        minLength={1}
         sx={{
           bg: 'search',
           color: 'text',
@@ -28,8 +29,6 @@ const Search = ({searchTerm, placeholder, updateSearch}) => {
           fontSize: [2, 3, 4],
           outline: 'none',
         }}
-        minLength={1}
-        debounceTimeout={300}
         placeholder={placeholder}
         value={searchTerm}
         onChange={updateSearch}
