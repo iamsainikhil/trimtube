@@ -21,12 +21,19 @@ const TABS = {
 }
 
 const Input = () => {
+  const [inputValue, setInputValue] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [activeTab, setActiveTab] = useState(TABS.video)
   const [data, setData] = useState(undefined)
   const [error, setError] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const [btnLoading, setBtnLoading] = useState(false)
+
+  // debounce the search input (equivalent to the earlier 300ms DebounceInput)
+  useEffect(() => {
+    const timer = setTimeout(() => setSearchTerm(inputValue), 300)
+    return () => clearTimeout(timer)
+  }, [inputValue])
 
   const getPlaceholder = () => {
     return activeTab === TABS.video
@@ -75,7 +82,7 @@ const Input = () => {
   }
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value)
+    setInputValue(event.target.value)
   }
 
   /**
@@ -136,6 +143,7 @@ const Input = () => {
 
   useEffect(() => {
     updateDataError(undefined, undefined)
+    setInputValue('')
     setSearchTerm('')
     setBtnLoading(false)
     return () => {}
@@ -163,7 +171,7 @@ const Input = () => {
           />
         </div>
         <Search
-          searchTerm={searchTerm}
+          searchTerm={inputValue}
           placeholder={getPlaceholder()}
           updateSearch={handleSearch}
         />
