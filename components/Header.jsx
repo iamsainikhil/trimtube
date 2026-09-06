@@ -3,6 +3,7 @@
 import {jsx, useThemeUI} from 'theme-ui'
 import {default as NextLink} from 'next/link'
 import {useRouter} from 'next/router'
+import {useEffect, useState} from 'react'
 import Headroom from 'react-headroom'
 import {GoSearch} from 'react-icons/go'
 import {FiHelpCircle, FiSun, FiMoon} from 'react-icons/fi'
@@ -13,6 +14,13 @@ const Header = () => {
   const {colorMode, setColorMode} = useThemeUI()
   const router = useRouter()
   const {asPath: routePath} = router
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    return () => {}
+  }, [])
+
   const iconStyle = {
     verticalAlign: 'middle',
     p: '6px',
@@ -120,7 +128,7 @@ const Header = () => {
               </p>
             )}
             <p>
-              {colorMode !== 'dark' ? (
+              {mounted && (colorMode !== 'dark' ? (
                 <span
                   title='Switch to Dark Mode'
                   aria-label='Switch to Dark Mode'>
@@ -158,7 +166,7 @@ const Header = () => {
                     }}
                   />
                 </span>
-              )}
+              ))}
             </p>
           </div>
         </div>
