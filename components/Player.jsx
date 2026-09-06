@@ -20,6 +20,17 @@ const Player = ({
     )
   }
 
+  // True once the user has interacted with this page session (client-side
+  // navigation from Search/Playlists keeps the same document, so their
+  // earlier gesture is sticky activation on iOS 17+).
+  const hasUserActivation = () => {
+    return (
+      typeof navigator !== 'undefined' &&
+      navigator.userActivation &&
+      navigator.userActivation.hasBeenActive
+    )
+  }
+
   const getOptions = () => ({
     height: '360',
     width: '640',
@@ -52,9 +63,11 @@ const Player = ({
     event.target.playVideo()
   }
 
-  // iOS pauses muted autoplay if the player is unmuted without a user
-  // gesture, so restore audio on the first real interaction with the page.
-  const enableAudioOnGesture = (player) => {
+  // On iOS the video is kept muted so autoplay is always permitted. Once the
+  // user has interacted with this document, sticky activation (iOS 17+)
+  // lets us restore the audio immediately — no extra tap needed. On a cold
+  // page load the first real gesture unlocks the sound in the same handler.
+  const unlockAudio = (player) => {
     if (!isIOS()) {
       return
     }
@@ -63,6 +76,13 @@ const Player = ({
       document.removeEventListener('pointerdown', unmute)
       document.removeEventListener('touchend', unmute)
     }
+    // sticky activation: audio autoplay is already blessed for this document
+    if (hasUserActivation()) {
+      unmute()
+      return
+    }
+    // cold load: eager listeners unlock audio the moment the user gestures,
+    // while the video itself keeps autoplaying muted in the meantime
     document.addEventListener('pointerdown', unmute)
     document.addEventListener('touchend', unmute)
   }
@@ -81,9 +101,7 @@ const Player = ({
     setPlayerEvent(event)
     trackGAEvent('player', `loaded player for ${videoId}`, 'player ready')
     startVideo(event)
-    // leave the player muted on iOS so autoplay is permitted; bring back
-    // the sound when the user taps anywhere on the page
-    enableAudioOnGesture(event.target)
+    unlockAudio(event.target)
   }
 
   const _onStateChange = (event) => {
