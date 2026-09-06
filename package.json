@@ -1,6 +1,6 @@
 {
   "name": "trimtube",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TrimTube is a web application which allows the user to search for YouTube videos or paste any YouTube video link. This app also features a media player that allows the user to trim and loop any portion of a YouTube video with ability to save the video(s) to a playlist.",
   "author": "Sai Nikhil <contact@iamsainikhil.com>",
   "engines": {
@@ -31,10 +31,10 @@
     "react-lottie": "^1.2.10",
     "react-modal": "^3.16.3",
     "react-toastify": "^11.1.0",
-    "react-youtube": "^10.1.0",
     "sass": "^1.100.0",
     "theme-ui": "^0.17.4",
-    "webpack": "^5.107.2"
+    "webpack": "^5.107.2",
+    "youtube-player": "^5.5.2"
   },
   "devDependencies": {
     "commitizen": "^4.3.1",
