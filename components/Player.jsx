@@ -10,6 +10,16 @@ const Player = ({
   loopStatus,
   updateVideoNumber,
 }) => {
+  const isIOS = () => {
+    if (typeof navigator === 'undefined') {
+      return false
+    }
+    return (
+      /iPad|iPhone|iPod/.test(navigator.platform) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    )
+  }
+
   const getOptions = () => ({
     height: '360',
     width: '640',
@@ -21,6 +31,7 @@ const Player = ({
       // playlist: videoId,
       playsinline: 1,
       autoplay: 1, // Auto-play the video on load
+      mute: isIOS() ? 1 : 0, // Muted autoplay is required on iOS devices
       controls: 1, // Show pause/play buttons in player
       showinfo: 1, // Hide the video title
       modestbranding: 1, // Hide the Youtube Logo
@@ -55,6 +66,8 @@ const Player = ({
     setPlayerEvent(event)
     trackGAEvent('player', `loaded player for ${videoId}`, 'player ready')
     startVideo(event)
+    // iOS only allows autoplay when muted; try to restore the audio right away
+    event.target.unMute()
   }
 
   const _onStateChange = (event) => {
@@ -82,6 +95,7 @@ const Player = ({
     setOpts(getOptions())
     if (playerEvent) {
       startVideo(playerEvent)
+      playerEvent.target.unMute()
     }
     return () => {}
   }, [start, end])
