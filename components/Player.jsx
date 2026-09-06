@@ -52,6 +52,21 @@ const Player = ({
     event.target.playVideo()
   }
 
+  // iOS pauses muted autoplay if the player is unmuted without a user
+  // gesture, so restore audio on the first real interaction with the page.
+  const enableAudioOnGesture = (player) => {
+    if (!isIOS()) {
+      return
+    }
+    const unmute = () => {
+      player.unMute()
+      document.removeEventListener('pointerdown', unmute)
+      document.removeEventListener('touchend', unmute)
+    }
+    document.addEventListener('pointerdown', unmute)
+    document.addEventListener('touchend', unmute)
+  }
+
   const updateStatus = (event) => {
     if (loopStatus === 'LOOP_VIDEO') {
       startVideo(event)
@@ -66,8 +81,9 @@ const Player = ({
     setPlayerEvent(event)
     trackGAEvent('player', `loaded player for ${videoId}`, 'player ready')
     startVideo(event)
-    // iOS only allows autoplay when muted; try to restore the audio right away
-    event.target.unMute()
+    // leave the player muted on iOS so autoplay is permitted; bring back
+    // the sound when the user taps anywhere on the page
+    enableAudioOnGesture(event.target)
   }
 
   const _onStateChange = (event) => {
@@ -95,7 +111,6 @@ const Player = ({
     setOpts(getOptions())
     if (playerEvent) {
       startVideo(playerEvent)
-      playerEvent.target.unMute()
     }
     return () => {}
   }, [start, end])
