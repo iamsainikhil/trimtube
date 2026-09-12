@@ -12,6 +12,11 @@ const Player = ({
 }) => {
   const containerRef = useRef(null)
   const playerRef = useRef(null)
+  // True while a freshly loaded cue has not started playing yet. When
+  // loadVideoById reloads the SAME video id (e.g. the next trim of the same
+  // song), the iframe can re-emit the previous cue's `ended` event before the
+  // new trim starts playing; that stale event must not advance the playlist.
+  const pendingPlayRef = useRef(false)
 
   // Keep the latest props readable inside the stable YT event handlers,
   // since those handlers are registered only once.
@@ -62,6 +67,7 @@ const Player = ({
   // subsequent videos via loadVideoById keeps the sound — so auto-advancing
   // playlists don't need a manual tap on each video.
   const loadVideo = (player, id, startTime, endTime) => {
+    pendingPlayRef.current = true
     const opts = {
       videoId: id,
       startSeconds: Number(startTime) || 0,
@@ -147,10 +153,18 @@ const Player = ({
       } else if (event.data === 0) {
         if (ls === 'LOOP_VIDEO') {
           startVideo(player, s)
-        } else {
+        } else if (!pendingPlayRef.current) {
+          pendingPlayRef.current = true
           vn ? updateVideoNumber(vn) : startVideo(player, s)
         }
+        // A stale `ended` arriving while the next cue (possibly the same video
+        // id with a different trim) has not started playing yet is ignored so
+        // the playlist advances only once and same-id trims don't get skipped.
       } else {
+        if (event.data === 1) {
+          // the freshly loaded cue is actually playing — accept a future `ended`
+          pendingPlayRef.current = false
+        }
         player.getCurrentTime().then((currentTime) => {
           // fix the iframe issue playing video from the beginning
           // even though start time is different

@@ -64,10 +64,14 @@ export default function Video({videoData, videoTitle, videoImage, error}) {
     let videoNumber = 1
     for (let i = 0; i < playlist?.videos.length; i++) {
       const {id, start: startTime, end: endTime} = playlist?.videos[i]
+      // Untrimmed videos (e.g. YouTube Shorts) are stored with start/end of
+      // 0/null while the player state keeps 0 as well; normalize both sides so
+      // the exact entry is always found and loop mode advances instead of
+      // treating the video as a repeat-one.
       if (
         id === videoId &&
-        Number(startTime) === start &&
-        Number(endTime) === end
+        (Number(startTime) || 0) === (start || 0) &&
+        (Number(endTime) || 0) === (end || 0)
       ) {
         return videoNumber
       }
