@@ -218,6 +218,16 @@ In the project directory, you can run:
 - If you have any new idea, check the **[feature request](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/blob/main/.github/ISSUE_TEMPLATE/feature_request.md)** template to create a request.
 - If you found any issue or a bug, check the **[bug report](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/blob/main/.github/ISSUE_TEMPLATE/bug_report.md)** template to create a report.
 
+# ⭐ Star History
+
+<a href="https://www.star-history.com/?repos=iamsainikhil%2Ftrimtube&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=iamsainikhil/trimtube&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=iamsainikhil/trimtube&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=iamsainikhil/trimtube&type=date&legend=top-left" />
+ </picture>
+</a>
+
 # **📃 License**
 
 Have a look at the **[license file](https://raw.githubusercontent.com/iamsainikhil/trimtube/main/raw/master/README_images/LICENSE)** for details
